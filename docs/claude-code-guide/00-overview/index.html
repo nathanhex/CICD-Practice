@@ -1,0 +1,636 @@
+<!DOCTYPE html><html lang="[&quot;zh-CN&quot;,&quot;en&quot;,&quot;default&quot;]" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>Claude Code 架构与组件总览 | 老丶黄的个人博客</title><meta name="author" content="老黄"><meta name="copyright" content="老黄"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="Claude Code 架构与组件总览 本系列文档面向有经验的开发者，帮助你理解 Claude Code 的核心架构，掌握各组件的原理与使用方法，具备二次开发能力。  目录 架构与组件总览 - 本文 Rules 系统 - 持久化的行为约束 Skills 系统 - 可复用的指令集 Commands 系统 - 斜杠命令 Hooks 系统 - 生命周期事件 Agents 系统 - 专业化代理 Tools">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Claude Code 架构与组件总览">
+<meta property="og:url" content="https://nathanhex.github.io/CICD-Practice/claude-code-guide/00-overview/index.html">
+<meta property="og:site_name" content="老丶黄的个人博客">
+<meta property="og:description" content="Claude Code 架构与组件总览 本系列文档面向有经验的开发者，帮助你理解 Claude Code 的核心架构，掌握各组件的原理与使用方法，具备二次开发能力。  目录 架构与组件总览 - 本文 Rules 系统 - 持久化的行为约束 Skills 系统 - 可复用的指令集 Commands 系统 - 斜杠命令 Hooks 系统 - 生命周期事件 Agents 系统 - 专业化代理 Tools">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg">
+<meta property="article:published_time" content="2026-02-05T00:00:00.000Z">
+<meta property="article:modified_time" content="2026-02-06T02:34:48.624Z">
+<meta property="article:author" content="老黄">
+<meta property="article:tag" content="claude-code">
+<meta property="article:tag" content="AI编程">
+<meta property="article:tag" content="开发工具">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg"><link rel="shortcut icon" href="/CICD-Practice/img/favicon.png"><link rel="canonical" href="https://nathanhex.github.io/CICD-Practice/claude-code-guide/00-overview/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/CICD-Practice/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/CICD-Practice/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: {"limitCount":50,"languages":{"author":"作者: 老黄","link":"链接: ","source":"来源: 老丶黄的个人博客","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。"}},
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Claude Code 架构与组件总览',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2026-02-06 10:34:48'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+        if (t === 'dark') activateDarkMode()
+        else if (t === 'light') activateLightMode()
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><meta name="generator" content="Hexo 6.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/CICD-Practice/archives/"><div class="headline">文章</div><div class="length-num">15</div></a><a href="/CICD-Practice/tags/"><div class="headline">标签</div><div class="length-num">20</div></a><a href="/CICD-Practice/categories/"><div class="headline">分类</div><div class="length-num">7</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/CICD-Practice/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/CICD-Practice/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/CICD-Practice/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/CICD-Practice/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg')"><nav id="nav"><span id="blog-info"><a href="/CICD-Practice/" title="老丶黄的个人博客"><img class="site-icon" src="/CICD-Practice/images/main-logo.jpg"/><span class="site-name">老丶黄的个人博客</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/CICD-Practice/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/CICD-Practice/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/CICD-Practice/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/CICD-Practice/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">Claude Code 架构与组件总览</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2026-02-05T00:00:00.000Z" title="发表于 2026-02-05 08:00:00">2026-02-05</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2026-02-06T02:34:48.624Z" title="更新于 2026-02-06 10:34:48">2026-02-06</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/CICD-Practice/categories/AI/">AI</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/CICD-Practice/categories/AI/Claude-Code/">Claude Code</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="Claude Code 架构与组件总览"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="Claude-Code-架构与组件总览"><a href="#Claude-Code-架构与组件总览" class="headerlink" title="Claude Code 架构与组件总览"></a>Claude Code 架构与组件总览</h1><blockquote>
+<p>本系列文档面向有经验的开发者，帮助你理解 Claude Code 的核心架构，掌握各组件的原理与使用方法，具备二次开发能力。</p>
+</blockquote>
+<h2 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h2><ul>
+<li><a href="/CICD-Practice/claude-code-guide/00-overview/">架构与组件总览</a> - 本文</li>
+<li><a href="/CICD-Practice/claude-code-guide/01-rules/">Rules 系统</a> - 持久化的行为约束</li>
+<li><a href="/CICD-Practice/claude-code-guide/02-skills/">Skills 系统</a> - 可复用的指令集</li>
+<li><a href="/CICD-Practice/claude-code-guide/03-commands/">Commands 系统</a> - 斜杠命令</li>
+<li><a href="/CICD-Practice/claude-code-guide/04-hooks/">Hooks 系统</a> - 生命周期事件</li>
+<li><a href="/CICD-Practice/claude-code-guide/05-agents/">Agents 系统</a> - 专业化代理</li>
+<li><a href="/CICD-Practice/claude-code-guide/06-tools/">Tools 系统</a> - Claude 可调用的能力</li>
+<li><a href="/CICD-Practice/claude-code-guide/07-mcp/">MCP</a> - Model Context Protocol</li>
+</ul>
+<hr>
+<h2 id="0-先解答一个疑惑：为什么需要这么多概念？"><a href="#0-先解答一个疑惑：为什么需要这么多概念？" class="headerlink" title="0. 先解答一个疑惑：为什么需要这么多概念？"></a>0. 先解答一个疑惑：为什么需要这么多概念？</h2><blockquote>
+<p><strong>“Rules、Skills、Commands、Agents 本质上不都是提示词吗？为什么要搞这么复杂？”</strong></p>
+</blockquote>
+<p>从技术本质上看，<strong>这些组件最终都会变成文本，注入到 Claude 的上下文（Context）中</strong>。它们确实都是”提示词工程”（Prompt Engineering）的产物。</p>
+<p>但是，这恰恰是精心设计的结果，而非过度工程。让我们用软件工程的视角来理解：</p>
+<h3 id="0-1-类比：为什么编程语言需要不同的结构？"><a href="#0-1-类比：为什么编程语言需要不同的结构？" class="headerlink" title="0.1 类比：为什么编程语言需要不同的结构？"></a>0.1 类比：为什么编程语言需要不同的结构？</h3><p>想象一下，如果一门编程语言只有”代码”这一个概念，没有函数、类、模块、包的区分：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">❌ 没有抽象的世界</span><br><span class="line">所有代码写在一个巨大的文件里，没有函数、没有类、没有模块...</span><br><span class="line">技术上可行，但维护噩梦。</span><br><span class="line"></span><br><span class="line">✅ 有抽象的世界</span><br><span class="line">- 函数：可复用的代码块</span><br><span class="line">- 类：封装数据和行为</span><br><span class="line">- 模块：组织相关功能</span><br><span class="line">- 包：分发和共享</span><br></pre></td></tr></table></figure>
+
+<p>Claude Code 的组件设计遵循同样的逻辑：</p>
+<table>
+<thead>
+<tr>
+<th>编程概念</th>
+<th>Claude Code 概念</th>
+<th>解决的问题</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>全局配置</td>
+<td><strong>Rules</strong></td>
+<td>总是生效的约束</td>
+</tr>
+<tr>
+<td>函数库</td>
+<td><strong>Skills</strong></td>
+<td>可复用的指令集</td>
+</tr>
+<tr>
+<td>CLI 命令</td>
+<td><strong>Commands</strong></td>
+<td>快速触发入口</td>
+</tr>
+<tr>
+<td>生命周期钩子</td>
+<td><strong>Hooks</strong></td>
+<td>自动化触发</td>
+</tr>
+<tr>
+<td>子进程&#x2F;线程</td>
+<td><strong>Agents</strong></td>
+<td>并行和隔离</td>
+</tr>
+</tbody></table>
+<h3 id="0-2-核心问题：Token-经济学"><a href="#0-2-核心问题：Token-经济学" class="headerlink" title="0.2 核心问题：Token 经济学"></a>0.2 核心问题：Token 经济学</h3><p>LLM 的上下文窗口是 <strong>有限且昂贵</strong> 的资源。如果把所有指令都塞进每次对话：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">❌ 朴素方案</span><br><span class="line">每次对话 = 系统提示 + 所有规则 + 所有技能 + 所有文档 + 用户输入</span><br><span class="line">结果：Token 爆炸，成本高昂，响应变慢</span><br></pre></td></tr></table></figure>
+
+<p>Claude Code 的分层设计解决了这个问题：</p>
+<div class="mermaid-wrap"><pre class="mermaid-src" hidden>graph TB
+    subgraph "Token 使用策略"
+        R[Rules<br/>~500 tokens<br/>每次都加载]
+        S[Skills 索引<br/>~100 tokens<br/>仅名称和描述]
+        SF[Skills 全文<br/>~2000 tokens<br/>按需加载]
+        A[Agents<br/>独立上下文<br/>不占主会话]
+    end
+    
+    R -->|总是| Context[对话上下文]
+    S -->|总是| Context
+    SF -.->|需要时| Context
+    A -.->|隔离| SubContext[子代理上下文]</pre></div>
+
+<h3 id="0-3-各组件的本质区别"><a href="#0-3-各组件的本质区别" class="headerlink" title="0.3 各组件的本质区别"></a>0.3 各组件的本质区别</h3><p>虽然都是”提示词”，但它们在 <strong>何时加载、如何触发、作用范围</strong> 上有本质区别：</p>
+<table>
+<thead>
+<tr>
+<th>组件</th>
+<th>加载时机</th>
+<th>触发方式</th>
+<th>作用范围</th>
+<th>Token 消耗</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Rules</strong></td>
+<td>会话开始，自动加载</td>
+<td>始终生效</td>
+<td>全局</td>
+<td>每次都消耗</td>
+</tr>
+<tr>
+<td><strong>Skills</strong></td>
+<td>按需加载（渐进式）</td>
+<td>自动匹配或手动</td>
+<td>当次任务</td>
+<td>需要时才消耗</td>
+</tr>
+<tr>
+<td><strong>Commands</strong></td>
+<td>用户输入时</td>
+<td>手动 <code>/command</code></td>
+<td>当次任务</td>
+<td>触发时消耗</td>
+</tr>
+<tr>
+<td><strong>Agents</strong></td>
+<td>创建子代理时</td>
+<td>由主代理调用</td>
+<td>隔离上下文</td>
+<td>独立计费</td>
+</tr>
+<tr>
+<td><strong>Hooks</strong></td>
+<td>特定事件触发</td>
+<td>自动</td>
+<td>事件相关</td>
+<td>脚本层面</td>
+</tr>
+</tbody></table>
+<h3 id="0-4-设计收益"><a href="#0-4-设计收益" class="headerlink" title="0.4 设计收益"></a>0.4 设计收益</h3><p>这种分层设计带来了实际的收益：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">1. 性能优化</span><br><span class="line">   - Skills 的渐进式加载节省 70%+ 的 Token</span><br><span class="line">   - Agents 的上下文隔离避免主会话膨胀</span><br><span class="line"></span><br><span class="line">2. 可维护性</span><br><span class="line">   - Rules 放全局约束，一改全改</span><br><span class="line">   - Skills 按领域组织，职责清晰</span><br><span class="line">   - 团队可以各自维护自己领域的 Skills</span><br><span class="line"></span><br><span class="line">3. 可组合性</span><br><span class="line">   - Skills 可以调用其他 Skills</span><br><span class="line">   - Commands 可以触发 Skills</span><br><span class="line">   - Hooks 可以在 Skills 执行时自动运行</span><br><span class="line"></span><br><span class="line">4. 可移植性</span><br><span class="line">   - Skills 可以跨项目共享</span><br><span class="line">   - 2025 年 12 月 Skills 成为开放标准</span><br><span class="line">   - 一次编写，多平台使用</span><br></pre></td></tr></table></figure>
+
+<h3 id="0-5-一图总结"><a href="#0-5-一图总结" class="headerlink" title="0.5 一图总结"></a>0.5 一图总结</h3><div class="mermaid-wrap"><pre class="mermaid-src" hidden>flowchart LR
+    subgraph "本质"
+        P[都是提示词文本]
+    end
+    
+    subgraph "但是..."
+        P --> When[何时加载?]
+        P --> How[如何触发?]
+        P --> Where[作用范围?]
+        P --> Cost[Token 成本?]
+    end
+    
+    subgraph "所以需要区分"
+        When --> Rules[Rules: 总是]
+        When --> Skills[Skills: 按需]
+        How --> Commands[Commands: 手动]
+        How --> Hooks[Hooks: 自动]
+        Where --> Agents[Agents: 隔离]
+    end</pre></div>
+
+<p><strong>结论</strong>：这些概念不是为了复杂而复杂，而是为了在 <strong>有限的上下文窗口</strong> 中实现 <strong>高效、可维护、可扩展</strong> 的提示词管理。就像软件工程中的函数、类、模块一样，它们是对”提示词”这一基础单元的 <strong>合理抽象</strong>。</p>
+<hr>
+<h2 id="1-Claude-Code-是什么"><a href="#1-Claude-Code-是什么" class="headerlink" title="1. Claude Code 是什么"></a>1. Claude Code 是什么</h2><p>Claude Code 是 Anthropic 推出的 <strong>AI 编程助手</strong>，它不仅仅是一个聊天机器人，而是一个具备完整工具链的 <strong>智能代理（Agent）系统</strong>。</p>
+<h3 id="1-1-核心特点"><a href="#1-1-核心特点" class="headerlink" title="1.1 核心特点"></a>1.1 核心特点</h3><table>
+<thead>
+<tr>
+<th>特点</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>代理式交互</strong></td>
+<td>Claude 可以自主规划、执行多步骤任务，而不仅仅是问答</td>
+</tr>
+<tr>
+<td><strong>工具调用</strong></td>
+<td>可以读写文件、执行命令、搜索代码、访问网络等</td>
+</tr>
+<tr>
+<td><strong>上下文感知</strong></td>
+<td>自动理解项目结构、代码规范、技术栈</td>
+</tr>
+<tr>
+<td><strong>可扩展性</strong></td>
+<td>通过 Skills、Hooks、MCP 等机制进行深度定制</td>
+</tr>
+</tbody></table>
+<h3 id="1-2-与传统-AI-助手的区别"><a href="#1-2-与传统-AI-助手的区别" class="headerlink" title="1.2 与传统 AI 助手的区别"></a>1.2 与传统 AI 助手的区别</h3><div class="mermaid-wrap"><pre class="mermaid-src" hidden>graph LR
+    subgraph "传统 AI 助手"
+        A[用户输入] --> B[模型处理]
+        B --> C[文本输出]
+    end
+    
+    subgraph "Claude Code (Agent 模式)"
+        D[用户输入] --> E[模型规划]
+        E --> F{需要工具?}
+        F -->|是| G[调用工具]
+        G --> H[获取结果]
+        H --> E
+        F -->|否| I[输出结果]
+    end</pre></div>
+
+<hr>
+<h2 id="2-整体架构"><a href="#2-整体架构" class="headerlink" title="2. 整体架构"></a>2. 整体架构</h2><p>Claude Code 的架构可以分为三层：<strong>用户层</strong>、<strong>核心层</strong>、<strong>扩展层</strong>。</p>
+<div class="mermaid-wrap"><pre class="mermaid-src" hidden>graph TB
+    subgraph "用户层 (User Layer)"
+        U1[IDE 集成<br/>VS Code / Cursor]
+        U2[终端<br/>CLI]
+        U3[Web 界面]
+    end
+    
+    subgraph "核心层 (Core Layer)"
+        C1[Claude 模型<br/>Opus / Sonnet / Haiku]
+        C2[对话管理器<br/>Context Manager]
+        C3[工具调度器<br/>Tool Dispatcher]
+        C4[权限控制器<br/>Permission Controller]
+    end
+    
+    subgraph "扩展层 (Extension Layer)"
+        E1[Rules<br/>行为约束]
+        E2[Skills<br/>指令集]
+        E3[Commands<br/>斜杠命令]
+        E4[Hooks<br/>生命周期]
+        E5[Agents<br/>专业代理]
+        E6[Tools<br/>内置工具]
+        E7[MCP<br/>外部协议]
+    end
+    
+    U1 & U2 & U3 --> C1
+    C1 <--> C2
+    C1 <--> C3
+    C3 <--> C4
+    C3 <--> E1 & E2 & E3 & E4 & E5 & E6 & E7</pre></div>
+
+<hr>
+<h2 id="3-核心组件关系"><a href="#3-核心组件关系" class="headerlink" title="3. 核心组件关系"></a>3. 核心组件关系</h2><p>下图展示了各组件之间的数据流和依赖关系：</p>
+<div class="mermaid-wrap"><pre class="mermaid-src" hidden>flowchart TB
+    subgraph Input["输入阶段"]
+        UserPrompt[用户输入]
+        Rules[Rules<br/>注入系统提示]
+        Skills[Skills<br/>按需加载]
+        Commands[Commands<br/>触发技能]
+    end
+    
+    subgraph Process["处理阶段"]
+        Model[Claude 模型]
+        Hooks[Hooks<br/>生命周期事件]
+    end
+    
+    subgraph Execution["执行阶段"]
+        Tools[Tools<br/>内置工具]
+        MCP[MCP<br/>外部工具]
+        Agents[Agents<br/>子代理]
+    end
+    
+    UserPrompt --> Model
+    Rules -.->|系统提示| Model
+    Commands -->|触发| Skills
+    Skills -.->|指令注入| Model
+    
+    Model <-->|PreToolUse<br/>PostToolUse| Hooks
+    Model --> Tools
+    Model --> MCP
+    Model --> Agents
+    
+    Hooks -.->|拦截/修改| Tools
+    Hooks -.->|拦截/修改| MCP</pre></div>
+
+<hr>
+<h2 id="4-组件速览"><a href="#4-组件速览" class="headerlink" title="4. 组件速览"></a>4. 组件速览</h2><h3 id="4-1-Rules（规则）"><a href="#4-1-Rules（规则）" class="headerlink" title="4.1 Rules（规则）"></a>4.1 Rules（规则）</h3><p><strong>定位</strong>：持久化的行为约束，自动注入每次对话的系统提示。</p>
+<p><strong>作用</strong>：</p>
+<ul>
+<li>定义项目的代码规范、技术栈偏好</li>
+<li>设置 Claude 的行为边界</li>
+<li>提供项目特定的上下文</li>
+</ul>
+<p><strong>文件位置</strong>：</p>
+<ul>
+<li><code>CLAUDE.md</code>（项目根目录）</li>
+<li><code>.claude/rules/*.md</code>（模块化规则）</li>
+</ul>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="section"># 示例：CLAUDE.md</span></span><br><span class="line"><span class="section">## 技术栈</span></span><br><span class="line"><span class="bullet">-</span> Java 21 + Spring Boot 3.x</span><br><span class="line"><span class="bullet">-</span> Maven 构建</span><br><span class="line"></span><br><span class="line"><span class="section">## 代码规范</span></span><br><span class="line"><span class="bullet">-</span> 使用 Lombok 简化 POJO</span><br><span class="line"><span class="bullet">-</span> 所有 API 必须有 Swagger 注解</span><br></pre></td></tr></table></figure>
+
+<p>→ 详见 <a href="/CICD-Practice/claude-code-guide/01-rules/">Rules 系统</a></p>
+<hr>
+<h3 id="4-2-Skills（技能）"><a href="#4-2-Skills（技能）" class="headerlink" title="4.2 Skills（技能）"></a>4.2 Skills（技能）</h3><p><strong>定位</strong>：可复用的指令集，封装领域专业知识。</p>
+<p><strong>作用</strong>：</p>
+<ul>
+<li>将复杂工作流打包成可调用的”技能”</li>
+<li>支持渐进式加载，节省 Token</li>
+<li>可跨项目共享</li>
+</ul>
+<p><strong>文件位置</strong>：<code>.claude/skills/&lt;skill-name&gt;/SKILL.md</code></p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="section"># 示例：SKILL.md</span></span><br><span class="line">---</span><br><span class="line">name: code-review</span><br><span class="line"><span class="section">description: 执行代码审查</span></span><br><span class="line"><span class="section">---</span></span><br><span class="line"></span><br><span class="line"><span class="section">## 审查步骤</span></span><br><span class="line"><span class="bullet">1.</span> 检查代码风格</span><br><span class="line"><span class="bullet">2.</span> 检查安全隐患</span><br><span class="line"><span class="bullet">3.</span> 检查性能问题</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+
+<p>→ 详见 <a href="/CICD-Practice/claude-code-guide/02-skills/">Skills 系统</a></p>
+<hr>
+<h3 id="4-3-Commands（命令）"><a href="#4-3-Commands（命令）" class="headerlink" title="4.3 Commands（命令）"></a>4.3 Commands（命令）</h3><p><strong>定位</strong>：斜杠命令，快速触发特定功能。</p>
+<p><strong>作用</strong>：</p>
+<ul>
+<li>提供快捷入口（如 <code>/review</code>, <code>/test</code>）</li>
+<li>与 Skills 系统深度集成</li>
+<li>支持参数传递</li>
+</ul>
+<p><strong>文件位置</strong>：<code>.claude/commands/&lt;command-name&gt;.md</code></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 使用示例</span></span><br><span class="line">/review src/main/java/com/example/Service.java</span><br><span class="line">/test --coverage</span><br></pre></td></tr></table></figure>
+
+<p>→ 详见 <a href="/CICD-Practice/claude-code-guide/03-commands/">Commands 系统</a></p>
+<hr>
+<h3 id="4-4-Hooks（钩子）"><a href="#4-4-Hooks（钩子）" class="headerlink" title="4.4 Hooks（钩子）"></a>4.4 Hooks（钩子）</h3><p><strong>定位</strong>：生命周期事件监听器，实现自动化工作流。</p>
+<p><strong>作用</strong>：</p>
+<ul>
+<li>在特定时机自动执行脚本</li>
+<li>拦截&#x2F;修改工具调用</li>
+<li>注入动态上下文</li>
+</ul>
+<p><strong>文件位置</strong>：<code>.claude/hooks/hooks.json</code></p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;hooks&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;PostToolUse&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;matcher&quot;</span><span class="punctuation">:</span> <span class="string">&quot;Write|StrReplace&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;hooks&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="punctuation">&#123;</span></span><br><span class="line">        <span class="attr">&quot;type&quot;</span><span class="punctuation">:</span> <span class="string">&quot;command&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;command&quot;</span><span class="punctuation">:</span> <span class="string">&quot;prettier --write $CLAUDE_FILE_PATH&quot;</span></span><br><span class="line">      <span class="punctuation">&#125;</span><span class="punctuation">]</span></span><br><span class="line">    <span class="punctuation">&#125;</span><span class="punctuation">]</span></span><br><span class="line">  <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>→ 详见 <a href="/CICD-Practice/claude-code-guide/04-hooks/">Hooks 系统</a></p>
+<hr>
+<h3 id="4-5-Agents（代理）"><a href="#4-5-Agents（代理）" class="headerlink" title="4.5 Agents（代理）"></a>4.5 Agents（代理）</h3><p><strong>定位</strong>：专业化的子代理，处理特定领域任务。</p>
+<p><strong>作用</strong>：</p>
+<ul>
+<li>隔离复杂任务到独立上下文</li>
+<li>并行处理多个独立问题</li>
+<li>支持自定义代理配置</li>
+</ul>
+<p><strong>文件位置</strong>：<code>.claude/agents/&lt;agent-name&gt;.md</code></p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="section"># 示例：code-reviewer.md</span></span><br><span class="line">你是一个代码审查专家，专注于：</span><br><span class="line"><span class="bullet">-</span> 代码质量</span><br><span class="line"><span class="bullet">-</span> 安全漏洞</span><br><span class="line"><span class="bullet">-</span> 性能优化</span><br></pre></td></tr></table></figure>
+
+<p>→ 详见 <a href="/CICD-Practice/claude-code-guide/05-agents/">Agents 系统</a></p>
+<hr>
+<h3 id="4-6-Tools（工具）"><a href="#4-6-Tools（工具）" class="headerlink" title="4.6 Tools（工具）"></a>4.6 Tools（工具）</h3><p><strong>定位</strong>：Claude 可以调用的内置能力。</p>
+<p><strong>主要工具</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>工具</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>Read</code></td>
+<td>读取文件</td>
+</tr>
+<tr>
+<td><code>Write</code></td>
+<td>写入文件</td>
+</tr>
+<tr>
+<td><code>StrReplace</code></td>
+<td>字符串替换（编辑文件）</td>
+</tr>
+<tr>
+<td><code>Shell</code></td>
+<td>执行终端命令</td>
+</tr>
+<tr>
+<td><code>Grep</code></td>
+<td>正则搜索</td>
+</tr>
+<tr>
+<td><code>Glob</code></td>
+<td>文件模式匹配</td>
+</tr>
+<tr>
+<td><code>SemanticSearch</code></td>
+<td>语义搜索</td>
+</tr>
+<tr>
+<td><code>Task</code></td>
+<td>创建子代理</td>
+</tr>
+</tbody></table>
+<p>→ 详见 <a href="/CICD-Practice/claude-code-guide/06-tools/">Tools 系统</a></p>
+<hr>
+<h3 id="4-7-MCP（Model-Context-Protocol）"><a href="#4-7-MCP（Model-Context-Protocol）" class="headerlink" title="4.7 MCP（Model Context Protocol）"></a>4.7 MCP（Model Context Protocol）</h3><p><strong>定位</strong>：标准化的外部工具接入协议。</p>
+<p><strong>作用</strong>：</p>
+<ul>
+<li>连接数据库、API、第三方服务</li>
+<li>提供统一的工具发现和调用机制</li>
+<li>支持本地和远程服务器</li>
+</ul>
+<div class="mermaid-wrap"><pre class="mermaid-src" hidden>graph LR
+    Claude[Claude Code] <-->|MCP 协议| S1[GitHub Server]
+    Claude <-->|MCP 协议| S2[PostgreSQL Server]
+    Claude <-->|MCP 协议| S3[Sentry Server]
+    Claude <-->|MCP 协议| S4[自定义 Server]</pre></div>
+
+<p>→ 详见 <a href="/CICD-Practice/claude-code-guide/07-mcp/">MCP</a></p>
+<hr>
+<h2 id="5-配置文件结构"><a href="#5-配置文件结构" class="headerlink" title="5. 配置文件结构"></a>5. 配置文件结构</h2><p>Claude Code 的配置分布在多个位置：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">项目根目录/</span><br><span class="line">├── CLAUDE.md                    # 项目级规则（自动加载）</span><br><span class="line">└── .claude/</span><br><span class="line">    ├── settings.json            # 项目设置</span><br><span class="line">    ├── settings.local.json      # 本地设置（不提交）</span><br><span class="line">    ├── rules/                   # 模块化规则</span><br><span class="line">    │   ├── api.md</span><br><span class="line">    │   └── testing.md</span><br><span class="line">    ├── skills/                  # 技能目录</span><br><span class="line">    │   └── &lt;skill-name&gt;/</span><br><span class="line">    │       ├── SKILL.md</span><br><span class="line">    │       └── (supporting files)</span><br><span class="line">    ├── commands/                # 命令目录</span><br><span class="line">    │   └── &lt;command-name&gt;.md</span><br><span class="line">    ├── hooks/                   # 钩子配置</span><br><span class="line">    │   ├── hooks.json</span><br><span class="line">    │   └── (hook scripts)</span><br><span class="line">    └── agents/                  # 代理配置</span><br><span class="line">        └── &lt;agent-name&gt;.md</span><br><span class="line"></span><br><span class="line">用户主目录/</span><br><span class="line">├── ~/.claude/</span><br><span class="line">│   └── settings.json            # 用户级设置</span><br><span class="line">└── ~/.cursor/                   # Cursor 特定配置</span><br><span class="line">    └── skills-cursor/           # Cursor 内置技能</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="6-配置优先级"><a href="#6-配置优先级" class="headerlink" title="6. 配置优先级"></a>6. 配置优先级</h2><p>当同一配置在多处定义时，优先级如下（从高到低）：</p>
+<div class="mermaid-wrap"><pre class="mermaid-src" hidden>graph TB
+    A[会话内指令] --> B[项目 .claude/settings.local.json]
+    B --> C[项目 .claude/settings.json]
+    C --> D[项目 CLAUDE.md]
+    D --> E[用户 ~/.claude/settings.json]
+    E --> F[默认配置]
+    
+    style A fill:#ff6b6b
+    style F fill:#4ecdc4</pre></div>
+
+<hr>
+<h2 id="7-典型工作流程"><a href="#7-典型工作流程" class="headerlink" title="7. 典型工作流程"></a>7. 典型工作流程</h2><p>以下是一个典型的 Claude Code 会话流程：</p>
+<div class="mermaid-wrap"><pre class="mermaid-src" hidden>sequenceDiagram
+    participant U as 用户
+    participant CC as Claude Code
+    participant H as Hooks
+    participant T as Tools
+    participant M as MCP
+    
+    U->>CC: 启动会话
+    activate CC
+    CC->>H: 触发 SessionStart
+    H-->>CC: 注入 CLAUDE.md + Skills 元数据
+    
+    U->>CC: /review src/Service.java
+    CC->>CC: 解析 Command，加载 Skill
+    
+    CC->>H: 触发 PreToolUse (Read)
+    H-->>CC: 允许
+    CC->>T: Read(src/Service.java)
+    T-->>CC: 文件内容
+    CC->>H: 触发 PostToolUse
+    
+    CC->>M: 调用 GitHub MCP 获取 PR 信息
+    M-->>CC: PR 详情
+    
+    CC->>U: 输出审查结果
+    deactivate CC</pre></div>
+
+<hr>
+<h2 id="8-下一步"><a href="#8-下一步" class="headerlink" title="8. 下一步"></a>8. 下一步</h2><p>根据你的学习目标选择阅读顺序：</p>
+<h3 id="快速上手路径"><a href="#快速上手路径" class="headerlink" title="快速上手路径"></a>快速上手路径</h3><ol>
+<li><a href="/CICD-Practice/claude-code-guide/01-rules/">Rules 系统</a> - 先配置好项目规则</li>
+<li><a href="/CICD-Practice/claude-code-guide/06-tools/">Tools 系统</a> - 了解 Claude 能做什么</li>
+<li><a href="/CICD-Practice/claude-code-guide/03-commands/">Commands 系统</a> - 学习常用命令</li>
+</ol>
+<h3 id="深度定制路径"><a href="#深度定制路径" class="headerlink" title="深度定制路径"></a>深度定制路径</h3><ol>
+<li><a href="/CICD-Practice/claude-code-guide/02-skills/">Skills 系统</a> - 封装自己的工作流</li>
+<li><a href="/CICD-Practice/claude-code-guide/04-hooks/">Hooks 系统</a> - 实现自动化</li>
+<li><a href="/CICD-Practice/claude-code-guide/05-agents/">Agents 系统</a> - 创建专业代理</li>
+</ol>
+<h3 id="扩展集成路径"><a href="#扩展集成路径" class="headerlink" title="扩展集成路径"></a>扩展集成路径</h3><ol>
+<li><a href="/CICD-Practice/claude-code-guide/07-mcp/">MCP</a> - 连接外部服务</li>
+<li><a href="/CICD-Practice/claude-code-guide/06-tools/">Tools 系统</a> - 理解工具机制</li>
+</ol>
+<hr>
+<h2 id="参考资源"><a href="#参考资源" class="headerlink" title="参考资源"></a>参考资源</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://docs.anthropic.com/en/docs/claude-code">Claude Code 官方文档</a></li>
+<li><a target="_blank" rel="noopener" href="https://modelcontextprotocol.io/">MCP 协议规范</a></li>
+<li><a target="_blank" rel="noopener" href="https://anthropic.com/engineering/equipping-agents-for-the-real-world-with-agent-skills">Anthropic 工程博客 - Agent Skills</a></li>
+</ul>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://nathanhex.github.io/CICD-Practice">老黄</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://nathanhex.github.io/CICD-Practice/claude-code-guide/00-overview/">https://nathanhex.github.io/CICD-Practice/claude-code-guide/00-overview/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://nathanhex.github.io/CICD-Practice" target="_blank">老丶黄的个人博客</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/CICD-Practice/tags/claude-code/">claude-code</a><a class="post-meta__tags" href="/CICD-Practice/tags/AI%E7%BC%96%E7%A8%8B/">AI编程</a><a class="post-meta__tags" href="/CICD-Practice/tags/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7/">开发工具</a></div><div class="post_share"><div class="social-share" data-image="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/CICD-Practice/claude-code-guide/01-rules/" title="Claude Code Rules 系统：持久化的行为约束"><img class="cover" src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="onerror=null;src='/CICD-Practice/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">Claude Code Rules 系统：持久化的行为约束</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/CICD-Practice/claude-code-guide/01-rules/" title="Claude Code Rules 系统：持久化的行为约束"><img class="cover" src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2026-02-05</div><div class="title">Claude Code Rules 系统：持久化的行为约束</div></div></a></div><div><a href="/CICD-Practice/claude-code-guide/03-commands/" title="Claude Code Commands 系统：斜杠命令"><img class="cover" src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2026-02-05</div><div class="title">Claude Code Commands 系统：斜杠命令</div></div></a></div><div><a href="/CICD-Practice/claude-code-guide/04-hooks/" title="Claude Code Hooks 系统：生命周期事件"><img class="cover" src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2026-02-05</div><div class="title">Claude Code Hooks 系统：生命周期事件</div></div></a></div><div><a href="/CICD-Practice/claude-code-guide/02-skills/" title="Claude Code Skills 系统：可复用的指令集"><img class="cover" src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2026-02-05</div><div class="title">Claude Code Skills 系统：可复用的指令集</div></div></a></div><div><a href="/CICD-Practice/claude-code-guide/05-agents/" title="Claude Code Agents 系统：专业化代理"><img class="cover" src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2026-02-05</div><div class="title">Claude Code Agents 系统：专业化代理</div></div></a></div><div><a href="/CICD-Practice/claude-code-guide/07-mcp/" title="Claude Code MCP：Model Context Protocol"><img class="cover" src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2026-02-05</div><div class="title">Claude Code MCP：Model Context Protocol</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="this.onerror=null;this.src='/CICD-Practice/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">老黄</div><div class="author-info__description">天生我材必有用，千金散尽还复来</div></div><div class="card-info-data site-data is-center"><a href="/CICD-Practice/archives/"><div class="headline">文章</div><div class="length-num">15</div></a><a href="/CICD-Practice/tags/"><div class="headline">标签</div><div class="length-num">20</div></a><a href="/CICD-Practice/categories/"><div class="headline">分类</div><div class="length-num">7</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/nathanhex"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content is-expand"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Claude-Code-%E6%9E%B6%E6%9E%84%E4%B8%8E%E7%BB%84%E4%BB%B6%E6%80%BB%E8%A7%88"><span class="toc-number">1.</span> <span class="toc-text">Claude Code 架构与组件总览</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%9B%AE%E5%BD%95"><span class="toc-number">1.1.</span> <span class="toc-text">目录</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0-%E5%85%88%E8%A7%A3%E7%AD%94%E4%B8%80%E4%B8%AA%E7%96%91%E6%83%91%EF%BC%9A%E4%B8%BA%E4%BB%80%E4%B9%88%E9%9C%80%E8%A6%81%E8%BF%99%E4%B9%88%E5%A4%9A%E6%A6%82%E5%BF%B5%EF%BC%9F"><span class="toc-number">1.2.</span> <span class="toc-text">0. 先解答一个疑惑：为什么需要这么多概念？</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#0-1-%E7%B1%BB%E6%AF%94%EF%BC%9A%E4%B8%BA%E4%BB%80%E4%B9%88%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80%E9%9C%80%E8%A6%81%E4%B8%8D%E5%90%8C%E7%9A%84%E7%BB%93%E6%9E%84%EF%BC%9F"><span class="toc-number">1.2.1.</span> <span class="toc-text">0.1 类比：为什么编程语言需要不同的结构？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#0-2-%E6%A0%B8%E5%BF%83%E9%97%AE%E9%A2%98%EF%BC%9AToken-%E7%BB%8F%E6%B5%8E%E5%AD%A6"><span class="toc-number">1.2.2.</span> <span class="toc-text">0.2 核心问题：Token 经济学</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#0-3-%E5%90%84%E7%BB%84%E4%BB%B6%E7%9A%84%E6%9C%AC%E8%B4%A8%E5%8C%BA%E5%88%AB"><span class="toc-number">1.2.3.</span> <span class="toc-text">0.3 各组件的本质区别</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#0-4-%E8%AE%BE%E8%AE%A1%E6%94%B6%E7%9B%8A"><span class="toc-number">1.2.4.</span> <span class="toc-text">0.4 设计收益</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#0-5-%E4%B8%80%E5%9B%BE%E6%80%BB%E7%BB%93"><span class="toc-number">1.2.5.</span> <span class="toc-text">0.5 一图总结</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-Claude-Code-%E6%98%AF%E4%BB%80%E4%B9%88"><span class="toc-number">1.3.</span> <span class="toc-text">1. Claude Code 是什么</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-%E6%A0%B8%E5%BF%83%E7%89%B9%E7%82%B9"><span class="toc-number">1.3.1.</span> <span class="toc-text">1.1 核心特点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-%E4%B8%8E%E4%BC%A0%E7%BB%9F-AI-%E5%8A%A9%E6%89%8B%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="toc-number">1.3.2.</span> <span class="toc-text">1.2 与传统 AI 助手的区别</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E6%95%B4%E4%BD%93%E6%9E%B6%E6%9E%84"><span class="toc-number">1.4.</span> <span class="toc-text">2. 整体架构</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E6%A0%B8%E5%BF%83%E7%BB%84%E4%BB%B6%E5%85%B3%E7%B3%BB"><span class="toc-number">1.5.</span> <span class="toc-text">3. 核心组件关系</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-%E7%BB%84%E4%BB%B6%E9%80%9F%E8%A7%88"><span class="toc-number">1.6.</span> <span class="toc-text">4. 组件速览</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#4-1-Rules%EF%BC%88%E8%A7%84%E5%88%99%EF%BC%89"><span class="toc-number">1.6.1.</span> <span class="toc-text">4.1 Rules（规则）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-2-Skills%EF%BC%88%E6%8A%80%E8%83%BD%EF%BC%89"><span class="toc-number">1.6.2.</span> <span class="toc-text">4.2 Skills（技能）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-3-Commands%EF%BC%88%E5%91%BD%E4%BB%A4%EF%BC%89"><span class="toc-number">1.6.3.</span> <span class="toc-text">4.3 Commands（命令）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-4-Hooks%EF%BC%88%E9%92%A9%E5%AD%90%EF%BC%89"><span class="toc-number">1.6.4.</span> <span class="toc-text">4.4 Hooks（钩子）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-5-Agents%EF%BC%88%E4%BB%A3%E7%90%86%EF%BC%89"><span class="toc-number">1.6.5.</span> <span class="toc-text">4.5 Agents（代理）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-6-Tools%EF%BC%88%E5%B7%A5%E5%85%B7%EF%BC%89"><span class="toc-number">1.6.6.</span> <span class="toc-text">4.6 Tools（工具）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-7-MCP%EF%BC%88Model-Context-Protocol%EF%BC%89"><span class="toc-number">1.6.7.</span> <span class="toc-text">4.7 MCP（Model Context Protocol）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84"><span class="toc-number">1.7.</span> <span class="toc-text">5. 配置文件结构</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-%E9%85%8D%E7%BD%AE%E4%BC%98%E5%85%88%E7%BA%A7"><span class="toc-number">1.8.</span> <span class="toc-text">6. 配置优先级</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7-%E5%85%B8%E5%9E%8B%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B"><span class="toc-number">1.9.</span> <span class="toc-text">7. 典型工作流程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#8-%E4%B8%8B%E4%B8%80%E6%AD%A5"><span class="toc-number">1.10.</span> <span class="toc-text">8. 下一步</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BF%AB%E9%80%9F%E4%B8%8A%E6%89%8B%E8%B7%AF%E5%BE%84"><span class="toc-number">1.10.1.</span> <span class="toc-text">快速上手路径</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B7%B1%E5%BA%A6%E5%AE%9A%E5%88%B6%E8%B7%AF%E5%BE%84"><span class="toc-number">1.10.2.</span> <span class="toc-text">深度定制路径</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%89%A9%E5%B1%95%E9%9B%86%E6%88%90%E8%B7%AF%E5%BE%84"><span class="toc-number">1.10.3.</span> <span class="toc-text">扩展集成路径</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%BA%90"><span class="toc-number">1.11.</span> <span class="toc-text">参考资源</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/CICD-Practice/claude-code-guide/00-overview/" title="Claude Code 架构与组件总览"><img src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="this.onerror=null;this.src='/CICD-Practice/img/404.jpg'" alt="Claude Code 架构与组件总览"/></a><div class="content"><a class="title" href="/CICD-Practice/claude-code-guide/00-overview/" title="Claude Code 架构与组件总览">Claude Code 架构与组件总览</a><time datetime="2026-02-05T00:00:00.000Z" title="发表于 2026-02-05 08:00:00">2026-02-05</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/CICD-Practice/claude-code-guide/01-rules/" title="Claude Code Rules 系统：持久化的行为约束"><img src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="this.onerror=null;this.src='/CICD-Practice/img/404.jpg'" alt="Claude Code Rules 系统：持久化的行为约束"/></a><div class="content"><a class="title" href="/CICD-Practice/claude-code-guide/01-rules/" title="Claude Code Rules 系统：持久化的行为约束">Claude Code Rules 系统：持久化的行为约束</a><time datetime="2026-02-04T23:00:00.000Z" title="发表于 2026-02-05 07:00:00">2026-02-05</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/CICD-Practice/claude-code-guide/02-skills/" title="Claude Code Skills 系统：可复用的指令集"><img src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="this.onerror=null;this.src='/CICD-Practice/img/404.jpg'" alt="Claude Code Skills 系统：可复用的指令集"/></a><div class="content"><a class="title" href="/CICD-Practice/claude-code-guide/02-skills/" title="Claude Code Skills 系统：可复用的指令集">Claude Code Skills 系统：可复用的指令集</a><time datetime="2026-02-04T22:00:00.000Z" title="发表于 2026-02-05 06:00:00">2026-02-05</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/CICD-Practice/claude-code-guide/03-commands/" title="Claude Code Commands 系统：斜杠命令"><img src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="this.onerror=null;this.src='/CICD-Practice/img/404.jpg'" alt="Claude Code Commands 系统：斜杠命令"/></a><div class="content"><a class="title" href="/CICD-Practice/claude-code-guide/03-commands/" title="Claude Code Commands 系统：斜杠命令">Claude Code Commands 系统：斜杠命令</a><time datetime="2026-02-04T21:00:00.000Z" title="发表于 2026-02-05 05:00:00">2026-02-05</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/CICD-Practice/claude-code-guide/04-hooks/" title="Claude Code Hooks 系统：生命周期事件"><img src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="this.onerror=null;this.src='/CICD-Practice/img/404.jpg'" alt="Claude Code Hooks 系统：生命周期事件"/></a><div class="content"><a class="title" href="/CICD-Practice/claude-code-guide/04-hooks/" title="Claude Code Hooks 系统：生命周期事件">Claude Code Hooks 系统：生命周期事件</a><time datetime="2026-02-04T20:00:00.000Z" title="发表于 2026-02-05 04:00:00">2026-02-05</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2026 By 老黄</div><div class="footer_custom_text">欢迎来到老黄的<a href="https://nathanhex.github.io/CICD-Practice/">博客</a>!</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/CICD-Practice/js/utils.js"></script><script src="/CICD-Practice/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"><script>(() => {
+  const $mermaid = document.querySelectorAll('#article-container .mermaid-wrap')
+  if ($mermaid.length === 0) return
+  const runMermaid = () => {
+    window.loadMermaid = true
+    const theme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'default'
+
+    Array.from($mermaid).forEach((item, index) => {
+      const mermaidSrc = item.firstElementChild
+      const mermaidThemeConfig = '%%{init:{ \'theme\':\'' + theme + '\'}}%%\n'
+      const mermaidID = 'mermaid-' + index
+      const mermaidDefinition = mermaidThemeConfig + mermaidSrc.textContent
+
+      const renderFn = mermaid.render(mermaidID, mermaidDefinition)
+
+      const renderV10 = () => {
+        renderFn.then(({svg}) => {
+          mermaidSrc.insertAdjacentHTML('afterend', svg)
+        })
+      }
+
+      const renderV9 = svg => {
+        mermaidSrc.insertAdjacentHTML('afterend', svg)
+      }
+
+      typeof renderFn === 'string' ? renderV9(renderFn) : renderV10()
+    })
+  }
+
+  const loadMermaid = () => {
+    window.loadMermaid ? runMermaid() : getScript('https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js').then(runMermaid)
+  }
+
+  btf.addGlobalFn('themeChange', runMermaid, 'mermaid')
+
+  window.pjax ? loadMermaid() : document.addEventListener('DOMContentLoaded', loadMermaid)
+})()</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

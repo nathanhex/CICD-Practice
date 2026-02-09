@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="[&quot;zh-CN&quot;,&quot;en&quot;,&quot;default&quot;]" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"><title>老丶黄的个人博客 - hello word</title><meta name="author" content="老黄"><meta name="copyright" content="老黄"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="天生我材必有用，千金散尽还复来">
+<!DOCTYPE html><html lang="[&quot;zh-CN&quot;,&quot;en&quot;,&quot;default&quot;]" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>老丶黄的个人博客 - hello word</title><meta name="author" content="老黄"><meta name="copyright" content="老黄"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="天生我材必有用，千金散尽还复来">
 <meta property="og:type" content="website">
 <meta property="og:title" content="老丶黄的个人博客">
 <meta property="og:url" content="https://nathanhex.github.io/CICD-Practice/index.html">
@@ -11,13 +11,13 @@
 <meta property="article:tag" content="cicd">
 <meta property="article:tag" content="持续交付">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png"><link rel="shortcut icon" href="/CICD-Practice/img/favicon.png"><link rel="canonical" href="https://nathanhex.github.io/CICD-Practice/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/CICD-Practice/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+<meta name="twitter:image" content="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png"><link rel="shortcut icon" href="/CICD-Practice/img/favicon.png"><link rel="canonical" href="https://nathanhex.github.io/CICD-Practice/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/CICD-Practice/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
   root: '/CICD-Practice/',
   algolia: undefined,
   localSearch: undefined,
   translate: undefined,
   noticeOutdate: undefined,
-  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
   copy: {
     success: '复制成功',
     error: '复制错误',
@@ -28,7 +28,7 @@
     post: false
   },
   runtime: '',
-  date_suffix: {
+  dateSuffix: {
     just: '刚刚',
     min: '分钟前',
     hour: '小时前',
@@ -38,11 +38,9 @@
   copyright: {"limitCount":50,"languages":{"author":"作者: 老黄","link":"链接: ","source":"来源: 老丶黄的个人博客","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。"}},
   lightbox: 'fancybox',
   Snackbar: undefined,
-  source: {
-    justifiedGallery: {
-      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
-      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
-    }
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
   },
   isPhotoFigcaption: false,
   islazyload: false,
@@ -50,86 +48,86 @@
   percent: {
     toc: true,
     rightside: false,
-  }
+  },
+  autoDarkmode: false
 }</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
   title: '老丶黄的个人博客',
   isPost: false,
   isHome: true,
   isHighlightShrink: false,
   isToc: false,
-  postUpdate: '2024-03-30 23:29:29'
-}</script><noscript><style type="text/css">
-  #nav {
-    opacity: 1
-  }
-  .justified-gallery img {
-    opacity: 1
-  }
-
-  #recent-posts time,
-  #post-meta time {
-    display: inline !important
-  }
-</style></noscript><script>(win=>{
-    win.saveToLocal = {
-      set: function setWithExpiry(key, value, ttl) {
-        if (ttl === 0) return
-        const now = new Date()
-        const expiryDay = ttl * 86400000
-        const item = {
-          value: value,
-          expiry: now.getTime() + expiryDay,
+  postUpdate: '2026-02-09 08:52:11'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
         }
-        localStorage.setItem(key, JSON.stringify(item))
-      },
-
-      get: function getWithExpiry(key) {
-        const itemStr = localStorage.getItem(key)
-
-        if (!itemStr) {
-          return undefined
-        }
-        const item = JSON.parse(itemStr)
-        const now = new Date()
-
-        if (now.getTime() > item.expiry) {
-          localStorage.removeItem(key)
-          return undefined
-        }
-        return item.value
       }
-    }
-  
-    win.getScript = url => new Promise((resolve, reject) => {
-      const script = document.createElement('script')
-      script.src = url
-      script.async = true
-      script.onerror = reject
-      script.onload = script.onreadystatechange = function() {
-        const loadState = this.readyState
-        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
-        script.onload = script.onreadystatechange = null
-        resolve()
-      }
-      document.head.appendChild(script)
-    })
-  
-    win.getCSS = url => new Promise((resolve, reject) => {
-      const link = document.createElement('link')
-      link.rel = 'stylesheet'
-      link.href = url
-      link.onload = () => resolve()
-      link.onerror = () => reject()
-      document.head.appendChild(link)
-    })
-  
-      win.activateDarkMode = function () {
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
         document.documentElement.setAttribute('data-theme', 'dark')
         if (document.querySelector('meta[name="theme-color"]') !== null) {
           document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
         }
       }
-      win.activateLightMode = function () {
+      win.activateLightMode = () => {
         document.documentElement.setAttribute('data-theme', 'light')
         if (document.querySelector('meta[name="theme-color"]') !== null) {
           document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
@@ -137,9 +135,9 @@
       }
       const t = saveToLocal.get('theme')
     
-          if (t === 'dark') activateDarkMode()
-          else if (t === 'light') activateLightMode()
-        
+        if (t === 'dark') activateDarkMode()
+        else if (t === 'light') activateLightMode()
+      
       const asideStatus = saveToLocal.get('aside-status')
       if (asideStatus !== undefined) {
         if (asideStatus === 'hide') {
@@ -149,58 +147,354 @@
         }
       }
     
-    const detectApple = () => {
-      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
-        document.documentElement.classList.add('apple')
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
       }
-    }
-    detectApple()
-    })(window)</script><meta name="generator" content="Hexo 6.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/CICD-Practice/archives/"><div class="headline">文章</div><div class="length-num">7</div></a><a href="/CICD-Practice/tags/"><div class="headline">标签</div><div class="length-num">15</div></a><a href="/CICD-Practice/categories/"><div class="headline">分类</div><div class="length-num">5</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/CICD-Practice/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/CICD-Practice/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/CICD-Practice/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/CICD-Practice/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div></div></div></div><div class="page" id="body-wrap"><header class="full_page" id="page-header" style="background-image: url('/CICD-Practice/images/main-logo.jpg')"><nav id="nav"><span id="blog-info"><a href="/CICD-Practice/" title="老丶黄的个人博客"><img class="site-icon" src="/CICD-Practice/images/main-logo.jpg"/><span class="site-name">老丶黄的个人博客</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/CICD-Practice/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/CICD-Practice/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/CICD-Practice/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/CICD-Practice/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="site-info"><h1 id="site-title">老丶黄的个人博客</h1><div id="site-subtitle"><span id="subtitle"></span></div></div><div id="scroll-down"><i class="fas fa-angle-down scroll-down-effects"></i></div></header><main class="layout" id="content-inner"><div class="recent-posts" id="recent-posts"><div class="recent-post-item"><div class="post_cover left"><a href="/CICD-Practice/2024/03/30/stt/" title="利用openai开源语音识别模型whipser，自建stt服务，替代讯飞和百度的语音转文字"><img class="post-bg" src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="this.onerror=null;this.src='/CICD-Practice/img/404.jpg'" alt="利用openai开源语音识别模型whipser，自建stt服务，替代讯飞和百度的语音转文字"></a></div><div class="recent-post-info"><a class="article-title" href="/CICD-Practice/2024/03/30/stt/" title="利用openai开源语音识别模型whipser，自建stt服务，替代讯飞和百度的语音转文字">利用openai开源语音识别模型whipser，自建stt服务，替代讯飞和百度的语音转文字</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2024-03-29T16:00:00.000Z" title="发表于 2024-03-30 00:00:00">2024-03-30</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/CICD-Practice/categories/openai%EF%BC%8Cwhipser/">openai，whipser</a></span></div><div class="content">openai whipser开源的语音转文字服务微信公众号下线了语音消息转文字能力，不再返回Recongnition字段。讯飞的语音识别有额度限制，得知Openai开源的whipser语音识别能力非常强悍，于是决定自己搭建语音识别服务。
+      detectApple()
+    })(window)</script><meta name="generator" content="Hexo 6.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/CICD-Practice/archives/"><div class="headline">文章</div><div class="length-num">15</div></a><a href="/CICD-Practice/tags/"><div class="headline">标签</div><div class="length-num">20</div></a><a href="/CICD-Practice/categories/"><div class="headline">分类</div><div class="length-num">7</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/CICD-Practice/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/CICD-Practice/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/CICD-Practice/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/CICD-Practice/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div></div></div></div><div class="page" id="body-wrap"><header class="full_page" id="page-header" style="background-image: url('/CICD-Practice/images/main-logo.jpg')"><nav id="nav"><span id="blog-info"><a href="/CICD-Practice/" title="老丶黄的个人博客"><img class="site-icon" src="/CICD-Practice/images/main-logo.jpg"/><span class="site-name">老丶黄的个人博客</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/CICD-Practice/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/CICD-Practice/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/CICD-Practice/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/CICD-Practice/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="site-info"><h1 id="site-title">老丶黄的个人博客</h1><div id="site-subtitle"><span id="subtitle"></span></div></div><div id="scroll-down"><i class="fas fa-angle-down scroll-down-effects"></i></div></header><main class="layout" id="content-inner"><div class="recent-posts" id="recent-posts"><div class="recent-post-item"><div class="post_cover left"><a href="/CICD-Practice/claude-code-guide/00-overview/" title="Claude Code 架构与组件总览"><img class="post-bg" src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="this.onerror=null;this.src='/CICD-Practice/img/404.jpg'" alt="Claude Code 架构与组件总览"></a></div><div class="recent-post-info"><a class="article-title" href="/CICD-Practice/claude-code-guide/00-overview/" title="Claude Code 架构与组件总览">Claude Code 架构与组件总览</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2026-02-05T00:00:00.000Z" title="发表于 2026-02-05 08:00:00">2026-02-05</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/CICD-Practice/categories/AI/">AI</a><i class="fas fa-angle-right article-meta-link"></i><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/CICD-Practice/categories/AI/Claude-Code/">Claude Code</a></span></div><div class="content">Claude Code 架构与组件总览
+本系列文档面向有经验的开发者，帮助你理解 Claude Code 的核心架构，掌握各组件的原理与使用方法，具备二次开发能力。
+
+目录
+架构与组件总览 - 本文
+Rules 系统 - 持久化的行为约束
+Skills 系统 - 可复用的指令集
+Commands 系统 - 斜杠命令
+Hooks 系统 - 生命周期事件
+Agents 系统 - 专业化代理
+Tools 系统 - Claude 可调用的能力
+MCP - Model Context Protocol
+
+
+0. 先解答一个疑惑：为什么需要这么多概念？
+“Rules、Skills、Commands、Agents 本质上不都是提示词吗？为什么要搞这么复杂？”
+
+从技术本质上看，这些组件最终都会变成文本，注入到 Claude 的上下文（Context）中。它们确实都是”提示词工程”（Prompt Engineering）的产物。
+但是，这恰恰是精心设计的结果，而非过度工程。让我们用软件工程的视角来理解：
+0.1 类比：为什么编程语言需要不同的结构？想象一下，如果一门编程语言只有”代码”这一个概念，没有 ...</div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/CICD-Practice/claude-code-guide/01-rules/" title="Claude Code Rules 系统：持久化的行为约束"><img class="post-bg" src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="this.onerror=null;this.src='/CICD-Practice/img/404.jpg'" alt="Claude Code Rules 系统：持久化的行为约束"></a></div><div class="recent-post-info"><a class="article-title" href="/CICD-Practice/claude-code-guide/01-rules/" title="Claude Code Rules 系统：持久化的行为约束">Claude Code Rules 系统：持久化的行为约束</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2026-02-04T23:00:00.000Z" title="发表于 2026-02-05 07:00:00">2026-02-05</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/CICD-Practice/categories/AI/">AI</a><i class="fas fa-angle-right article-meta-link"></i><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/CICD-Practice/categories/AI/Claude-Code/">Claude Code</a></span></div><div class="content">Rules 系统：持久化的行为约束
+Rules 是 Claude Code 最基础也最重要的配置机制。通过 Rules，你可以定义项目的”宪法”——Claude 在每次对话中都会遵循的行为准则。
+
+
+1. 概述1.1 什么是 RulesRules（规则）是一组持久化的指令，它们会被自动注入到每次对话的系统提示（System Prompt）中，让 Claude 在整个会话期间始终遵循这些约束。
+1.2 Rules 的作用
+
+
+场景
+没有 Rules
+有 Rules
+
+
+
+每次对话
+需要重复说明技术栈、规范
+Claude 自动了解项目背景
+
+
+代码风格
+可能生成不符合规范的代码
+始终遵循团队约定
+
+
+错误处理
+可能忽略项目特有的坑
+会主动避开已知问题
+
+
+1.3 Rules vs Skillsgraph LR
+    subgraph Rules
+        R1[始终生效]
+        R2[注入系统提示]
+        R3[定义"是什么"]
+    end
+    
+    subgraph Skills
+        S1[按需加载]
+        S2[用户或模型触 ...</div></div></div><div class="recent-post-item"><div class="post_cover left"><a href="/CICD-Practice/claude-code-guide/02-skills/" title="Claude Code Skills 系统：可复用的指令集"><img class="post-bg" src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="this.onerror=null;this.src='/CICD-Practice/img/404.jpg'" alt="Claude Code Skills 系统：可复用的指令集"></a></div><div class="recent-post-info"><a class="article-title" href="/CICD-Practice/claude-code-guide/02-skills/" title="Claude Code Skills 系统：可复用的指令集">Claude Code Skills 系统：可复用的指令集</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2026-02-04T22:00:00.000Z" title="发表于 2026-02-05 06:00:00">2026-02-05</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/CICD-Practice/categories/AI/">AI</a><i class="fas fa-angle-right article-meta-link"></i><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/CICD-Practice/categories/AI/Claude-Code/">Claude Code</a></span></div><div class="content">Skills 系统：可复用的指令集
+Skills 是 Claude Code 最强大的扩展机制，它允许你将领域专业知识封装成可复用、可组合的”技能包”。
+
+目录
+什么是 Skills
+核心原理
+目录结构
+SKILL.md 详解
+技能发现与加载
+高级特性
+实战案例
+最佳实践
+常见问题
+
+
+1. 什么是 Skills1.1 定义Skills（技能）是 组织化的指令文件夹，包含 SKILL.md 主文件和可选的支持文件（脚本、模板、示例等）。它让 Claude 能够执行特定领域的专业任务。
+1.2 与其他组件的区别
+
+
+组件
+作用
+加载时机
+典型大小
+
+
+
+Rules
+定义行为边界
+每次会话开始自动加载
+小（&lt; 1KB）
+
+
+Skills
+封装专业知识
+按需加载（渐进式）
+大（1-10KB+）
+
+
+Commands
+触发入口
+用户输入时
+小
+
+
+1.3 设计哲学Skills 的设计遵循 渐进式披露（Progressive Disclosure） 原则：
+graph LR
+    A[技能元数据name + description] -->|匹配相关| B[加载 SKILL.md]
+   ...</div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/CICD-Practice/claude-code-guide/03-commands/" title="Claude Code Commands 系统：斜杠命令"><img class="post-bg" src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="this.onerror=null;this.src='/CICD-Practice/img/404.jpg'" alt="Claude Code Commands 系统：斜杠命令"></a></div><div class="recent-post-info"><a class="article-title" href="/CICD-Practice/claude-code-guide/03-commands/" title="Claude Code Commands 系统：斜杠命令">Claude Code Commands 系统：斜杠命令</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2026-02-04T21:00:00.000Z" title="发表于 2026-02-05 05:00:00">2026-02-05</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/CICD-Practice/categories/AI/">AI</a><i class="fas fa-angle-right article-meta-link"></i><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/CICD-Practice/categories/AI/Claude-Code/">Claude Code</a></span></div><div class="content">Commands 系统：斜杠命令
+Commands（命令）是 Claude Code 的快捷入口，通过简单的 /command 语法快速触发特定功能。
+
+目录
+什么是 Commands
+内置命令
+自定义命令
+Commands 与 Skills 的关系
+高级用法
+实战案例
+最佳实践
+常见问题
+
+
+1. 什么是 Commands1.1 定义Commands 是以 / 开头的快捷指令，类似于 Slack 或 Discord 的斜杠命令。它们提供了一种快速、可预测的方式来触发 Claude Code 的特定功能。
+1.2 命令类型graph TB
+    Commands[Commands 命令系统]
+    Commands --> Built[内置命令]
+    Commands --> Custom[自定义命令]
+    
+    Built --> Config[/config - 配置]
+    Built --> Init[/init - 初始化]
+    Built --> Help[/help - 帮助]
+    Built --> Clear[/clear - 清除]
+    ...</div></div></div><div class="recent-post-item"><div class="post_cover left"><a href="/CICD-Practice/claude-code-guide/04-hooks/" title="Claude Code Hooks 系统：生命周期事件"><img class="post-bg" src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="this.onerror=null;this.src='/CICD-Practice/img/404.jpg'" alt="Claude Code Hooks 系统：生命周期事件"></a></div><div class="recent-post-info"><a class="article-title" href="/CICD-Practice/claude-code-guide/04-hooks/" title="Claude Code Hooks 系统：生命周期事件">Claude Code Hooks 系统：生命周期事件</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2026-02-04T20:00:00.000Z" title="发表于 2026-02-05 04:00:00">2026-02-05</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/CICD-Practice/categories/AI/">AI</a><i class="fas fa-angle-right article-meta-link"></i><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/CICD-Practice/categories/AI/Claude-Code/">Claude Code</a></span></div><div class="content">Hooks 系统：生命周期事件
+Hooks（钩子）是 Claude Code 的自动化引擎，让你能在特定事件发生时自动执行脚本，实现工作流自动化。
+
+目录
+什么是 Hooks
+生命周期事件
+配置详解
+Matcher 模式
+Hook 脚本编写
+高级特性
+实战案例
+最佳实践
+常见问题
+
+
+1. 什么是 Hooks1.1 定义Hooks 是 事件驱动的自动化机制，允许你在 Claude Code 的特定生命周期事件发生时执行自定义脚本或命令。
+1.2 核心价值
+
+
+场景
+无 Hooks
+有 Hooks
+
+
+
+代码格式化
+每次手动运行 prettier
+文件保存后自动格式化
+
+
+安全检查
+容易遗忘
+每次修改自动检查
+
+
+上下文注入
+手动复制粘贴
+会话启动自动注入
+
+
+权限控制
+Claude 可能执行危险操作
+自动拦截并确认
+
+
+1.3 工作原理sequenceDiagram
+    participant U as 用户/Claude
+    participant CC as Claude Code
+    participant HM as Hook Manager
+    partici ...</div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/CICD-Practice/claude-code-guide/05-agents/" title="Claude Code Agents 系统：专业化代理"><img class="post-bg" src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="this.onerror=null;this.src='/CICD-Practice/img/404.jpg'" alt="Claude Code Agents 系统：专业化代理"></a></div><div class="recent-post-info"><a class="article-title" href="/CICD-Practice/claude-code-guide/05-agents/" title="Claude Code Agents 系统：专业化代理">Claude Code Agents 系统：专业化代理</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2026-02-04T19:00:00.000Z" title="发表于 2026-02-05 03:00:00">2026-02-05</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/CICD-Practice/categories/AI/">AI</a><i class="fas fa-angle-right article-meta-link"></i><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/CICD-Practice/categories/AI/Claude-Code/">Claude Code</a></span></div><div class="content">Agents 系统：专业化代理
+Agents（代理）是 Claude Code 的分身能力，允许你创建专注于特定任务的独立 Claude 实例，实现并行处理和专业化分工。
+
+目录
+什么是 Agents
+代理类型
+代理配置
+Task 工具详解
+代理通信机制
+高级特性
+实战案例
+最佳实践
+常见问题
+
+
+1. 什么是 Agents1.1 定义Agents（代理）是 独立运行的 Claude 实例，拥有自己的上下文和工具访问权限，可以执行特定领域的任务。
+1.2 为什么需要代理
+
+
+场景
+无代理
+有代理
+
+
+
+多任务处理
+顺序执行，效率低
+并行执行，速度快
+
+
+上下文隔离
+所有任务共享上下文，容易混乱
+每个任务独立上下文，清晰
+
+
+专业分工
+通用提示，质量不稳定
+专业提示，质量有保障
+
+
+错误隔离
+一个任务失败影响全局
+失败仅影响单个代理
+
+
+1.3 核心概念graph TB
+    subgraph "主代理 (Main Agent)"
+        MA[Claude Code 主实例]
+    end
+    
+    subgraph "子代理 (Subagents)"
+       ...</div></div></div><div class="recent-post-item"><div class="post_cover left"><a href="/CICD-Practice/claude-code-guide/06-tools/" title="Claude Code Tools 系统：Claude 可调用的能力"><img class="post-bg" src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="this.onerror=null;this.src='/CICD-Practice/img/404.jpg'" alt="Claude Code Tools 系统：Claude 可调用的能力"></a></div><div class="recent-post-info"><a class="article-title" href="/CICD-Practice/claude-code-guide/06-tools/" title="Claude Code Tools 系统：Claude 可调用的能力">Claude Code Tools 系统：Claude 可调用的能力</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2026-02-04T18:00:00.000Z" title="发表于 2026-02-05 02:00:00">2026-02-05</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/CICD-Practice/categories/AI/">AI</a><i class="fas fa-angle-right article-meta-link"></i><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/CICD-Practice/categories/AI/Claude-Code/">Claude Code</a></span></div><div class="content">Tools 系统：Claude 可调用的能力
+Tools（工具）是 Claude Code 与外部世界交互的桥梁，让 Claude 能够读写文件、执行命令、搜索代码，真正成为一个有行动能力的助手。
+
+目录
+什么是 Tools
+工具调用机制
+内置工具详解
+工具组合模式
+权限与安全
+高级特性
+实战案例
+最佳实践
+常见问题
+
+
+1. 什么是 Tools1.1 定义Tools 是 Claude 可以调用的函数，每个工具封装了一个特定的能力（如读取文件、执行命令）。通过工具，Claude 从”只能对话”变成”能够行动”。
+1.2 工具 vs 普通函数
+
+
+特性
+普通函数
+Claude Tools
+
+
+
+调用者
+代码
+AI 模型
+
+
+参数
+编译时确定
+运行时推断
+
+
+描述
+可选
+必需（供 AI 理解）
+
+
+权限
+代码控制
+用户授权
+
+
+1.3 工具分类graph TB
+    Tools[Claude Code Tools]
+    
+    Tools --> FileOps[文件操作]
+    Tools --> Search[搜索工具]
+    Tools --> Exec[执行工具]
+   ...</div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/CICD-Practice/claude-code-guide/07-mcp/" title="Claude Code MCP：Model Context Protocol"><img class="post-bg" src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="this.onerror=null;this.src='/CICD-Practice/img/404.jpg'" alt="Claude Code MCP：Model Context Protocol"></a></div><div class="recent-post-info"><a class="article-title" href="/CICD-Practice/claude-code-guide/07-mcp/" title="Claude Code MCP：Model Context Protocol">Claude Code MCP：Model Context Protocol</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2026-02-04T17:00:00.000Z" title="发表于 2026-02-05 01:00:00">2026-02-05</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/CICD-Practice/categories/AI/">AI</a><i class="fas fa-angle-right article-meta-link"></i><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/CICD-Practice/categories/AI/Claude-Code/">Claude Code</a></span></div><div class="content">MCP：Model Context Protocol
+MCP（Model Context Protocol）是连接 Claude Code 与外部世界的标准协议，让你能够无限扩展 Claude 的能力边界。
+
+目录
+什么是 MCP
+核心概念
+MCP 服务器类型
+配置与安装
+常用 MCP 服务器
+开发自定义 MCP 服务器
+实战案例
+最佳实践
+常见问题
+
+
+1. 什么是 MCP1.1 定义MCP（Model Context Protocol）是 Anthropic 开发的 开放协议，用于标准化 AI 模型与外部工具&#x2F;数据源之间的通信。
+1.2 为什么需要 MCP
+
+
+问题
+无 MCP
+有 MCP
+
+
+
+工具集成
+每个工具单独开发集成
+统一协议，即插即用
+
+
+跨平台
+每个平台重复开发
+一次开发，多平台使用
+
+
+数据访问
+硬编码数据源
+动态发现和连接
+
+
+安全性
+各自实现
+协议层统一安全机制
+
+
+1.3 MCP 生态系统graph TB
+    subgraph "AI 应用"
+        CC[Claude Code]
+        CD[Claude Desktop]
+  ...</div></div></div><div class="recent-post-item"><div class="post_cover left"><a href="/CICD-Practice/2024/03/30/stt/" title="利用openai开源语音识别模型whipser，自建stt服务，替代讯飞和百度的语音转文字"><img class="post-bg" src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="this.onerror=null;this.src='/CICD-Practice/img/404.jpg'" alt="利用openai开源语音识别模型whipser，自建stt服务，替代讯飞和百度的语音转文字"></a></div><div class="recent-post-info"><a class="article-title" href="/CICD-Practice/2024/03/30/stt/" title="利用openai开源语音识别模型whipser，自建stt服务，替代讯飞和百度的语音转文字">利用openai开源语音识别模型whipser，自建stt服务，替代讯飞和百度的语音转文字</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2024-03-29T16:00:00.000Z" title="发表于 2024-03-30 00:00:00">2024-03-30</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/CICD-Practice/categories/openai%EF%BC%8Cwhipser/">openai，whipser</a></span></div><div class="content">openai whipser开源的语音转文字服务微信公众号下线了语音消息转文字能力，不再返回Recongnition字段。讯飞的语音识别有额度限制，得知Openai开源的whipser语音识别能力非常强悍，于是决定自己搭建语音识别服务。
 服务搭建whipser本身无法直接提供接口给用户使用，github上有个项目jianchang512-stt集成了whipser并提供了http的api接口给用户使用。jianchang512-stt有详细的安装教程，不复杂，但是需要保证网络环境通畅，需要下载的依赖有7-8gb。
 基于jianchang512-stt打了一个docker镜像，包含的base模型，方便docker用户运行stt服务。不想折腾可以直接使用我打的docker镜像运行。大小有7-8g。
 运行默认base模型的stt服务1docker run -d -p 9977:9977 nathanhuang/stt:latest 
 运行openai whisper的small&#x2F;medium&#x2F;large-v3等模型从此网友提供的全部模型下载地址下载模型。
 下载并解压的模型 ...</div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/CICD-Practice/2023/06/25/%E9%9D%A2%E5%90%91ai%E7%BC%96%E7%A8%8B/" title="面向AI编程"><img class="post-bg" src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="this.onerror=null;this.src='/CICD-Practice/img/404.jpg'" alt="面向AI编程"></a></div><div class="recent-post-info"><a class="article-title" href="/CICD-Practice/2023/06/25/%E9%9D%A2%E5%90%91ai%E7%BC%96%E7%A8%8B/" title="面向AI编程">面向AI编程</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2023-06-24T16:00:00.000Z" title="发表于 2023-06-25 00:00:00">2023-06-25</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/CICD-Practice/categories/chatgpt/">chatgpt</a></span></div><div class="content">AI焦虑症openai的chatGPT大流行后，国内一大批国产大模型跟进，让大模型的AI成为2023最火热的技术焦点。于是很多自媒体就开始了夸张的宣传，“你再不快点学习使用chatGPT,就要落伍了，要被淘汰了，要被AI取代了”。“快来报名，只要699，保你精通chatGPT,送账号”。这样的氛围下，假如自己现在的工作还没有用到AI，就感觉自己要被淘汰了，急得像热锅上的蚂蚁。大家似乎患上了一种AI焦虑症，感觉自己要被时代抛弃了。于是赶紧掏出699购买课程，学习使用chatGPT。但是这时候会发现 ，AI并没有他们说的那么高大上。大部分人付费学习后也就是把网上的示例试了一试。并不能在自己的工作中得到帮助。于是又开始焦虑了。
-如何缓解AI焦虑症我们要知道AI确实能提高人类的生产效率，只是它目前还处于初期阶段，智能不足。我个人认为我们已经处在了另一场工业革命的初期，这次工业革命的特点是，实现了将电能转换成了智能，这个特点意味着，它会越来越智能。你现在之所以需要花699学习怎么使用它，不过是因为它还不够智能，但是当他足够智能的时候，就不是你要学习怎么使用它，而是它要学习怎么理解你需求了。也就是 ...</div></div></div><div class="recent-post-item"><div class="post_cover left"><a href="/CICD-Practice/2023/03/05/mstts/" title="基于微软的免费的接近真人效果的TTS java实现"><img class="post-bg" src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="this.onerror=null;this.src='/CICD-Practice/img/404.jpg'" alt="基于微软的免费的接近真人效果的TTS java实现"></a></div><div class="recent-post-info"><a class="article-title" href="/CICD-Practice/2023/03/05/mstts/" title="基于微软的免费的接近真人效果的TTS java实现">基于微软的免费的接近真人效果的TTS java实现</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2023-03-04T16:00:00.000Z" title="发表于 2023-03-05 00:00:00">2023-03-05</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/CICD-Practice/categories/chatgpt/">chatgpt</a></span></div><div class="content">基于微软的免费的接近真人效果的TTS java实现微软的tts语音合成发音接近真人。效果非常好，本仓库基于微软官方的demo实现了免费的tts示例，使用了java语言实现。
-微软官方demo解析微软的语音合成demo使用了websocket连接，一次合成会通过websocket想服务器发起三次请求，服务器通过若干个响应信息返回mp3格式音频
-三次请求内容格式
-第一次请求内容：123456Path: speech.configX-RequestId: 81C8781545B84F5394A3949B28716251X-Timestamp: 2023-03-05T02:44:26.068ZContent-Type: application/json&#123;&quot;context&quot;:&#123;&quot;system&quot;:&#123;&quot;name&quot;:&quot;SpeechSDK&quot;,&quot;version&quot;:&quot;1.19.0&quot;,&quot;build&quot;:&quot;JavaScript&quot ...</div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/CICD-Practice/2023/03/04/chatgpt-demo/" title="openai gpt-3.5-turbo新模型java demo"><img class="post-bg" src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="this.onerror=null;this.src='/CICD-Practice/img/404.jpg'" alt="openai gpt-3.5-turbo新模型java demo"></a></div><div class="recent-post-info"><a class="article-title" href="/CICD-Practice/2023/03/04/chatgpt-demo/" title="openai gpt-3.5-turbo新模型java demo">openai gpt-3.5-turbo新模型java demo</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2023-03-03T16:00:00.000Z" title="发表于 2023-03-04 00:00:00">2023-03-04</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/CICD-Practice/categories/chatgpt/">chatgpt</a></span></div><div class="content">openai gpt-3.5-turbo新模型java demo
-openai 新增了gpt-3.5-turbo模型，该模型可以有chatgpt网页一样的效果，可以记住上下文信息。官方提供了python和nodejs的sdk，我基于java的sdk写了一个demo
-
-代码依赖：123456789101112131415161718192021&lt;dependencies&gt;    &lt;!--    openai的一个开源的java sdk库，git地址是：https://github.com/TheoKanning/openai-java/tree/main     --&gt;    &lt;dependency&gt;        &lt;groupId&gt;com.theokanning.openai-gpt3-java&lt;/groupId&gt;        &lt;artifactId&gt;service&lt;/artifactId&gt;        &lt;version&gt;0.11.0&lt;/version&gt;    &lt;/de ...</div></div></div><div class="recent-post-item"><div class="post_cover left"><a href="/CICD-Practice/2023/02/05/%E5%9F%BA%E4%BA%8Ejenkins+kubernetes%E7%9A%84%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90%E6%B5%81%E6%B0%B4%E7%BA%BF%E6%90%AD%E5%BB%BA/" title="基于jenkins+kubernetes的持续集成流水线搭建"><img class="post-bg" src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="this.onerror=null;this.src='/CICD-Practice/img/404.jpg'" alt="基于jenkins+kubernetes的持续集成流水线搭建"></a></div><div class="recent-post-info"><a class="article-title" href="/CICD-Practice/2023/02/05/%E5%9F%BA%E4%BA%8Ejenkins+kubernetes%E7%9A%84%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90%E6%B5%81%E6%B0%B4%E7%BA%BF%E6%90%AD%E5%BB%BA/" title="基于jenkins+kubernetes的持续集成流水线搭建">基于jenkins+kubernetes的持续集成流水线搭建</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2023-02-04T16:00:00.000Z" title="发表于 2023-02-05 00:00:00">2023-02-05</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/CICD-Practice/categories/CICD/">CICD</a><i class="fas fa-angle-right article-meta-link"></i><a class="article-meta__categories" href="/CICD-Practice/categories/CICD/%E7%B3%BB%E7%BB%9F%E5%B7%A5%E5%85%B7/">系统工具</a></span></div><div class="content">jenkins是什么？Jenkins是一款开源 CICD 软件，用于自动化各种任务，包括构建、测试和部署软件。
-Jenkins 支持各种运行方式，可通过系统包、Docker 或者通过一个独立的 Java 程序。
-why jenkins kubernetes持续构建与发布是我们日常工作中必不可少的一个步骤，jenkins需要的资源有时候单台机器不一定能满足全公司的构建发布需求，所以使用一般需要Jenkins 集群来搭建符合需求的 CI&#x2F;CD 流程，然而传统的 Jenkins Slave 一主多从方式会存在一些痛点:
-痛点1：主 Master 发生单点故障时，整个流程都不可用了；
-痛点2：每个 Slave 的配置环境不一样，来完成不同语言的编译打包等操作，但是这些差异化的配置导致管理起来非常不方便，维护起来也是比较费劲；
-痛点3：资源分配不均衡，有的 Slave 要运行的 job 出现排队等待，而有的 Slave 处于空闲状态；
-痛点4：最后资源有浪费，每台 Slave 可能是实体机或者 VM，当 Slave 处于空闲状态时，也不会完全释放掉资源。
-如何解决传统jenkins 集 ...</div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/CICD-Practice/2023/02/04/nexus-install/" title="nexus安装配置教程"><img class="post-bg" src="/CICD-Practice/images/nexus-install-cover.png" onerror="this.onerror=null;this.src='/CICD-Practice/img/404.jpg'" alt="nexus安装配置教程"></a></div><div class="recent-post-info"><a class="article-title" href="/CICD-Practice/2023/02/04/nexus-install/" title="nexus安装配置教程">nexus安装配置教程</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2023-02-03T16:00:00.000Z" title="发表于 2023-02-04 00:00:00">2023-02-04</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/CICD-Practice/categories/CICD/">CICD</a></span></div><div class="content">安装此教程帮助搭建在kubernetes集群中安装nexus。选择nexus的理由：
-
-轻松管理所有包裹
-存储和分发具有本机包管理器兼容性的组件
-支持 Java&#x2F;Maven、npm、NuGet、PyPI、RubyGems、CocoaPods 等生态系统
-分发打包和容器化的应用程序，例如 Docker、Helm、Yum 和 APT
-与流行的 IDE 和 CI 兼容，例如 Eclipse、IntelliJ、Visual Studio、Jenkins
-
-安装依赖：安装kuberneter集群
-安装nexus主程序12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364656667686970717273747576777879808182838485868788899091929394959697989910010110210310410510610710810911011111211311411511 ...</div></div></div><div class="recent-post-item"><div class="post_cover left"><a href="/CICD-Practice/2023/02/04/not-imagePullSecrets-pull/" title="配置免imagePullSecrets拉取私有仓库镜像"><img class="post-bg" src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="this.onerror=null;this.src='/CICD-Practice/img/404.jpg'" alt="配置免imagePullSecrets拉取私有仓库镜像"></a></div><div class="recent-post-info"><a class="article-title" href="/CICD-Practice/2023/02/04/not-imagePullSecrets-pull/" title="配置免imagePullSecrets拉取私有仓库镜像">配置免imagePullSecrets拉取私有仓库镜像</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2023-02-03T16:00:00.000Z" title="发表于 2023-02-04 00:00:00">2023-02-04</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/CICD-Practice/categories/kubernetes/">kubernetes</a></span></div><div class="content">
-在kubernetes中的pod运行的镜像有时候会存储在企业搭建的私有镜像仓库，拉取这类镜像的时候一般需要登录授权后才能拉取，这时候有两种方式实现：
-
-
-方法一：在deployment或pod中配置imagePullSecrets声明拉取镜像时需要使用的账号密码secret，但是需要每个deployment和pod都要配置该字段，比较繁琐
-
-
-方法二：给namespace下的default serviceaccount添加拉取镜像的账号密码secret，这样整个namespace下的deployment和pod拉取镜像是使用该serviceaccount下的secret去拉取镜像
-
-以下就是方法二的设置方式：
-步骤1：生成拉取docker镜像的用户名密码的secret生成用户名密码base64字符串123#假设用户名是:&quot;admin&quot;，密码是：&quot;123456&quot;,构建&quot;admin:123456&quot;这样的字符串，然后base64编码echo &quot;admin:123456&quot;|base64YWRtaW46MTIzND ...</div></div></div><nav id="pagination"><div class="pagination"><span class="page-number current">1</span></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="this.onerror=null;this.src='/CICD-Practice/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">老黄</div><div class="author-info__description">天生我材必有用，千金散尽还复来</div></div><div class="card-info-data site-data is-center"><a href="/CICD-Practice/archives/"><div class="headline">文章</div><div class="length-num">7</div></a><a href="/CICD-Practice/tags/"><div class="headline">标签</div><div class="length-num">15</div></a><a href="/CICD-Practice/categories/"><div class="headline">分类</div><div class="length-num">5</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/nathanhex"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="sticky_layout"><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/CICD-Practice/2024/03/30/stt/" title="利用openai开源语音识别模型whipser，自建stt服务，替代讯飞和百度的语音转文字"><img src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="this.onerror=null;this.src='/CICD-Practice/img/404.jpg'" alt="利用openai开源语音识别模型whipser，自建stt服务，替代讯飞和百度的语音转文字"/></a><div class="content"><a class="title" href="/CICD-Practice/2024/03/30/stt/" title="利用openai开源语音识别模型whipser，自建stt服务，替代讯飞和百度的语音转文字">利用openai开源语音识别模型whipser，自建stt服务，替代讯飞和百度的语音转文字</a><time datetime="2024-03-29T16:00:00.000Z" title="发表于 2024-03-30 00:00:00">2024-03-30</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/CICD-Practice/2023/06/25/%E9%9D%A2%E5%90%91ai%E7%BC%96%E7%A8%8B/" title="面向AI编程"><img src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="this.onerror=null;this.src='/CICD-Practice/img/404.jpg'" alt="面向AI编程"/></a><div class="content"><a class="title" href="/CICD-Practice/2023/06/25/%E9%9D%A2%E5%90%91ai%E7%BC%96%E7%A8%8B/" title="面向AI编程">面向AI编程</a><time datetime="2023-06-24T16:00:00.000Z" title="发表于 2023-06-25 00:00:00">2023-06-25</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/CICD-Practice/2023/03/05/mstts/" title="基于微软的免费的接近真人效果的TTS java实现"><img src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="this.onerror=null;this.src='/CICD-Practice/img/404.jpg'" alt="基于微软的免费的接近真人效果的TTS java实现"/></a><div class="content"><a class="title" href="/CICD-Practice/2023/03/05/mstts/" title="基于微软的免费的接近真人效果的TTS java实现">基于微软的免费的接近真人效果的TTS java实现</a><time datetime="2023-03-04T16:00:00.000Z" title="发表于 2023-03-05 00:00:00">2023-03-05</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/CICD-Practice/2023/03/04/chatgpt-demo/" title="openai gpt-3.5-turbo新模型java demo"><img src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="this.onerror=null;this.src='/CICD-Practice/img/404.jpg'" alt="openai gpt-3.5-turbo新模型java demo"/></a><div class="content"><a class="title" href="/CICD-Practice/2023/03/04/chatgpt-demo/" title="openai gpt-3.5-turbo新模型java demo">openai gpt-3.5-turbo新模型java demo</a><time datetime="2023-03-03T16:00:00.000Z" title="发表于 2023-03-04 00:00:00">2023-03-04</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/CICD-Practice/2023/02/05/%E5%9F%BA%E4%BA%8Ejenkins+kubernetes%E7%9A%84%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90%E6%B5%81%E6%B0%B4%E7%BA%BF%E6%90%AD%E5%BB%BA/" title="基于jenkins+kubernetes的持续集成流水线搭建"><img src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="this.onerror=null;this.src='/CICD-Practice/img/404.jpg'" alt="基于jenkins+kubernetes的持续集成流水线搭建"/></a><div class="content"><a class="title" href="/CICD-Practice/2023/02/05/%E5%9F%BA%E4%BA%8Ejenkins+kubernetes%E7%9A%84%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90%E6%B5%81%E6%B0%B4%E7%BA%BF%E6%90%AD%E5%BB%BA/" title="基于jenkins+kubernetes的持续集成流水线搭建">基于jenkins+kubernetes的持续集成流水线搭建</a><time datetime="2023-02-04T16:00:00.000Z" title="发表于 2023-02-05 00:00:00">2023-02-05</time></div></div></div></div><div class="card-widget card-categories"><div class="item-headline">
+如何缓解AI焦虑症我们要知道AI确实能提高人类的生产效率，只是它目前还处于初期阶段，智能不足。我个人认为我们已经处在了另一场工业革命的初期，这次工业革命的特点是，实现了将电能转换成了智能，这个特点意味着，它会越来越智能。你现在之所以需要花699学习怎么使用它，不过是因为它还不够智能，但是当他足够智能的时候，就不是你要学习怎么使用它，而是它要学习怎么理解你需求了。也就是 ...</div></div></div><nav id="pagination"><div class="pagination"><span class="page-number current">1</span><a class="page-number" href="/CICD-Practice/page/2/#content-inner">2</a><a class="extend next" rel="next" href="/CICD-Practice/page/2/#content-inner"><i class="fas fa-chevron-right fa-fw"></i></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="this.onerror=null;this.src='/CICD-Practice/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">老黄</div><div class="author-info__description">天生我材必有用，千金散尽还复来</div></div><div class="card-info-data site-data is-center"><a href="/CICD-Practice/archives/"><div class="headline">文章</div><div class="length-num">15</div></a><a href="/CICD-Practice/tags/"><div class="headline">标签</div><div class="length-num">20</div></a><a href="/CICD-Practice/categories/"><div class="headline">分类</div><div class="length-num">7</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/nathanhex"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="sticky_layout"><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/CICD-Practice/claude-code-guide/00-overview/" title="Claude Code 架构与组件总览"><img src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="this.onerror=null;this.src='/CICD-Practice/img/404.jpg'" alt="Claude Code 架构与组件总览"/></a><div class="content"><a class="title" href="/CICD-Practice/claude-code-guide/00-overview/" title="Claude Code 架构与组件总览">Claude Code 架构与组件总览</a><time datetime="2026-02-05T00:00:00.000Z" title="发表于 2026-02-05 08:00:00">2026-02-05</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/CICD-Practice/claude-code-guide/01-rules/" title="Claude Code Rules 系统：持久化的行为约束"><img src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="this.onerror=null;this.src='/CICD-Practice/img/404.jpg'" alt="Claude Code Rules 系统：持久化的行为约束"/></a><div class="content"><a class="title" href="/CICD-Practice/claude-code-guide/01-rules/" title="Claude Code Rules 系统：持久化的行为约束">Claude Code Rules 系统：持久化的行为约束</a><time datetime="2026-02-04T23:00:00.000Z" title="发表于 2026-02-05 07:00:00">2026-02-05</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/CICD-Practice/claude-code-guide/02-skills/" title="Claude Code Skills 系统：可复用的指令集"><img src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="this.onerror=null;this.src='/CICD-Practice/img/404.jpg'" alt="Claude Code Skills 系统：可复用的指令集"/></a><div class="content"><a class="title" href="/CICD-Practice/claude-code-guide/02-skills/" title="Claude Code Skills 系统：可复用的指令集">Claude Code Skills 系统：可复用的指令集</a><time datetime="2026-02-04T22:00:00.000Z" title="发表于 2026-02-05 06:00:00">2026-02-05</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/CICD-Practice/claude-code-guide/03-commands/" title="Claude Code Commands 系统：斜杠命令"><img src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="this.onerror=null;this.src='/CICD-Practice/img/404.jpg'" alt="Claude Code Commands 系统：斜杠命令"/></a><div class="content"><a class="title" href="/CICD-Practice/claude-code-guide/03-commands/" title="Claude Code Commands 系统：斜杠命令">Claude Code Commands 系统：斜杠命令</a><time datetime="2026-02-04T21:00:00.000Z" title="发表于 2026-02-05 05:00:00">2026-02-05</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/CICD-Practice/claude-code-guide/04-hooks/" title="Claude Code Hooks 系统：生命周期事件"><img src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="this.onerror=null;this.src='/CICD-Practice/img/404.jpg'" alt="Claude Code Hooks 系统：生命周期事件"/></a><div class="content"><a class="title" href="/CICD-Practice/claude-code-guide/04-hooks/" title="Claude Code Hooks 系统：生命周期事件">Claude Code Hooks 系统：生命周期事件</a><time datetime="2026-02-04T20:00:00.000Z" title="发表于 2026-02-05 04:00:00">2026-02-05</time></div></div></div></div><div class="card-widget card-categories"><div class="item-headline">
             <i class="fas fa-folder-open"></i>
             <span>分类</span>
             
             </div>
             <ul class="card-category-list" id="aside-cat-list">
-            <li class="card-category-list-item "><a class="card-category-list-link" href="/CICD-Practice/categories/CICD/"><span class="card-category-list-name">CICD</span><span class="card-category-list-count">2</span></a><ul class="card-category-list child"><li class="card-category-list-item "><a class="card-category-list-link" href="/CICD-Practice/categories/CICD/%E7%B3%BB%E7%BB%9F%E5%B7%A5%E5%85%B7/"><span class="card-category-list-name">系统工具</span><span class="card-category-list-count">1</span></a></li></ul></li><li class="card-category-list-item "><a class="card-category-list-link" href="/CICD-Practice/categories/chatgpt/"><span class="card-category-list-name">chatgpt</span><span class="card-category-list-count">3</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/CICD-Practice/categories/kubernetes/"><span class="card-category-list-name">kubernetes</span><span class="card-category-list-count">1</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/CICD-Practice/categories/openai%EF%BC%8Cwhipser/"><span class="card-category-list-name">openai，whipser</span><span class="card-category-list-count">1</span></a></li>
-            </ul></div><div class="card-widget card-webinfo"><div class="item-headline"><i class="fas fa-chart-line"></i><span>网站资讯</span></div><div class="webinfo"><div class="webinfo-item"><div class="item-name">文章数目 :</div><div class="item-count">7</div></div><div class="webinfo-item"><div class="item-name">本站访客数 :</div><div class="item-count" id="busuanzi_value_site_uv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">本站总访问量 :</div><div class="item-count" id="busuanzi_value_site_pv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">最后更新时间 :</div><div class="item-count" id="last-push-date" data-lastPushDate="2024-03-30T15:29:28.740Z"><i class="fa-solid fa-spinner fa-spin"></i></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2024 By 老黄</div><div class="footer_custom_text">欢迎来到老黄的<a href="https://nathanhex.github.io/CICD-Practice/">博客</a>!</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/CICD-Practice/js/utils.js"></script><script src="/CICD-Practice/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.min.js"></script><div class="js-pjax"><script>window.typedJSFn = {
+            <li class="card-category-list-item "><a class="card-category-list-link" href="/CICD-Practice/categories/AI/"><span class="card-category-list-name">AI</span><span class="card-category-list-count">8</span></a><ul class="card-category-list child"><li class="card-category-list-item "><a class="card-category-list-link" href="/CICD-Practice/categories/AI/Claude-Code/"><span class="card-category-list-name">Claude Code</span><span class="card-category-list-count">8</span></a></li></ul></li><li class="card-category-list-item "><a class="card-category-list-link" href="/CICD-Practice/categories/CICD/"><span class="card-category-list-name">CICD</span><span class="card-category-list-count">2</span></a><ul class="card-category-list child"><li class="card-category-list-item "><a class="card-category-list-link" href="/CICD-Practice/categories/CICD/%E7%B3%BB%E7%BB%9F%E5%B7%A5%E5%85%B7/"><span class="card-category-list-name">系统工具</span><span class="card-category-list-count">1</span></a></li></ul></li><li class="card-category-list-item "><a class="card-category-list-link" href="/CICD-Practice/categories/chatgpt/"><span class="card-category-list-name">chatgpt</span><span class="card-category-list-count">3</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/CICD-Practice/categories/kubernetes/"><span class="card-category-list-name">kubernetes</span><span class="card-category-list-count">1</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/CICD-Practice/categories/openai%EF%BC%8Cwhipser/"><span class="card-category-list-name">openai，whipser</span><span class="card-category-list-count">1</span></a></li>
+            </ul></div><div class="card-widget card-webinfo"><div class="item-headline"><i class="fas fa-chart-line"></i><span>网站资讯</span></div><div class="webinfo"><div class="webinfo-item"><div class="item-name">文章数目 :</div><div class="item-count">15</div></div><div class="webinfo-item"><div class="item-name">本站访客数 :</div><div class="item-count" id="busuanzi_value_site_uv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">本站总访问量 :</div><div class="item-count" id="busuanzi_value_site_pv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">最后更新时间 :</div><div class="item-count" id="last-push-date" data-lastPushDate="2026-02-09T00:52:11.420Z"><i class="fa-solid fa-spinner fa-spin"></i></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2026 By 老黄</div><div class="footer_custom_text">欢迎来到老黄的<a href="https://nathanhex.github.io/CICD-Practice/">博客</a>!</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/CICD-Practice/js/utils.js"></script><script src="/CICD-Practice/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"><script>window.typedJSFn = {
   init: (str) => {
     window.typed = new Typed('#subtitle', Object.assign({
       strings: str,
@@ -215,7 +509,7 @@ why jenkins kubernetes持续构建与发布是我们日常工作中必不可少�
       if (typeof Typed === 'function') {
         subtitleType()
       } else {
-        getScript('https://cdn.jsdelivr.net/npm/typed.js/lib/typed.min.js').then(subtitleType)
+        getScript('https://cdn.jsdelivr.net/npm/typed.js/dist/typed.umd.min.js').then(subtitleType)
       }
     } else {
       subtitleType()
@@ -226,7 +520,43 @@ why jenkins kubernetes持续构建与发布是我们日常工作中必不可少�
   if (true) {
     typedJSFn.init(["hello word"])
   } else {
-    document.getElementById("subtitle").innerHTML = 'hello word'
+    document.getElementById("subtitle").textContent = "hello word"
   }
 }
-typedJSFn.run(subtitleType)</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
+typedJSFn.run(subtitleType)</script><script>(() => {
+  const $mermaid = document.querySelectorAll('#article-container .mermaid-wrap')
+  if ($mermaid.length === 0) return
+  const runMermaid = () => {
+    window.loadMermaid = true
+    const theme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'default'
+
+    Array.from($mermaid).forEach((item, index) => {
+      const mermaidSrc = item.firstElementChild
+      const mermaidThemeConfig = '%%{init:{ \'theme\':\'' + theme + '\'}}%%\n'
+      const mermaidID = 'mermaid-' + index
+      const mermaidDefinition = mermaidThemeConfig + mermaidSrc.textContent
+
+      const renderFn = mermaid.render(mermaidID, mermaidDefinition)
+
+      const renderV10 = () => {
+        renderFn.then(({svg}) => {
+          mermaidSrc.insertAdjacentHTML('afterend', svg)
+        })
+      }
+
+      const renderV9 = svg => {
+        mermaidSrc.insertAdjacentHTML('afterend', svg)
+      }
+
+      typeof renderFn === 'string' ? renderV9(renderFn) : renderV10()
+    })
+  }
+
+  const loadMermaid = () => {
+    window.loadMermaid ? runMermaid() : getScript('https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js').then(runMermaid)
+  }
+
+  btf.addGlobalFn('themeChange', runMermaid, 'mermaid')
+
+  window.pjax ? loadMermaid() : document.addEventListener('DOMContentLoaded', loadMermaid)
+})()</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

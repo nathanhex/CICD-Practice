@@ -108,6 +108,25 @@ ignore:
 ## Themes: https://hexo.io/themes/
 theme: butterfly
 
+# Mermaid diagram configuration
+mermaid_diagrams:
+  enable: true
+  theme:
+    - default
+    - forest
+    - dark
+    - neutral
+  # 输出格式配置 - 这对于 Butterfly 主题很重要
+  container:
+    tag: div
+    class: mermaid-wrap
+    # 将原始代码放在隐藏的 pre 标签中
+    inner:
+      tag: pre
+      class: mermaid-src
+      attrs:
+        hidden: true
+
 # Deployment
 ## Docs: https://hexo.io/docs/one-command-deployment
 deploy:

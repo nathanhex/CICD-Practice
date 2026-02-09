@@ -1,0 +1,537 @@
+<!DOCTYPE html><html lang="[&quot;zh-CN&quot;,&quot;en&quot;,&quot;default&quot;]" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>Claude Code Skills 系统：可复用的指令集 | 老丶黄的个人博客</title><meta name="author" content="老黄"><meta name="copyright" content="老黄"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="Skills 系统：可复用的指令集 Skills 是 Claude Code 最强大的扩展机制，它允许你将领域专业知识封装成可复用、可组合的”技能包”。  目录 什么是 Skills 核心原理 目录结构 SKILL.md 详解 技能发现与加载 高级特性 实战案例 最佳实践 常见问题   1. 什么是 Skills1.1 定义Skills（技能）是 组织化的指令文件夹，包含 SKILL.md 主文件">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Claude Code Skills 系统：可复用的指令集">
+<meta property="og:url" content="https://nathanhex.github.io/CICD-Practice/claude-code-guide/02-skills/index.html">
+<meta property="og:site_name" content="老丶黄的个人博客">
+<meta property="og:description" content="Skills 系统：可复用的指令集 Skills 是 Claude Code 最强大的扩展机制，它允许你将领域专业知识封装成可复用、可组合的”技能包”。  目录 什么是 Skills 核心原理 目录结构 SKILL.md 详解 技能发现与加载 高级特性 实战案例 最佳实践 常见问题   1. 什么是 Skills1.1 定义Skills（技能）是 组织化的指令文件夹，包含 SKILL.md 主文件">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg">
+<meta property="article:published_time" content="2026-02-04T22:00:00.000Z">
+<meta property="article:modified_time" content="2026-02-05T08:51:24.744Z">
+<meta property="article:author" content="老黄">
+<meta property="article:tag" content="claude-code">
+<meta property="article:tag" content="AI编程">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg"><link rel="shortcut icon" href="/CICD-Practice/img/favicon.png"><link rel="canonical" href="https://nathanhex.github.io/CICD-Practice/claude-code-guide/02-skills/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/CICD-Practice/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/CICD-Practice/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: {"limitCount":50,"languages":{"author":"作者: 老黄","link":"链接: ","source":"来源: 老丶黄的个人博客","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。"}},
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Claude Code Skills 系统：可复用的指令集',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2026-02-05 16:51:24'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+        if (t === 'dark') activateDarkMode()
+        else if (t === 'light') activateLightMode()
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><meta name="generator" content="Hexo 6.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/CICD-Practice/archives/"><div class="headline">文章</div><div class="length-num">15</div></a><a href="/CICD-Practice/tags/"><div class="headline">标签</div><div class="length-num">20</div></a><a href="/CICD-Practice/categories/"><div class="headline">分类</div><div class="length-num">7</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/CICD-Practice/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/CICD-Practice/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/CICD-Practice/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/CICD-Practice/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg')"><nav id="nav"><span id="blog-info"><a href="/CICD-Practice/" title="老丶黄的个人博客"><img class="site-icon" src="/CICD-Practice/images/main-logo.jpg"/><span class="site-name">老丶黄的个人博客</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/CICD-Practice/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/CICD-Practice/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/CICD-Practice/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/CICD-Practice/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">Claude Code Skills 系统：可复用的指令集</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2026-02-04T22:00:00.000Z" title="发表于 2026-02-05 06:00:00">2026-02-05</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2026-02-05T08:51:24.744Z" title="更新于 2026-02-05 16:51:24">2026-02-05</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/CICD-Practice/categories/AI/">AI</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/CICD-Practice/categories/AI/Claude-Code/">Claude Code</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="Claude Code Skills 系统：可复用的指令集"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="Skills-系统：可复用的指令集"><a href="#Skills-系统：可复用的指令集" class="headerlink" title="Skills 系统：可复用的指令集"></a>Skills 系统：可复用的指令集</h1><blockquote>
+<p>Skills 是 Claude Code 最强大的扩展机制，它允许你将领域专业知识封装成可复用、可组合的”技能包”。</p>
+</blockquote>
+<h2 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h2><ol>
+<li><a href="#1-%E4%BB%80%E4%B9%88%E6%98%AF-skills">什么是 Skills</a></li>
+<li><a href="#2-%E6%A0%B8%E5%BF%83%E5%8E%9F%E7%90%86">核心原理</a></li>
+<li><a href="#3-%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%84">目录结构</a></li>
+<li><a href="#4-skillmd-%E8%AF%A6%E8%A7%A3">SKILL.md 详解</a></li>
+<li><a href="#5-%E6%8A%80%E8%83%BD%E5%8F%91%E7%8E%B0%E4%B8%8E%E5%8A%A0%E8%BD%BD">技能发现与加载</a></li>
+<li><a href="#6-%E9%AB%98%E7%BA%A7%E7%89%B9%E6%80%A7">高级特性</a></li>
+<li><a href="#7-%E5%AE%9E%E6%88%98%E6%A1%88%E4%BE%8B">实战案例</a></li>
+<li><a href="#8-%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5">最佳实践</a></li>
+<li><a href="#9-%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98">常见问题</a></li>
+</ol>
+<hr>
+<h2 id="1-什么是-Skills"><a href="#1-什么是-Skills" class="headerlink" title="1. 什么是 Skills"></a>1. 什么是 Skills</h2><h3 id="1-1-定义"><a href="#1-1-定义" class="headerlink" title="1.1 定义"></a>1.1 定义</h3><p>Skills（技能）是 <strong>组织化的指令文件夹</strong>，包含 <code>SKILL.md</code> 主文件和可选的支持文件（脚本、模板、示例等）。它让 Claude 能够执行特定领域的专业任务。</p>
+<h3 id="1-2-与其他组件的区别"><a href="#1-2-与其他组件的区别" class="headerlink" title="1.2 与其他组件的区别"></a>1.2 与其他组件的区别</h3><table>
+<thead>
+<tr>
+<th>组件</th>
+<th>作用</th>
+<th>加载时机</th>
+<th>典型大小</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Rules</strong></td>
+<td>定义行为边界</td>
+<td>每次会话开始自动加载</td>
+<td>小（&lt; 1KB）</td>
+</tr>
+<tr>
+<td><strong>Skills</strong></td>
+<td>封装专业知识</td>
+<td>按需加载（渐进式）</td>
+<td>大（1-10KB+）</td>
+</tr>
+<tr>
+<td><strong>Commands</strong></td>
+<td>触发入口</td>
+<td>用户输入时</td>
+<td>小</td>
+</tr>
+</tbody></table>
+<h3 id="1-3-设计哲学"><a href="#1-3-设计哲学" class="headerlink" title="1.3 设计哲学"></a>1.3 设计哲学</h3><p>Skills 的设计遵循 <strong>渐进式披露（Progressive Disclosure）</strong> 原则：</p>
+<div class="mermaid-wrap"><pre class="mermaid-src" hidden>graph LR
+    A[技能元数据<br/>name + description] -->|匹配相关| B[加载 SKILL.md]
+    B -->|需要时| C[加载支持文件]
+    
+    style A fill:#4ecdc4
+    style B fill:#45b7d1
+    style C fill:#96ceb4</pre></div>
+
+<ul>
+<li><strong>第一层</strong>：仅加载名称和描述（几十字节）</li>
+<li><strong>第二层</strong>：匹配后加载完整 SKILL.md（几 KB）</li>
+<li><strong>第三层</strong>：按需加载支持文件（脚本、模板等）</li>
+</ul>
+<p>这种设计让 Claude 能”知道”数百个技能的存在，但只在需要时才消耗 Token。</p>
+<hr>
+<h2 id="2-核心原理"><a href="#2-核心原理" class="headerlink" title="2. 核心原理"></a>2. 核心原理</h2><h3 id="2-1-技能生命周期"><a href="#2-1-技能生命周期" class="headerlink" title="2.1 技能生命周期"></a>2.1 技能生命周期</h3><div class="mermaid-wrap"><pre class="mermaid-src" hidden>sequenceDiagram
+    participant U as 用户
+    participant CC as Claude Code
+    participant SM as Skills Manager
+    participant S as Skill
+    
+    Note over CC,SM: 会话启动阶段
+    CC->>SM: 扫描 skills 目录
+    SM->>SM: 解析所有 SKILL.md 的 frontmatter
+    SM-->>CC: 返回技能索引 [name, description, path]
+    
+    Note over U,S: 使用阶段
+    U->>CC: 提交任务/使用 /skill-name
+    CC->>CC: 根据任务匹配相关技能
+    CC->>SM: 请求加载技能内容
+    SM->>S: 读取 SKILL.md 完整内容
+    S-->>SM: 返回指令
+    SM-->>CC: 注入到上下文
+    CC->>U: 执行任务</pre></div>
+
+<h3 id="2-2-匹配机制"><a href="#2-2-匹配机制" class="headerlink" title="2.2 匹配机制"></a>2.2 匹配机制</h3><p>Claude 通过以下方式判断是否需要某个技能：</p>
+<ol>
+<li><strong>显式调用</strong>：用户使用 <code>/skill-name</code> 命令</li>
+<li><strong>自动匹配</strong>：任务描述与技能的 <code>description</code> 语义相关</li>
+<li><strong>规则触发</strong>：其他技能或规则中引用</li>
+</ol>
+<div class="mermaid-wrap"><pre class="mermaid-src" hidden>flowchart TB
+    Input[用户输入] --> Check{检查技能索引}
+    Check -->|显式 /command| Direct[直接加载]
+    Check -->|语义匹配| Score[计算相关性分数]
+    Score -->|分数 > 阈值| Load[加载技能]
+    Score -->|分数 < 阈值| Skip[跳过]
+    
+    Direct --> Inject[注入上下文]
+    Load --> Inject
+    Inject --> Execute[执行任务]</pre></div>
+
+<hr>
+<h2 id="3-目录结构"><a href="#3-目录结构" class="headerlink" title="3. 目录结构"></a>3. 目录结构</h2><h3 id="3-1-基本结构"><a href="#3-1-基本结构" class="headerlink" title="3.1 基本结构"></a>3.1 基本结构</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">.claude/skills/</span><br><span class="line">├── my-skill/</span><br><span class="line">│   ├── SKILL.md           # 必需：主技能文件</span><br><span class="line">│   ├── template.md        # 可选：模板文件</span><br><span class="line">│   ├── examples/          # 可选：示例目录</span><br><span class="line">│   │   ├── example1.ts</span><br><span class="line">│   │   └── example2.ts</span><br><span class="line">│   └── scripts/           # 可选：辅助脚本</span><br><span class="line">│       └── validate.sh</span><br><span class="line">└── another-skill/</span><br><span class="line">    └── SKILL.md</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-2-文件说明"><a href="#3-2-文件说明" class="headerlink" title="3.2 文件说明"></a>3.2 文件说明</h3><table>
+<thead>
+<tr>
+<th>文件</th>
+<th>必需</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>SKILL.md</code></td>
+<td>✅</td>
+<td>技能的主要指令文件</td>
+</tr>
+<tr>
+<td><code>*.md</code></td>
+<td>❌</td>
+<td>额外的文档&#x2F;模板</td>
+</tr>
+<tr>
+<td><code>*.sh / *.js / *.py</code></td>
+<td>❌</td>
+<td>辅助脚本</td>
+</tr>
+<tr>
+<td><code>examples/</code></td>
+<td>❌</td>
+<td>示例代码&#x2F;配置</td>
+</tr>
+</tbody></table>
+<h3 id="3-3-技能位置"><a href="#3-3-技能位置" class="headerlink" title="3.3 技能位置"></a>3.3 技能位置</h3><p>技能可以存放在多个位置：</p>
+<table>
+<thead>
+<tr>
+<th>位置</th>
+<th>作用域</th>
+<th>示例路径</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>项目级</td>
+<td>当前项目</td>
+<td><code>.claude/skills/</code></td>
+</tr>
+<tr>
+<td>用户级</td>
+<td>所有项目</td>
+<td><code>~/.claude/skills/</code></td>
+</tr>
+<tr>
+<td>Cursor 内置</td>
+<td>Cursor 用户</td>
+<td><code>~/.cursor/skills-cursor/</code></td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="4-SKILL-md-详解"><a href="#4-SKILL-md-详解" class="headerlink" title="4. SKILL.md 详解"></a>4. SKILL.md 详解</h2><h3 id="4-1-基本格式"><a href="#4-1-基本格式" class="headerlink" title="4.1 基本格式"></a>4.1 基本格式</h3><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">---</span><br><span class="line">name: my-skill</span><br><span class="line"><span class="section">description: 一句话描述这个技能做什么</span></span><br><span class="line"><span class="section">---</span></span><br><span class="line"></span><br><span class="line"><span class="section"># 技能标题</span></span><br><span class="line"></span><br><span class="line"><span class="section">## 使用场景</span></span><br><span class="line">描述何时应该使用这个技能...</span><br><span class="line"></span><br><span class="line"><span class="section">## 执行步骤</span></span><br><span class="line"><span class="bullet">1.</span> 第一步</span><br><span class="line"><span class="bullet">2.</span> 第二步</span><br><span class="line">...</span><br><span class="line"></span><br><span class="line"><span class="section">## 注意事项</span></span><br><span class="line"><span class="bullet">-</span> 注意点 1</span><br><span class="line"><span class="bullet">-</span> 注意点 2</span><br></pre></td></tr></table></figure>
+
+<h3 id="4-2-Frontmatter-字段"><a href="#4-2-Frontmatter-字段" class="headerlink" title="4.2 Frontmatter 字段"></a>4.2 Frontmatter 字段</h3><p>Frontmatter 是 SKILL.md 开头的 YAML 元数据块：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="attr">name:</span> <span class="string">code-review</span>              <span class="comment"># 必需：技能名称（用于 /command）</span></span><br><span class="line"><span class="attr">description:</span> <span class="string">执行代码审查</span>      <span class="comment"># 必需：简短描述（用于匹配）</span></span><br><span class="line"><span class="attr">invocation:</span> <span class="string">user</span>               <span class="comment"># 可选：调用方式</span></span><br><span class="line"><span class="attr">tools:</span> [<span class="string">Read</span>, <span class="string">Grep</span>, <span class="string">Shell</span>]     <span class="comment"># 可选：允许使用的工具</span></span><br><span class="line"><span class="meta">---</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="字段详解"><a href="#字段详解" class="headerlink" title="字段详解"></a>字段详解</h4><table>
+<thead>
+<tr>
+<th>字段</th>
+<th>类型</th>
+<th>默认值</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>name</code></td>
+<td>string</td>
+<td>目录名</td>
+<td>技能唯一标识，用于 <code>/name</code> 调用</td>
+</tr>
+<tr>
+<td><code>description</code></td>
+<td>string</td>
+<td>-</td>
+<td>用于自动匹配的描述文本</td>
+</tr>
+<tr>
+<td><code>invocation</code></td>
+<td>string</td>
+<td><code>auto</code></td>
+<td>调用方式：<code>user</code>（仅用户）、<code>auto</code>（自动）、<code>claude</code>（仅 Claude）</td>
+</tr>
+<tr>
+<td><code>tools</code></td>
+<td>string[]</td>
+<td>全部</td>
+<td>限制可使用的工具列表</td>
+</tr>
+<tr>
+<td><code>agents</code></td>
+<td>string[]</td>
+<td>-</td>
+<td>允许使用的子代理</td>
+</tr>
+</tbody></table>
+<h3 id="4-3-指令编写原则"><a href="#4-3-指令编写原则" class="headerlink" title="4.3 指令编写原则"></a>4.3 指令编写原则</h3><p><strong>好的指令</strong>应该是：</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">## ✅ 好的示例</span></span><br><span class="line"></span><br><span class="line"><span class="section">### 审查步骤</span></span><br><span class="line"></span><br><span class="line"><span class="bullet">1.</span> <span class="strong">**检查代码风格**</span></span><br><span class="line"><span class="bullet">   -</span> 运行 <span class="code">`Grep`</span> 搜索 TODO/FIXME 注释</span><br><span class="line"><span class="bullet">   -</span> 检查命名是否符合项目规范</span><br><span class="line"></span><br><span class="line"><span class="bullet">2.</span> <span class="strong">**检查安全问题**</span></span><br><span class="line"><span class="bullet">   -</span> 搜索硬编码的密钥/密码</span><br><span class="line"><span class="bullet">   -</span> 检查 SQL 注入风险</span><br><span class="line"></span><br><span class="line"><span class="bullet">3.</span> <span class="strong">**输出格式**</span></span><br><span class="line">   使用以下格式输出审查结果：</span><br><span class="line">   <span class="code">```</span></span><br><span class="line"><span class="code">   ## 审查结果</span></span><br><span class="line"><span class="code">   - 严重问题: X 个</span></span><br><span class="line"><span class="code">   - 警告: Y 个</span></span><br><span class="line"><span class="code">   - 建议: Z 个</span></span><br><span class="line"><span class="code">   ```</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>避免的写法</strong>：</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">## ❌ 不好的示例</span></span><br><span class="line"></span><br><span class="line">帮我审查代码，找出问题。</span><br><span class="line"></span><br><span class="line">（太模糊，没有具体步骤）</span><br></pre></td></tr></table></figure>
+
+<h3 id="4-4-引用支持文件"><a href="#4-4-引用支持文件" class="headerlink" title="4.4 引用支持文件"></a>4.4 引用支持文件</h3><p>在 SKILL.md 中可以引用同目录下的其他文件：</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">## 模板</span></span><br><span class="line"></span><br><span class="line">代码审查报告请使用 [<span class="string">review-template.md</span>](<span class="link">./review-template.md</span>) 模板格式。</span><br><span class="line"></span><br><span class="line"><span class="section">## 示例</span></span><br><span class="line"></span><br><span class="line">参考 [<span class="string">examples/good-review.md</span>](<span class="link">./examples/good-review.md</span>) 了解输出格式。</span><br></pre></td></tr></table></figure>
+
+<p>Claude 会在需要时自动读取这些文件。</p>
+<hr>
+<h2 id="5-技能发现与加载"><a href="#5-技能发现与加载" class="headerlink" title="5. 技能发现与加载"></a>5. 技能发现与加载</h2><h3 id="5-1-自动发现"><a href="#5-1-自动发现" class="headerlink" title="5.1 自动发现"></a>5.1 自动发现</h3><p>Claude Code 在会话开始时自动扫描以下位置：</p>
+<div class="mermaid-wrap"><pre class="mermaid-src" hidden>graph TB
+    Start[会话启动] --> Scan[扫描技能目录]
+    Scan --> P[项目 .claude/skills/]
+    Scan --> U[用户 ~/.claude/skills/]
+    Scan --> C[Cursor ~/.cursor/skills-cursor/]
+    
+    P & U & C --> Index[构建技能索引]
+    Index --> Ready[就绪]</pre></div>
+
+<h3 id="5-2-手动触发"><a href="#5-2-手动触发" class="headerlink" title="5.2 手动触发"></a>5.2 手动触发</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 方式 1：斜杠命令（推荐）</span></span><br><span class="line">/code-review src/main/java/Service.java</span><br><span class="line"></span><br><span class="line"><span class="comment"># 方式 2：自然语言</span></span><br><span class="line"><span class="string">&quot;使用 code-review 技能审查这个文件&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 方式 3：明确请求</span></span><br><span class="line"><span class="string">&quot;请加载并使用代码审查技能&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="5-3-查看已加载的技能"><a href="#5-3-查看已加载的技能" class="headerlink" title="5.3 查看已加载的技能"></a>5.3 查看已加载的技能</h3><p>可以在对话中询问：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&quot;你当前加载了哪些技能？&quot;</span><br><span class="line">&quot;列出可用的技能&quot;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="6-高级特性"><a href="#6-高级特性" class="headerlink" title="6. 高级特性"></a>6. 高级特性</h2><h3 id="6-1-参数传递"><a href="#6-1-参数传递" class="headerlink" title="6.1 参数传递"></a>6.1 参数传递</h3><p>技能可以接收参数：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/deploy production --skip-tests</span><br></pre></td></tr></table></figure>
+
+<p>在 SKILL.md 中通过 <code>$1</code>, <code>$2</code> 或命名参数访问：</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">## 部署步骤</span></span><br><span class="line"></span><br><span class="line"><span class="bullet">1.</span> 目标环境: $1 (production/staging/dev)</span><br><span class="line"><span class="bullet">2.</span> 选项: $2 (--skip-tests 等)</span><br></pre></td></tr></table></figure>
+
+<h3 id="6-2-技能组合"><a href="#6-2-技能组合" class="headerlink" title="6.2 技能组合"></a>6.2 技能组合</h3><p>一个技能可以调用其他技能：</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">## 完整发布流程</span></span><br><span class="line"></span><br><span class="line"><span class="bullet">1.</span> 首先执行 <span class="code">`/code-review`</span> 技能</span><br><span class="line"><span class="bullet">2.</span> 如果审查通过，执行 <span class="code">`/test`</span> 技能</span><br><span class="line"><span class="bullet">3.</span> 测试通过后，执行 <span class="code">`/deploy`</span> 技能</span><br></pre></td></tr></table></figure>
+
+<h3 id="6-3-条件逻辑"><a href="#6-3-条件逻辑" class="headerlink" title="6.3 条件逻辑"></a>6.3 条件逻辑</h3><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">## 执行条件</span></span><br><span class="line"></span><br><span class="line"><span class="section">### 如果是 Java 项目</span></span><br><span class="line"><span class="bullet">-</span> 使用 Maven 构建</span><br><span class="line"><span class="bullet">-</span> 运行 JUnit 测试</span><br><span class="line"></span><br><span class="line"><span class="section">### 如果是 Node.js 项目</span></span><br><span class="line"><span class="bullet">-</span> 使用 npm 构建</span><br><span class="line"><span class="bullet">-</span> 运行 Jest 测试</span><br></pre></td></tr></table></figure>
+
+<h3 id="6-4-工具限制"><a href="#6-4-工具限制" class="headerlink" title="6.4 工具限制"></a>6.4 工具限制</h3><p>通过 frontmatter 限制技能可用的工具：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="attr">name:</span> <span class="string">safe-review</span></span><br><span class="line"><span class="attr">description:</span> <span class="string">只读的代码审查</span></span><br><span class="line"><span class="attr">tools:</span> [<span class="string">Read</span>, <span class="string">Grep</span>, <span class="string">Glob</span>, <span class="string">SemanticSearch</span>]  <span class="comment"># 不包含 Write, Shell 等</span></span><br><span class="line"><span class="meta">---</span></span><br></pre></td></tr></table></figure>
+
+<p>这对于创建”安全”的审查类技能很有用。</p>
+<h3 id="6-5-动态上下文注入"><a href="#6-5-动态上下文注入" class="headerlink" title="6.5 动态上下文注入"></a>6.5 动态上下文注入</h3><p>使用 Hooks 在技能加载时注入动态信息hooks.json：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;hooks&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;UserPromptSubmit&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;matcher&quot;</span><span class="punctuation">:</span> <span class="string">&quot;/deploy&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;hooks&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="punctuation">&#123;</span></span><br><span class="line">        <span class="attr">&quot;type&quot;</span><span class="punctuation">:</span> <span class="string">&quot;command&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;command&quot;</span><span class="punctuation">:</span> <span class="string">&quot;echo \&quot;当前 Git 分支: $(git branch --show-current)\&quot;&quot;</span></span><br><span class="line">      <span class="punctuation">&#125;</span><span class="punctuation">]</span></span><br><span class="line">    <span class="punctuation">&#125;</span><span class="punctuation">]</span></span><br><span class="line">  <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="7-实战案例"><a href="#7-实战案例" class="headerlink" title="7. 实战案例"></a>7. 实战案例</h2><h3 id="7-1-案例：代码审查技能"><a href="#7-1-案例：代码审查技能" class="headerlink" title="7.1 案例：代码审查技能"></a>7.1 案例：代码审查技能</h3><p><strong>目录结构</strong>：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">.claude/skills/code-review/</span><br><span class="line">├── SKILL.md</span><br><span class="line">├── checklist.md</span><br><span class="line">└── examples/</span><br><span class="line">    └── sample-review.md</span><br></pre></td></tr></table></figure>
+
+<p><strong>SKILL.md</strong>：</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br></pre></td><td class="code"><pre><span class="line">---</span><br><span class="line">name: code-review</span><br><span class="line">description: 执行全面的代码审查，检查质量、安全、性能问题</span><br><span class="line"><span class="section">tools: [Read, Grep, Glob, SemanticSearch]</span></span><br><span class="line"><span class="section">---</span></span><br><span class="line"></span><br><span class="line"><span class="section"># 代码审查技能</span></span><br><span class="line"></span><br><span class="line"><span class="section">## 触发条件</span></span><br><span class="line"></span><br><span class="line">当用户请求代码审查、review、检查代码质量时使用此技能。</span><br><span class="line"></span><br><span class="line"><span class="section">## 审查流程</span></span><br><span class="line"></span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">pre</span> <span class="attr">class</span>=<span class="string">&quot;mermaid&quot;</span>&gt;</span></span>flowchart TB</span><br><span class="line"><span class="code">    Start[开始审查] --&gt; Read[读取目标文件]</span></span><br><span class="line"><span class="code">    Read --&gt; Style[1. 代码风格检查]</span></span><br><span class="line"><span class="code">    Style --&gt; Security[2. 安全检查]</span></span><br><span class="line"><span class="code">    Security --&gt; Performance[3. 性能检查]</span></span><br><span class="line"><span class="code">    Performance --&gt; Logic[4. 逻辑检查]</span></span><br><span class="line"><span class="code">    Logic --&gt; Report[生成报告]&lt;/pre&gt;</span></span><br><span class="line"><span class="code"></span></span><br><span class="line"><span class="section">### 1. 代码风格检查</span></span><br><span class="line"></span><br><span class="line">使用 <span class="code">`Grep`</span> 检查以下问题：</span><br><span class="line"><span class="bullet">-</span> TODO/FIXME 注释: <span class="code">`grep -n &quot;TODO\|FIXME&quot;`</span></span><br><span class="line"><span class="bullet">-</span> 魔法数字: 硬编码的数值常量</span><br><span class="line"><span class="bullet">-</span> 过长的方法（&gt; 50 行）</span><br><span class="line"><span class="bullet">-</span> 命名规范违规</span><br><span class="line"></span><br><span class="line"><span class="section">### 2. 安全检查</span></span><br><span class="line"></span><br><span class="line">重点关注：</span><br><span class="line"><span class="bullet">-</span> 硬编码的密钥/密码: <span class="code">`grep -i &quot;password\|secret\|key\|token&quot;`</span></span><br><span class="line"><span class="bullet">-</span> SQL 拼接（注入风险）</span><br><span class="line"><span class="bullet">-</span> 不安全的反序列化</span><br><span class="line"><span class="bullet">-</span> 日志中的敏感信息</span><br><span class="line"></span><br><span class="line"><span class="section">### 3. 性能检查</span></span><br><span class="line"></span><br><span class="line"><span class="bullet">-</span> N+1 查询问题</span><br><span class="line"><span class="bullet">-</span> 循环中的数据库调用</span><br><span class="line"><span class="bullet">-</span> 不必要的对象创建</span><br><span class="line"><span class="bullet">-</span> 缺少索引的查询</span><br><span class="line"></span><br><span class="line"><span class="section">### 4. 逻辑检查</span></span><br><span class="line"></span><br><span class="line"><span class="bullet">-</span> 空指针风险</span><br><span class="line"><span class="bullet">-</span> 异常处理是否完整</span><br><span class="line"><span class="bullet">-</span> 边界条件</span><br><span class="line"><span class="bullet">-</span> 并发安全</span><br><span class="line"></span><br><span class="line"><span class="section">## 输出格式</span></span><br><span class="line"></span><br><span class="line">使用 [<span class="string">checklist.md</span>](<span class="link">./checklist.md</span>) 中的模板格式输出。</span><br><span class="line"></span><br><span class="line">严重程度分级：</span><br><span class="line"><span class="bullet">-</span> 🔴 <span class="strong">**严重**</span>：必须修复</span><br><span class="line"><span class="bullet">-</span> 🟡 <span class="strong">**警告**</span>：建议修复</span><br><span class="line"><span class="bullet">-</span> 🔵 <span class="strong">**建议**</span>：可以改进</span><br><span class="line"></span><br><span class="line"><span class="section">## 示例输出</span></span><br><span class="line"></span><br><span class="line">参考 [<span class="string">examples/sample-review.md</span>](<span class="link">./examples/sample-review.md</span>)</span><br></pre></td></tr></table></figure>
+
+<p><strong>checklist.md</strong>：</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="section"># 代码审查报告</span></span><br><span class="line"></span><br><span class="line"><span class="section">## 基本信息</span></span><br><span class="line"><span class="bullet">-</span> 文件: &#123;filename&#125;</span><br><span class="line"><span class="bullet">-</span> 审查时间: &#123;datetime&#125;</span><br><span class="line"><span class="bullet">-</span> 审查范围: &#123;scope&#125;</span><br><span class="line"></span><br><span class="line"><span class="section">## 审查结果汇总</span></span><br><span class="line"></span><br><span class="line">| 类别 | 严重 | 警告 | 建议 |</span><br><span class="line">|------|------|------|------|</span><br><span class="line">| 代码风格 | 0 | 0 | 0 |</span><br><span class="line">| 安全问题 | 0 | 0 | 0 |</span><br><span class="line">| 性能问题 | 0 | 0 | 0 |</span><br><span class="line">| 逻辑问题 | 0 | 0 | 0 |</span><br><span class="line"></span><br><span class="line"><span class="section">## 详细问题</span></span><br><span class="line"></span><br><span class="line"><span class="section">### 🔴 严重问题</span></span><br><span class="line"></span><br><span class="line">(列出严重问题...)</span><br><span class="line"></span><br><span class="line"><span class="section">### 🟡 警告</span></span><br><span class="line"></span><br><span class="line">(列出警告...)</span><br><span class="line"></span><br><span class="line"><span class="section">### 🔵 建议</span></span><br><span class="line"></span><br><span class="line">(列出建议...)</span><br><span class="line"></span><br><span class="line"><span class="section">## 改进建议</span></span><br><span class="line"></span><br><span class="line">(总体改进建议...)</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="7-2-案例：TDD-开发技能"><a href="#7-2-案例：TDD-开发技能" class="headerlink" title="7.2 案例：TDD 开发技能"></a>7.2 案例：TDD 开发技能</h3><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br></pre></td><td class="code"><pre><span class="line">---</span><br><span class="line">name: tdd</span><br><span class="line"><span class="section">description: 测试驱动开发流程，先写测试再实现</span></span><br><span class="line"><span class="section">---</span></span><br><span class="line"></span><br><span class="line"><span class="section"># 测试驱动开发 (TDD)</span></span><br><span class="line"></span><br><span class="line"><span class="section">## 核心原则</span></span><br><span class="line"></span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">pre</span> <span class="attr">class</span>=<span class="string">&quot;mermaid&quot;</span>&gt;</span></span>graph LR</span><br><span class="line"><span class="code">    R[🔴 RED&lt;br/&gt;写失败测试] --&gt; G[🟢 GREEN&lt;br/&gt;最小实现]</span></span><br><span class="line"><span class="code">    G --&gt; RF[🔵 REFACTOR&lt;br/&gt;重构优化]</span></span><br><span class="line"><span class="code">    RF --&gt; R&lt;/pre&gt;</span></span><br><span class="line"><span class="code"></span></span><br><span class="line"><span class="section">## 强制规则</span></span><br><span class="line"></span><br><span class="line"><span class="bullet">1.</span> <span class="strong">**必须先看到测试失败**</span></span><br><span class="line"><span class="bullet">   -</span> 写测试后立即运行</span><br><span class="line"><span class="bullet">   -</span> 确认测试因为正确的原因失败</span><br><span class="line"><span class="bullet">   -</span> 禁止跳过这一步</span><br><span class="line"></span><br><span class="line"><span class="bullet">2.</span> <span class="strong">**最小实现**</span></span><br><span class="line"><span class="bullet">   -</span> 只写让测试通过的最少代码</span><br><span class="line"><span class="bullet">   -</span> 不要提前优化</span><br><span class="line"><span class="bullet">   -</span> 不要添加未测试的功能</span><br><span class="line"></span><br><span class="line"><span class="bullet">3.</span> <span class="strong">**重构时机**</span></span><br><span class="line"><span class="bullet">   -</span> 测试通过后才能重构</span><br><span class="line"><span class="bullet">   -</span> 重构不改变行为，只改善结构</span><br><span class="line"><span class="bullet">   -</span> 每次重构后运行测试</span><br><span class="line"></span><br><span class="line"><span class="section">## 执行步骤</span></span><br><span class="line"></span><br><span class="line"><span class="section">### Step 1: 理解需求</span></span><br><span class="line"><span class="bullet">-</span> 明确要实现的功能</span><br><span class="line"><span class="bullet">-</span> 拆分为可测试的小单元</span><br><span class="line"></span><br><span class="line"><span class="section">### Step 2: 写测试 (RED)</span></span><br><span class="line"><span class="code">```bash</span></span><br><span class="line"><span class="code"># 创建测试文件</span></span><br><span class="line"><span class="code"># 编写测试用例</span></span><br><span class="line"><span class="code"># 运行测试，确认失败</span></span><br><span class="line"><span class="code">mvn test -Dtest=XxxTest</span></span><br><span class="line"><span class="code">```</span></span><br><span class="line"></span><br><span class="line"><span class="section">### Step 3: 实现 (GREEN)</span></span><br><span class="line"><span class="code">```bash</span></span><br><span class="line"><span class="code"># 写最小实现</span></span><br><span class="line"><span class="code"># 运行测试，确认通过</span></span><br><span class="line"><span class="code">mvn test -Dtest=XxxTest</span></span><br><span class="line"><span class="code">```</span></span><br><span class="line"></span><br><span class="line"><span class="section">### Step 4: 重构 (REFACTOR)</span></span><br><span class="line"><span class="code">```bash</span></span><br><span class="line"><span class="code"># 优化代码结构</span></span><br><span class="line"><span class="code"># 运行全部测试，确认没有破坏</span></span><br><span class="line"><span class="code">mvn test</span></span><br><span class="line"><span class="code">```</span></span><br><span class="line"></span><br><span class="line"><span class="section">### Step 5: 循环</span></span><br><span class="line">重复 Step 2-4 直到功能完成。</span><br><span class="line"></span><br><span class="line"><span class="section">## 禁止行为</span></span><br><span class="line"></span><br><span class="line"><span class="bullet">-</span> ❌ 先写实现再补测试</span><br><span class="line"><span class="bullet">-</span> ❌ 跳过失败测试直接实现</span><br><span class="line"><span class="bullet">-</span> ❌ 一次写多个测试</span><br><span class="line"><span class="bullet">-</span> ❌ 在测试失败时重构</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="7-3-案例：并行代理调度技能"><a href="#7-3-案例：并行代理调度技能" class="headerlink" title="7.3 案例：并行代理调度技能"></a>7.3 案例：并行代理调度技能</h3><p>这是你项目中已有的技能，展示了如何处理复杂的工作流：</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line">---</span><br><span class="line">name: dispatching-parallel-agents</span><br><span class="line"><span class="section">description: 当面对多个独立任务时，并行调度多个代理处理</span></span><br><span class="line"><span class="section">---</span></span><br><span class="line"></span><br><span class="line"><span class="section"># 并行代理调度</span></span><br><span class="line"></span><br><span class="line"><span class="section">## 使用场景</span></span><br><span class="line"></span><br><span class="line">当遇到以下情况时使用此技能：</span><br><span class="line"><span class="bullet">-</span> 多个独立的问题需要解决</span><br><span class="line"><span class="bullet">-</span> 问题之间没有依赖关系</span><br><span class="line"><span class="bullet">-</span> 顺序处理会浪费时间</span><br><span class="line"></span><br><span class="line"><span class="section">## 决策流程</span></span><br><span class="line"></span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">pre</span> <span class="attr">class</span>=<span class="string">&quot;mermaid&quot;</span>&gt;</span></span>flowchart TB</span><br><span class="line"><span class="code">    Input[接收任务] --&gt; Analyze[分析任务]</span></span><br><span class="line"><span class="code">    Analyze --&gt; Independent&#123;任务独立?&#125;</span></span><br><span class="line"><span class="code">    Independent --&gt;|是| Count&#123;数量 &gt;= 2?&#125;</span></span><br><span class="line"><span class="code">    Independent --&gt;|否| Sequential[顺序执行]</span></span><br><span class="line"><span class="code">    Count --&gt;|是| Parallel[并行调度]</span></span><br><span class="line"><span class="code">    Count --&gt;|否| Single[单独执行]&lt;/pre&gt;</span></span><br><span class="line"><span class="code"></span></span><br><span class="line"><span class="section">## 执行步骤</span></span><br><span class="line"></span><br><span class="line"><span class="bullet">1.</span> <span class="strong">**识别独立任务**</span></span><br><span class="line"><span class="bullet">   -</span> 分析用户请求</span><br><span class="line"><span class="bullet">   -</span> 识别可以独立完成的子任务</span><br><span class="line"></span><br><span class="line"><span class="bullet">2.</span> <span class="strong">**创建代理**</span></span><br><span class="line"><span class="bullet">   -</span> 为每个任务创建专门的子代理</span><br><span class="line"><span class="bullet">   -</span> 明确每个代理的职责边界</span><br><span class="line"></span><br><span class="line"><span class="bullet">3.</span> <span class="strong">**并行执行**</span></span><br><span class="line"><span class="bullet">   -</span> 同时启动所有代理</span><br><span class="line"><span class="bullet">   -</span> 监控执行状态</span><br><span class="line"></span><br><span class="line"><span class="bullet">4.</span> <span class="strong">**汇总结果**</span></span><br><span class="line"><span class="bullet">   -</span> 收集各代理结果</span><br><span class="line"><span class="bullet">   -</span> 合并输出</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="8-最佳实践"><a href="#8-最佳实践" class="headerlink" title="8. 最佳实践"></a>8. 最佳实践</h2><h3 id="8-1-技能设计原则"><a href="#8-1-技能设计原则" class="headerlink" title="8.1 技能设计原则"></a>8.1 技能设计原则</h3><table>
+<thead>
+<tr>
+<th>原则</th>
+<th>说明</th>
+<th>示例</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>单一职责</strong></td>
+<td>每个技能只做一件事</td>
+<td><code>code-review</code> 不应该包含部署逻辑</td>
+</tr>
+<tr>
+<td><strong>自包含</strong></td>
+<td>技能应该包含所有必要信息</td>
+<td>不依赖外部未声明的知识</td>
+</tr>
+<tr>
+<td><strong>可测试</strong></td>
+<td>技能行为应该可预测</td>
+<td>相同输入产生相同输出</td>
+</tr>
+<tr>
+<td><strong>渐进式</strong></td>
+<td>利用支持文件分层加载</td>
+<td>主文件简洁，详情放支持文件</td>
+</tr>
+</tbody></table>
+<h3 id="8-2-命名规范"><a href="#8-2-命名规范" class="headerlink" title="8.2 命名规范"></a>8.2 命名规范</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">✅ 好的命名</span><br><span class="line">- code-review</span><br><span class="line">- deploy-production</span><br><span class="line">- generate-api-docs</span><br><span class="line"></span><br><span class="line">❌ 不好的命名</span><br><span class="line">- skill1</span><br><span class="line">- my-skill</span><br><span class="line">- do-stuff</span><br></pre></td></tr></table></figure>
+
+<h3 id="8-3-文档规范"><a href="#8-3-文档规范" class="headerlink" title="8.3 文档规范"></a>8.3 文档规范</h3><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="section"># 技能标题</span></span><br><span class="line"></span><br><span class="line"><span class="section">## 简介</span></span><br><span class="line">一两句话说明技能用途。</span><br><span class="line"></span><br><span class="line"><span class="section">## 使用场景</span></span><br><span class="line">明确何时应该使用这个技能。</span><br><span class="line"></span><br><span class="line"><span class="section">## 前置条件</span></span><br><span class="line">列出使用前需要满足的条件。</span><br><span class="line"></span><br><span class="line"><span class="section">## 执行步骤</span></span><br><span class="line">详细的分步骤指令。</span><br><span class="line"></span><br><span class="line"><span class="section">## 输出格式</span></span><br><span class="line">说明期望的输出格式。</span><br><span class="line"></span><br><span class="line"><span class="section">## 示例</span></span><br><span class="line">提供具体的使用示例。</span><br><span class="line"></span><br><span class="line"><span class="section">## 注意事项</span></span><br><span class="line">列出重要的注意点和限制。</span><br></pre></td></tr></table></figure>
+
+<h3 id="8-4-调试技巧"><a href="#8-4-调试技巧" class="headerlink" title="8.4 调试技巧"></a>8.4 调试技巧</h3><ol>
+<li><p><strong>检查技能是否被识别</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&quot;列出当前可用的技能&quot;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>查看技能内容</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&quot;显示 code-review 技能的完整内容&quot;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>测试技能匹配</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&quot;如果我说&#x27;帮我检查代码质量&#x27;，你会使用哪个技能？&quot;</span><br></pre></td></tr></table></figure></li>
+</ol>
+<hr>
+<h2 id="9-常见问题"><a href="#9-常见问题" class="headerlink" title="9. 常见问题"></a>9. 常见问题</h2><h3 id="Q-技能没有被自动识别怎么办？"><a href="#Q-技能没有被自动识别怎么办？" class="headerlink" title="Q: 技能没有被自动识别怎么办？"></a>Q: 技能没有被自动识别怎么办？</h3><p><strong>A</strong>: 检查以下几点：</p>
+<ol>
+<li><code>SKILL.md</code> 文件名是否正确（区分大小写）</li>
+<li>Frontmatter 格式是否正确（必须有 <code>---</code> 分隔）</li>
+<li><code>description</code> 是否包含相关关键词</li>
+<li>文件位置是否在正确的 skills 目录下</li>
+</ol>
+<h3 id="Q-技能加载太慢怎么办？"><a href="#Q-技能加载太慢怎么办？" class="headerlink" title="Q: 技能加载太慢怎么办？"></a>Q: 技能加载太慢怎么办？</h3><p><strong>A</strong>: </p>
+<ol>
+<li>精简 SKILL.md 内容，将详细信息移到支持文件</li>
+<li>优化 <code>description</code> 使匹配更精确</li>
+<li>使用 <code>invocation: user</code> 禁止自动加载</li>
+</ol>
+<h3 id="Q-如何限制技能只能被特定用户使用？"><a href="#Q-如何限制技能只能被特定用户使用？" class="headerlink" title="Q: 如何限制技能只能被特定用户使用？"></a>Q: 如何限制技能只能被特定用户使用？</h3><p><strong>A</strong>: 目前 Skills 系统不支持用户级权限控制。可以通过以下方式变通：</p>
+<ol>
+<li>将技能放在 <code>settings.local.json</code> 管理的目录</li>
+<li>使用 <code>.gitignore</code> 排除敏感技能</li>
+<li>在技能中加入手动确认步骤</li>
+</ol>
+<h3 id="Q-技能可以访问网络吗？"><a href="#Q-技能可以访问网络吗？" class="headerlink" title="Q: 技能可以访问网络吗？"></a>Q: 技能可以访问网络吗？</h3><p><strong>A</strong>: 技能本身是指令文本，不能直接访问网络。但可以：</p>
+<ol>
+<li>指导 Claude 使用 <code>WebSearch</code> 工具</li>
+<li>通过 MCP 连接外部服务</li>
+<li>使用 Shell 执行网络命令（如 curl）</li>
+</ol>
+<h3 id="Q-如何在团队中共享技能？"><a href="#Q-如何在团队中共享技能？" class="headerlink" title="Q: 如何在团队中共享技能？"></a>Q: 如何在团队中共享技能？</h3><p><strong>A</strong>: </p>
+<ol>
+<li>将 <code>.claude/skills/</code> 目录提交到 Git 仓库</li>
+<li>创建独立的技能仓库，使用 Git submodule 引用</li>
+<li>使用符号链接指向共享位置</li>
+</ol>
+<hr>
+<h2 id="下一步"><a href="#下一步" class="headerlink" title="下一步"></a>下一步</h2><ul>
+<li><a href="/CICD-Practice/claude-code-guide/03-commands/">Commands 系统</a> - 学习如何创建斜杠命令</li>
+<li><a href="/CICD-Practice/claude-code-guide/04-hooks/">Hooks 系统</a> - 了解如何在技能执行时触发自动化</li>
+<li><a href="/CICD-Practice/claude-code-guide/05-agents/">Agents 系统</a> - 探索如何在技能中使用子代理</li>
+</ul>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://nathanhex.github.io/CICD-Practice">老黄</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://nathanhex.github.io/CICD-Practice/claude-code-guide/02-skills/">https://nathanhex.github.io/CICD-Practice/claude-code-guide/02-skills/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://nathanhex.github.io/CICD-Practice" target="_blank">老丶黄的个人博客</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/CICD-Practice/tags/claude-code/">claude-code</a><a class="post-meta__tags" href="/CICD-Practice/tags/AI%E7%BC%96%E7%A8%8B/">AI编程</a></div><div class="post_share"><div class="social-share" data-image="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/CICD-Practice/claude-code-guide/01-rules/" title="Claude Code Rules 系统：持久化的行为约束"><img class="cover" src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="onerror=null;src='/CICD-Practice/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">Claude Code Rules 系统：持久化的行为约束</div></div></a></div><div class="next-post pull-right"><a href="/CICD-Practice/claude-code-guide/03-commands/" title="Claude Code Commands 系统：斜杠命令"><img class="cover" src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="onerror=null;src='/CICD-Practice/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">Claude Code Commands 系统：斜杠命令</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/CICD-Practice/claude-code-guide/01-rules/" title="Claude Code Rules 系统：持久化的行为约束"><img class="cover" src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2026-02-05</div><div class="title">Claude Code Rules 系统：持久化的行为约束</div></div></a></div><div><a href="/CICD-Practice/claude-code-guide/00-overview/" title="Claude Code 架构与组件总览"><img class="cover" src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2026-02-05</div><div class="title">Claude Code 架构与组件总览</div></div></a></div><div><a href="/CICD-Practice/claude-code-guide/03-commands/" title="Claude Code Commands 系统：斜杠命令"><img class="cover" src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2026-02-05</div><div class="title">Claude Code Commands 系统：斜杠命令</div></div></a></div><div><a href="/CICD-Practice/claude-code-guide/04-hooks/" title="Claude Code Hooks 系统：生命周期事件"><img class="cover" src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2026-02-05</div><div class="title">Claude Code Hooks 系统：生命周期事件</div></div></a></div><div><a href="/CICD-Practice/claude-code-guide/05-agents/" title="Claude Code Agents 系统：专业化代理"><img class="cover" src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2026-02-05</div><div class="title">Claude Code Agents 系统：专业化代理</div></div></a></div><div><a href="/CICD-Practice/claude-code-guide/07-mcp/" title="Claude Code MCP：Model Context Protocol"><img class="cover" src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2026-02-05</div><div class="title">Claude Code MCP：Model Context Protocol</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="this.onerror=null;this.src='/CICD-Practice/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">老黄</div><div class="author-info__description">天生我材必有用，千金散尽还复来</div></div><div class="card-info-data site-data is-center"><a href="/CICD-Practice/archives/"><div class="headline">文章</div><div class="length-num">15</div></a><a href="/CICD-Practice/tags/"><div class="headline">标签</div><div class="length-num">20</div></a><a href="/CICD-Practice/categories/"><div class="headline">分类</div><div class="length-num">7</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/nathanhex"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content is-expand"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Skills-%E7%B3%BB%E7%BB%9F%EF%BC%9A%E5%8F%AF%E5%A4%8D%E7%94%A8%E7%9A%84%E6%8C%87%E4%BB%A4%E9%9B%86"><span class="toc-number">1.</span> <span class="toc-text">Skills 系统：可复用的指令集</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%9B%AE%E5%BD%95"><span class="toc-number">1.1.</span> <span class="toc-text">目录</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E4%BB%80%E4%B9%88%E6%98%AF-Skills"><span class="toc-number">1.2.</span> <span class="toc-text">1. 什么是 Skills</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-%E5%AE%9A%E4%B9%89"><span class="toc-number">1.2.1.</span> <span class="toc-text">1.1 定义</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-%E4%B8%8E%E5%85%B6%E4%BB%96%E7%BB%84%E4%BB%B6%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="toc-number">1.2.2.</span> <span class="toc-text">1.2 与其他组件的区别</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3-%E8%AE%BE%E8%AE%A1%E5%93%B2%E5%AD%A6"><span class="toc-number">1.2.3.</span> <span class="toc-text">1.3 设计哲学</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E6%A0%B8%E5%BF%83%E5%8E%9F%E7%90%86"><span class="toc-number">1.3.</span> <span class="toc-text">2. 核心原理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-%E6%8A%80%E8%83%BD%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F"><span class="toc-number">1.3.1.</span> <span class="toc-text">2.1 技能生命周期</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-%E5%8C%B9%E9%85%8D%E6%9C%BA%E5%88%B6"><span class="toc-number">1.3.2.</span> <span class="toc-text">2.2 匹配机制</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%84"><span class="toc-number">1.4.</span> <span class="toc-text">3. 目录结构</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-%E5%9F%BA%E6%9C%AC%E7%BB%93%E6%9E%84"><span class="toc-number">1.4.1.</span> <span class="toc-text">3.1 基本结构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-%E6%96%87%E4%BB%B6%E8%AF%B4%E6%98%8E"><span class="toc-number">1.4.2.</span> <span class="toc-text">3.2 文件说明</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-3-%E6%8A%80%E8%83%BD%E4%BD%8D%E7%BD%AE"><span class="toc-number">1.4.3.</span> <span class="toc-text">3.3 技能位置</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-SKILL-md-%E8%AF%A6%E8%A7%A3"><span class="toc-number">1.5.</span> <span class="toc-text">4. SKILL.md 详解</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#4-1-%E5%9F%BA%E6%9C%AC%E6%A0%BC%E5%BC%8F"><span class="toc-number">1.5.1.</span> <span class="toc-text">4.1 基本格式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-2-Frontmatter-%E5%AD%97%E6%AE%B5"><span class="toc-number">1.5.2.</span> <span class="toc-text">4.2 Frontmatter 字段</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AD%97%E6%AE%B5%E8%AF%A6%E8%A7%A3"><span class="toc-number">1.5.2.1.</span> <span class="toc-text">字段详解</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-3-%E6%8C%87%E4%BB%A4%E7%BC%96%E5%86%99%E5%8E%9F%E5%88%99"><span class="toc-number">1.5.3.</span> <span class="toc-text">4.3 指令编写原则</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-4-%E5%BC%95%E7%94%A8%E6%94%AF%E6%8C%81%E6%96%87%E4%BB%B6"><span class="toc-number">1.5.4.</span> <span class="toc-text">4.4 引用支持文件</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-%E6%8A%80%E8%83%BD%E5%8F%91%E7%8E%B0%E4%B8%8E%E5%8A%A0%E8%BD%BD"><span class="toc-number">1.6.</span> <span class="toc-text">5. 技能发现与加载</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#5-1-%E8%87%AA%E5%8A%A8%E5%8F%91%E7%8E%B0"><span class="toc-number">1.6.1.</span> <span class="toc-text">5.1 自动发现</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-2-%E6%89%8B%E5%8A%A8%E8%A7%A6%E5%8F%91"><span class="toc-number">1.6.2.</span> <span class="toc-text">5.2 手动触发</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-3-%E6%9F%A5%E7%9C%8B%E5%B7%B2%E5%8A%A0%E8%BD%BD%E7%9A%84%E6%8A%80%E8%83%BD"><span class="toc-number">1.6.3.</span> <span class="toc-text">5.3 查看已加载的技能</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-%E9%AB%98%E7%BA%A7%E7%89%B9%E6%80%A7"><span class="toc-number">1.7.</span> <span class="toc-text">6. 高级特性</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#6-1-%E5%8F%82%E6%95%B0%E4%BC%A0%E9%80%92"><span class="toc-number">1.7.1.</span> <span class="toc-text">6.1 参数传递</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-2-%E6%8A%80%E8%83%BD%E7%BB%84%E5%90%88"><span class="toc-number">1.7.2.</span> <span class="toc-text">6.2 技能组合</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-3-%E6%9D%A1%E4%BB%B6%E9%80%BB%E8%BE%91"><span class="toc-number">1.7.3.</span> <span class="toc-text">6.3 条件逻辑</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-4-%E5%B7%A5%E5%85%B7%E9%99%90%E5%88%B6"><span class="toc-number">1.7.4.</span> <span class="toc-text">6.4 工具限制</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-5-%E5%8A%A8%E6%80%81%E4%B8%8A%E4%B8%8B%E6%96%87%E6%B3%A8%E5%85%A5"><span class="toc-number">1.7.5.</span> <span class="toc-text">6.5 动态上下文注入</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7-%E5%AE%9E%E6%88%98%E6%A1%88%E4%BE%8B"><span class="toc-number">1.8.</span> <span class="toc-text">7. 实战案例</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#7-1-%E6%A1%88%E4%BE%8B%EF%BC%9A%E4%BB%A3%E7%A0%81%E5%AE%A1%E6%9F%A5%E6%8A%80%E8%83%BD"><span class="toc-number">1.8.1.</span> <span class="toc-text">7.1 案例：代码审查技能</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-2-%E6%A1%88%E4%BE%8B%EF%BC%9ATDD-%E5%BC%80%E5%8F%91%E6%8A%80%E8%83%BD"><span class="toc-number">1.8.2.</span> <span class="toc-text">7.2 案例：TDD 开发技能</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-3-%E6%A1%88%E4%BE%8B%EF%BC%9A%E5%B9%B6%E8%A1%8C%E4%BB%A3%E7%90%86%E8%B0%83%E5%BA%A6%E6%8A%80%E8%83%BD"><span class="toc-number">1.8.3.</span> <span class="toc-text">7.3 案例：并行代理调度技能</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#8-%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5"><span class="toc-number">1.9.</span> <span class="toc-text">8. 最佳实践</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#8-1-%E6%8A%80%E8%83%BD%E8%AE%BE%E8%AE%A1%E5%8E%9F%E5%88%99"><span class="toc-number">1.9.1.</span> <span class="toc-text">8.1 技能设计原则</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#8-2-%E5%91%BD%E5%90%8D%E8%A7%84%E8%8C%83"><span class="toc-number">1.9.2.</span> <span class="toc-text">8.2 命名规范</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#8-3-%E6%96%87%E6%A1%A3%E8%A7%84%E8%8C%83"><span class="toc-number">1.9.3.</span> <span class="toc-text">8.3 文档规范</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#8-4-%E8%B0%83%E8%AF%95%E6%8A%80%E5%B7%A7"><span class="toc-number">1.9.4.</span> <span class="toc-text">8.4 调试技巧</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#9-%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98"><span class="toc-number">1.10.</span> <span class="toc-text">9. 常见问题</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Q-%E6%8A%80%E8%83%BD%E6%B2%A1%E6%9C%89%E8%A2%AB%E8%87%AA%E5%8A%A8%E8%AF%86%E5%88%AB%E6%80%8E%E4%B9%88%E5%8A%9E%EF%BC%9F"><span class="toc-number">1.10.1.</span> <span class="toc-text">Q: 技能没有被自动识别怎么办？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q-%E6%8A%80%E8%83%BD%E5%8A%A0%E8%BD%BD%E5%A4%AA%E6%85%A2%E6%80%8E%E4%B9%88%E5%8A%9E%EF%BC%9F"><span class="toc-number">1.10.2.</span> <span class="toc-text">Q: 技能加载太慢怎么办？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q-%E5%A6%82%E4%BD%95%E9%99%90%E5%88%B6%E6%8A%80%E8%83%BD%E5%8F%AA%E8%83%BD%E8%A2%AB%E7%89%B9%E5%AE%9A%E7%94%A8%E6%88%B7%E4%BD%BF%E7%94%A8%EF%BC%9F"><span class="toc-number">1.10.3.</span> <span class="toc-text">Q: 如何限制技能只能被特定用户使用？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q-%E6%8A%80%E8%83%BD%E5%8F%AF%E4%BB%A5%E8%AE%BF%E9%97%AE%E7%BD%91%E7%BB%9C%E5%90%97%EF%BC%9F"><span class="toc-number">1.10.4.</span> <span class="toc-text">Q: 技能可以访问网络吗？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q-%E5%A6%82%E4%BD%95%E5%9C%A8%E5%9B%A2%E9%98%9F%E4%B8%AD%E5%85%B1%E4%BA%AB%E6%8A%80%E8%83%BD%EF%BC%9F"><span class="toc-number">1.10.5.</span> <span class="toc-text">Q: 如何在团队中共享技能？</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%8B%E4%B8%80%E6%AD%A5"><span class="toc-number">1.11.</span> <span class="toc-text">下一步</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/CICD-Practice/claude-code-guide/00-overview/" title="Claude Code 架构与组件总览"><img src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="this.onerror=null;this.src='/CICD-Practice/img/404.jpg'" alt="Claude Code 架构与组件总览"/></a><div class="content"><a class="title" href="/CICD-Practice/claude-code-guide/00-overview/" title="Claude Code 架构与组件总览">Claude Code 架构与组件总览</a><time datetime="2026-02-05T00:00:00.000Z" title="发表于 2026-02-05 08:00:00">2026-02-05</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/CICD-Practice/claude-code-guide/01-rules/" title="Claude Code Rules 系统：持久化的行为约束"><img src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="this.onerror=null;this.src='/CICD-Practice/img/404.jpg'" alt="Claude Code Rules 系统：持久化的行为约束"/></a><div class="content"><a class="title" href="/CICD-Practice/claude-code-guide/01-rules/" title="Claude Code Rules 系统：持久化的行为约束">Claude Code Rules 系统：持久化的行为约束</a><time datetime="2026-02-04T23:00:00.000Z" title="发表于 2026-02-05 07:00:00">2026-02-05</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/CICD-Practice/claude-code-guide/02-skills/" title="Claude Code Skills 系统：可复用的指令集"><img src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="this.onerror=null;this.src='/CICD-Practice/img/404.jpg'" alt="Claude Code Skills 系统：可复用的指令集"/></a><div class="content"><a class="title" href="/CICD-Practice/claude-code-guide/02-skills/" title="Claude Code Skills 系统：可复用的指令集">Claude Code Skills 系统：可复用的指令集</a><time datetime="2026-02-04T22:00:00.000Z" title="发表于 2026-02-05 06:00:00">2026-02-05</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/CICD-Practice/claude-code-guide/03-commands/" title="Claude Code Commands 系统：斜杠命令"><img src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="this.onerror=null;this.src='/CICD-Practice/img/404.jpg'" alt="Claude Code Commands 系统：斜杠命令"/></a><div class="content"><a class="title" href="/CICD-Practice/claude-code-guide/03-commands/" title="Claude Code Commands 系统：斜杠命令">Claude Code Commands 系统：斜杠命令</a><time datetime="2026-02-04T21:00:00.000Z" title="发表于 2026-02-05 05:00:00">2026-02-05</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/CICD-Practice/claude-code-guide/04-hooks/" title="Claude Code Hooks 系统：生命周期事件"><img src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="this.onerror=null;this.src='/CICD-Practice/img/404.jpg'" alt="Claude Code Hooks 系统：生命周期事件"/></a><div class="content"><a class="title" href="/CICD-Practice/claude-code-guide/04-hooks/" title="Claude Code Hooks 系统：生命周期事件">Claude Code Hooks 系统：生命周期事件</a><time datetime="2026-02-04T20:00:00.000Z" title="发表于 2026-02-05 04:00:00">2026-02-05</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2026 By 老黄</div><div class="footer_custom_text">欢迎来到老黄的<a href="https://nathanhex.github.io/CICD-Practice/">博客</a>!</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/CICD-Practice/js/utils.js"></script><script src="/CICD-Practice/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"><script>(() => {
+  const $mermaid = document.querySelectorAll('#article-container .mermaid-wrap')
+  if ($mermaid.length === 0) return
+  const runMermaid = () => {
+    window.loadMermaid = true
+    const theme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'default'
+
+    Array.from($mermaid).forEach((item, index) => {
+      const mermaidSrc = item.firstElementChild
+      const mermaidThemeConfig = '%%{init:{ \'theme\':\'' + theme + '\'}}%%\n'
+      const mermaidID = 'mermaid-' + index
+      const mermaidDefinition = mermaidThemeConfig + mermaidSrc.textContent
+
+      const renderFn = mermaid.render(mermaidID, mermaidDefinition)
+
+      const renderV10 = () => {
+        renderFn.then(({svg}) => {
+          mermaidSrc.insertAdjacentHTML('afterend', svg)
+        })
+      }
+
+      const renderV9 = svg => {
+        mermaidSrc.insertAdjacentHTML('afterend', svg)
+      }
+
+      typeof renderFn === 'string' ? renderV9(renderFn) : renderV10()
+    })
+  }
+
+  const loadMermaid = () => {
+    window.loadMermaid ? runMermaid() : getScript('https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js').then(runMermaid)
+  }
+
+  btf.addGlobalFn('themeChange', runMermaid, 'mermaid')
+
+  window.pjax ? loadMermaid() : document.addEventListener('DOMContentLoaded', loadMermaid)
+})()</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
