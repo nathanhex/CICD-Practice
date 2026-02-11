@@ -7,6 +7,7 @@ tags:
   - AI编程
 date: 2026-02-05 01:00:00
 permalink: claude-code-guide/07-mcp/
+cover: images/claude-code-guide-covers/07-mcp-cover.png
 ---
 
 # MCP：Model Context Protocol

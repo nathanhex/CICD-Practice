@@ -7,6 +7,7 @@ tags:
   - AI编程
 date: 2026-02-05 05:00:00
 permalink: claude-code-guide/03-commands/
+cover: images/claude-code-guide-covers/03-commands-cover.png
 ---
 
 # Commands 系统：斜杠命令

@@ -8,6 +8,8 @@ tags:
   - 开发工具
 date: 2026-02-05 08:00:00
 permalink: claude-code-guide/00-overview/
+cover: images/claude-code-guide-covers/00-overview-cover.png
+
 ---
 
 # Claude Code 架构与组件总览

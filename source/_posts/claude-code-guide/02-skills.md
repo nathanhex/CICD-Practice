@@ -7,6 +7,7 @@ tags:
   - AI编程
 date: 2026-02-05 06:00:00
 permalink: claude-code-guide/02-skills/
+cover: images/claude-code-guide-covers/02-skills-cover.png
 ---
 
 # Skills 系统：可复用的指令集

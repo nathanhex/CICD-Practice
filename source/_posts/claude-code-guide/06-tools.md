@@ -7,6 +7,7 @@ tags:
   - AI编程
 date: 2026-02-05 02:00:00
 permalink: claude-code-guide/06-tools/
+cover: images/claude-code-guide-covers/06-tools-cover.png
 ---
 
 # Tools 系统：Claude 可调用的能力

@@ -9,6 +9,7 @@ tags:
   - 配置管理
 date: 2026-02-05 07:00:00
 permalink: claude-code-guide/01-rules/
+cover: images/claude-code-guide-covers/01-rules-cover.png
 ---
 
 # Rules 系统：持久化的行为约束

@@ -7,6 +7,7 @@ tags:
   - AI编程
 date: 2026-02-05 03:00:00
 permalink: claude-code-guide/05-agents/
+cover: images/claude-code-guide-covers/05-agents-cover.png
 ---
 
 # Agents 系统：专业化代理
