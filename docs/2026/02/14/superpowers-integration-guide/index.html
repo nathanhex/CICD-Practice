@@ -1,0 +1,600 @@
+<!DOCTYPE html><html lang="[&quot;zh-CN&quot;,&quot;en&quot;,&quot;default&quot;]" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>从零开始理解Superpowers：让AI变成听话的AI程序员 | 老丶黄的个人博客</title><meta name="author" content="老黄"><meta name="copyright" content="老黄"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="刷抖音、刷短视频时，是不是总刷到“AI要取代程序员”“3年后程序员要失业”？ 算法把我们困在信息茧房里，全网都在演“被AI替代”的焦虑大戏，搞得不少程序员半夜失眠，一边敲代码一边慌：下一个被淘汰的，会不会是我？ 其实我的答案很简单：凉拌。 真的，大时代的洪流滚滚而来，我们不过是沧海一粟。那些你改变不了的趋势，再焦虑也没用——与其天天内耗“会不会被取代”，不如把焦虑掰碎了，变成自己能掌控的动力。 做">
+<meta property="og:type" content="article">
+<meta property="og:title" content="从零开始理解Superpowers：让AI变成听话的AI程序员">
+<meta property="og:url" content="https://nathanhex.github.io/CICD-Practice/2026/02/14/superpowers-integration-guide/index.html">
+<meta property="og:site_name" content="老丶黄的个人博客">
+<meta property="og:description" content="刷抖音、刷短视频时，是不是总刷到“AI要取代程序员”“3年后程序员要失业”？ 算法把我们困在信息茧房里，全网都在演“被AI替代”的焦虑大戏，搞得不少程序员半夜失眠，一边敲代码一边慌：下一个被淘汰的，会不会是我？ 其实我的答案很简单：凉拌。 真的，大时代的洪流滚滚而来，我们不过是沧海一粟。那些你改变不了的趋势，再焦虑也没用——与其天天内耗“会不会被取代”，不如把焦虑掰碎了，变成自己能掌控的动力。 做">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://nathanhex.github.io/CICD-Practice/images/superpowers-integration-guide-cover.png">
+<meta property="article:published_time" content="2026-02-13T16:00:00.000Z">
+<meta property="article:modified_time" content="2026-02-14T10:28:30.011Z">
+<meta property="article:author" content="老黄">
+<meta property="article:tag" content="AI">
+<meta property="article:tag" content="Claude Code">
+<meta property="article:tag" content="Superpowers">
+<meta property="article:tag" content="开发工具">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://nathanhex.github.io/CICD-Practice/images/superpowers-integration-guide-cover.png"><link rel="shortcut icon" href="/CICD-Practice/img/favicon.png"><link rel="canonical" href="https://nathanhex.github.io/CICD-Practice/2026/02/14/superpowers-integration-guide/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/CICD-Practice/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/CICD-Practice/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: {"limitCount":50,"languages":{"author":"作者: 老黄","link":"链接: ","source":"来源: 老丶黄的个人博客","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。"}},
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '从零开始理解Superpowers：让AI变成听话的AI程序员',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2026-02-14 18:28:30'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+        if (t === 'dark') activateDarkMode()
+        else if (t === 'light') activateLightMode()
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><meta name="generator" content="Hexo 6.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/CICD-Practice/archives/"><div class="headline">文章</div><div class="length-num">16</div></a><a href="/CICD-Practice/tags/"><div class="headline">标签</div><div class="length-num">23</div></a><a href="/CICD-Practice/categories/"><div class="headline">分类</div><div class="length-num">8</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/CICD-Practice/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/CICD-Practice/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/CICD-Practice/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/CICD-Practice/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('/CICD-Practice/images/superpowers-integration-guide-cover.png')"><nav id="nav"><span id="blog-info"><a href="/CICD-Practice/" title="老丶黄的个人博客"><img class="site-icon" src="/CICD-Practice/images/main-logo.jpg"/><span class="site-name">老丶黄的个人博客</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/CICD-Practice/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/CICD-Practice/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/CICD-Practice/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/CICD-Practice/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">从零开始理解Superpowers：让AI变成听话的AI程序员</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2026-02-13T16:00:00.000Z" title="发表于 2026-02-14 00:00:00">2026-02-14</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2026-02-14T10:28:30.011Z" title="更新于 2026-02-14 18:28:30">2026-02-14</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/CICD-Practice/categories/AI%E7%BC%96%E7%A8%8B/">AI编程</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="从零开始理解Superpowers：让AI变成听话的AI程序员"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>刷抖音、刷短视频时，是不是总刷到“<strong>AI</strong>要取代<strong>程序员</strong>”“3年后<strong>程序员</strong>要失业”？</p>
+<p><strong>算法</strong>把我们困在<strong>信息茧房</strong>里，全网都在演“被<strong>AI</strong>替代”的焦虑大戏，搞得不少<strong>程序员</strong>半夜失眠，一边敲代码一边慌：下一个被淘汰的，会不会是我？</p>
+<p>其实我的答案很简单：凉拌。</p>
+<p>真的，<strong>大时代</strong>的洪流滚滚而来，我们不过是沧海一粟。那些你改变不了的<strong>趋势</strong>，再焦虑也没用——与其天天内耗“会不会被取代”，不如把<strong>焦虑</strong>掰碎了，变成自己能掌控的<strong>动力</strong>。</p>
+<p>做点啥都行：翻一本<strong>技术书</strong>、啃一篇<strong>硬核文档</strong>、下楼走两圈晒晒太阳，甚至只是整理一下电脑里的<strong>代码文件夹</strong>。人一忙起来，<strong>焦虑</strong>就没空想你了。</p>
+<p>别再沉迷<strong>短视频</strong>那种随手就能拿到的廉价<strong>多巴胺</strong>，去追一追更踏实的快乐——比如学会一个<strong>新技能</strong>、跑完3公里、搞定一个卡了很久的<strong>bug</strong>，那种努力过后的<strong>内啡肽</strong>，才是对抗<strong>焦虑</strong>的底气。</p>
+<p>如果你正好是<strong>程序员</strong>，那恭喜你，这篇文章值得你“被迫营业”10分钟。</p>
+<p>就10分钟，看完你就能get一门<strong>绝技</strong>：如何让<strong>AI</strong>变成一个听话、守规矩，完全贴合<strong>软件工程规范</strong>的“<strong>AI程序员</strong>”。</p>
+<p>有了这个靠谱的<strong>AI小伙伴</strong>，你根本不用怕被取代——你的工作不仅会更稳，还能华丽转型：从天天亲自动手<strong>敲代码</strong>、<strong>画图纸</strong>，变成专职做<strong>需求分析</strong>、<strong>项目管理</strong>、<strong>代码审查</strong>、<strong>验收成果</strong>的“<strong>技术指挥官</strong>”。</p>
+<p>说不定再过不久，各大公司的<strong>招聘JD</strong>上，都会多这么一条：负责<strong>审查AI生成的代码</strong>，把控<strong>项目质量</strong>。</p>
+<p>下面，给大家看一幕我前两天刚亲身经历的场景，看完你就懂，<strong>AI时代</strong>的<strong>程序员转型</strong>，已经悄悄开始了。</p>
+<p>2026年2月11日晚上8点多，我们公司办公室里，4位开发者围坐在一台电脑前，大气都不敢喘。那天是他们的<strong>项目上线日</strong>，所有人的目光都盯着屏幕里<strong>Cursor</strong>的<strong>Agent Thinking</strong>窗口——那里的<strong>代码指令</strong>飞快滚动，一个不知疲倦的<strong>AI助手</strong>，正在为<strong>项目上线</strong>做最后的<strong>冲刺调试</strong>。</p>
+<p>看着那个不停运转的<strong>AI</strong>，我突然意识到：人类真的多了一个永不疲劳、不用加班补贴、更不会累到进<strong>ICU</strong>的“<strong>加班战友</strong>”。而这一天，比我预想中来得还要早。</p>
+<p>回想一年前（2025年），我还在纠结要不要让团队用<strong>AI写代码</strong>。那时候的<strong>AI</strong>，生成的<strong>代码</strong>只能勉强实现<strong>需求</strong>，根本达不到<strong>工业级标准</strong>——没有<strong>工程化思维</strong>、不写<strong>单元测试</strong>、<strong>代码风格</strong>和现有系统格格不入，后续<strong>维护</strong>和<strong>接入</strong>全是坑，反而给我们添了不少麻烦。</p>
+<p>但仅仅一年时间，一切都变了。</p>
+<p>随着<strong>GPT-5.3 Codex</strong>、<strong>Claude Opus 4.6</strong>等新一代<strong>大模型</strong>的迭代，再加上<strong>Superpowers</strong>这种<strong>Skill框架开发方法论</strong>的成熟，<strong>AI编写真实项目代码</strong>，已经从“不可行”变成了“日常操作”。</p>
+<p>我们公司的<strong>程序员</strong>，也正在悄悄完成<strong>角色转变</strong>：从代码的“<strong>亲手编写者</strong>”，变成了成果的“<strong>验收者</strong>”和代码的“<strong>审查员</strong>”。</p>
+<p>我一直觉得，<strong>大模型能力</strong>的进化只是一方面，真正让<strong>AI编程时代</strong>到来的关键，是让<strong>大模型</strong>像人类<strong>工程师</strong>一样，写出<strong>规范、可维护、符合项目要求的代码</strong>。</p>
+<p>而要让<strong>AI</strong>听话、写<strong>规范代码</strong>，核心工具就是<strong>Superpowers</strong>。</p>
+<h2 id="1-从零理解-Superpowers"><a href="#1-从零理解-Superpowers" class="headerlink" title="1. 从零理解 Superpowers"></a>1. 从零理解 Superpowers</h2><h3 id="1-1-理解Superpowers之前，先理解背景：Claude-Code-是什么"><a href="#1-1-理解Superpowers之前，先理解背景：Claude-Code-是什么" class="headerlink" title="1.1 理解Superpowers之前，先理解背景：Claude Code 是什么"></a>1.1 理解Superpowers之前，先理解背景：Claude Code 是什么</h3><p><strong>Claude Code</strong> 是一个运行在终端里的 AI 编码助手。它的背后是一个大语言模型（Claude）。你在终端里用自然语言告诉它要做什么（比如「帮我写一个用户登录功能」），它就会帮你读代码、写代码、运行命令、修 bug。</p>
+<p>你可以把 Claude Code 理解为一个「会写代码的聊天对象」——你发消息给它，它回复你，并且可以直接修改你的项目文件。</p>
+<h3 id="1-2-问题在哪：为什么需要-Superpowers"><a href="#1-2-问题在哪：为什么需要-Superpowers" class="headerlink" title="1.2 问题在哪：为什么需要 Superpowers"></a>1.2 问题在哪：为什么需要 Superpowers</h3><p>默认情况下，当你对 Claude Code 说「帮我加个购物车功能」，它可能会<strong>直接开始写代码</strong>。这就像一个程序员拿到需求后不做设计、不写测试、不做计划，直接动手敲代码——虽然速度快，但：</p>
+<ul>
+<li>没有先讨论设计方案，可能方向做错</li>
+<li>没有先写测试，写出来的代码可能有隐藏 bug</li>
+<li>没有拆分任务，复杂功能可能顾此失彼</li>
+<li>没有代码审查，质量无法保证</li>
+<li>没有编码规范，变量的命名规则，代码组织结构，代码风格等无法保证</li>
+</ul>
+<p><strong>Superpowers 就是为了解决这个问题</strong>。</p>
+<h3 id="1-3-Superpowers-到底是什么"><a href="#1-3-Superpowers-到底是什么" class="headerlink" title="1.3 Superpowers 到底是什么"></a>1.3 Superpowers 到底是什么</h3><p>一句话：<strong>Superpowers 是一组写给大模型看的「工作指南」</strong>。</p>
+<p>具体来说，Superpowers 就是一堆 Markdown 文件（纯文本），每个文件描述一套详细的工作流程。比如：</p>
+<ul>
+<li>有一个文件写着：「当你要写代码时，必须先写一个会失败的测试，运行看到失败，再写代码让测试通过」（这就是 TDD 技能）</li>
+<li>有一个文件写着：「当你要实现新功能时，先提出 2-3 个设计方案，分析优缺点，让用户选择后再动手」（这就是 brainstorming 技能）</li>
+<li>有一个文件写着：「当你收到任何任务时，先检查是否有对应的技能流程，不要跳过流程直接做」（这就是 using-superpowers 引导技能）</li>
+</ul>
+<p>这些文件被统称为 <strong>「技能」（skills）</strong>。</p>
+<h3 id="1-4-核心原理：为什么给模型一段文字它就会「听话」"><a href="#1-4-核心原理：为什么给模型一段文字它就会「听话」" class="headerlink" title="1.4 核心原理：为什么给模型一段文字它就会「听话」"></a>1.4 核心原理：为什么给模型一段文字它就会「听话」</h3><p>这是最关键的一点，也是之前缺失的解释：</p>
+<blockquote>
+<p><strong>大语言模型会遵循它在对话中收到的指令。</strong></p>
+</blockquote>
+<p>这不是什么魔法。大模型在生成每一句回复时，都会参考它之前「看到过」的所有文字——包括系统指令、对话历史和额外注入的上下文。如果它的上下文中包含一段话说「在写代码之前必须先写测试」，模型就会在后续的回复中遵循这个要求。</p>
+<p><strong>Superpowers 的全部工作原理就是</strong>：在你和 Claude Code 对话开始之前，自动把那些「工作指南」文字塞进模型的上下文里。模型看到了这些指南，就会按照指南要求的方式工作——先设计再实现、先写测试再写代码、不跳过流程步骤。</p>
+<p>这就是为什么我们说「模型具备了 Superpowers 的纪律和技能使用指引」——不是模型本身变了，而是<strong>它读到了一份详细的行为规范，并按照规范行事</strong>。</p>
+<h3 id="1-5-打个比方"><a href="#1-5-打个比方" class="headerlink" title="1.5 打个比方"></a>1.5 打个比方</h3><p>想象你新入职一家公司，主管给你一份《开发规范手册》——所有功能先写设计文档、所有代码先写单元测试、遇到 bug 先做根因分析。你读完后就会按手册办事。</p>
+<p><strong>Superpowers 就是这份手册，Claude Code 就是那个新员工。</strong> 每次对话开始时，手册会自动递给 Claude Code。</p>
+<h3 id="1-6-一句话总结"><a href="#1-6-一句话总结" class="headerlink" title="1.6 一句话总结"></a>1.6 一句话总结</h3><table>
+<thead>
+<tr>
+<th>概念</th>
+<th>是什么</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Claude Code</strong></td>
+<td>运行在终端里的 AI 编码助手（背后是大模型 Claude）</td>
+</tr>
+<tr>
+<td><strong>Superpowers</strong></td>
+<td>一组 Markdown 格式的「工作流指南」，自动注入给模型以规范其开发行为</td>
+</tr>
+<tr>
+<td><strong>技能（Skill）</strong></td>
+<td>每一份独立的工作流指南，比如 TDD 技能、头脑风暴技能等</td>
+</tr>
+<tr>
+<td><strong>注入（Inject）</strong></td>
+<td>在对话开始时把技能内容自动塞进模型的上下文，让模型按此行事</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="2-快速开始"><a href="#2-快速开始" class="headerlink" title="2. 快速开始"></a>2. 快速开始</h2><h3 id="2-1-安装"><a href="#2-1-安装" class="headerlink" title="2.1 安装"></a>2.1 安装</h3><p>要开始使用 Superpowers，需先在本地安装 Claude Code 和相关依赖。基本流程如下：</p>
+<ol>
+<li><strong>前置条件</strong></li>
+</ol>
+<ul>
+<li>操作系统：macOS 13.0+、Ubuntu 20.04+&#x2F;Debian 10+ 或 Windows 10+（带 WSL 1、WSL 2 或 Git for Windows）</li>
+<li>硬件：4 GB+ RAM</li>
+<li>网络：需要互联网连接（请参阅网络配置）</li>
+<li>Shell：在 Bash 或 Zsh 中效果最佳</li>
+</ul>
+<ol start="2">
+<li><p><strong>安装 Claude Code</strong>  </p>
+<p>macOS, Linux, WSL:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -fsSL https://claude.ai/install.sh | bash</span><br></pre></td></tr></table></figure>
+<p>Windows PowerShell:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">irm https://claude.ai/install.ps1 | iex</span><br></pre></td></tr></table></figure>
+<p>Windows CMD:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -fsSL https://claude.ai/install.cmd -o install.cmd &amp;&amp; install.cmd &amp;&amp; del install.cmd</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>验证安装</strong>  </p>
+<ul>
+<li>运行 Claude Code 命令行界面，查看是否启动成功：</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./claude</span><br></pre></td></tr></table></figure>
+
+<p>首次启动将提示输入 API 密钥，以及初始化基础配置。</p>
+<ul>
+<li>输入 <code>help</code> 查看可用命令。如能顺利进入终端并看到欢迎信息，说明安装无误。</li>
+</ul>
+</li>
+<li><p><strong>安装 Superpowers</strong>：启动 Claude Code 后，在对话界面中直接输入以下命令（<code>/</code> 开头的是 Claude Code 内置命令，不是 shell 命令）：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">/plugin marketplace add obra/superpowers-marketplace</span><br><span class="line">/plugin install superpowers@superpowers-marketplace</span><br></pre></td></tr></table></figure>
+
+<p>以后更新：<code>/plugin update superpowers</code></p>
+</li>
+<li><p>superpowers目录结构</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">superpowers/</span><br><span class="line">├── hooks/                    # 会话钩子脚本及配置，实现技能自动注入</span><br><span class="line">│   └── hooks.json            # 钩子配置，声明会话生命周期下挂载哪些脚本</span><br><span class="line">├── skills/                   # Superpowers 核心技能库，每个工作流程是一个 skill</span><br><span class="line">│   ├── brainstorming.md      # 头脑风暴与方案评审技能</span><br><span class="line">│   ├── test-driven-development.md  # 测试驱动开发全流程</span><br><span class="line">│   ├── subagent-driven-development.md  # 子代理并行开发与自动评审</span><br><span class="line">│   ├── writing-plans.md      # 详细分解实现计划的技能</span><br><span class="line">│   └── ...                   # 更多工作流技能</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h3 id="2-2-启动"><a href="#2-2-启动" class="headerlink" title="2.2 启动"></a>2.2 启动</h3><p>安装完成后，Superpowers 通过两种方式生效：</p>
+<h4 id="方式一：自动启动（无需操作）"><a href="#方式一：自动启动（无需操作）" class="headerlink" title="方式一：自动启动（无需操作）"></a>方式一：自动启动（无需操作）</h4><p>当你在 Claude Code 中<strong>新建会话、恢复会话、清空或压缩会话</strong>时，Superpowers 会自动启动。</p>
+<p><strong>Claude Code 是怎么发现 Superpowers 这份「手册」的？</strong></p>
+<p>这要从插件安装说起。当你执行 <code>/plugin install superpowers</code> 时，Claude Code 会把 Superpowers 的所有文件（技能文件、脚本等）下载到本地的插件目录。关键是，这些文件里包含了一个<strong>钩子配置文件</strong>（<code>hooks/hooks.json</code>），它相当于对 Claude Code 说：</p>
+<blockquote>
+<p>「嘿，每当有新会话启动时，请执行我指定的这个脚本。」</p>
+</blockquote>
+<p>Claude Code 的插件系统会自动读取每个已安装插件的钩子配置。所以从安装完成那一刻起，Claude Code 就「知道了」：每次会话开始时要执行 Superpowers 的脚本。</p>
+<p><strong>完整的自动发现链路：</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">/plugin install superpowers</span><br><span class="line">      ↓</span><br><span class="line">Claude Code 把插件文件下载到本地，并读取 hooks/hooks.json</span><br><span class="line">      ↓</span><br><span class="line">hooks.json 告诉 Claude Code：「会话开始时，请运行 session-start.sh」</span><br><span class="line">      ↓</span><br><span class="line">（你开始一个新会话）</span><br><span class="line">      ↓</span><br><span class="line">Claude Code 自动运行 session-start.sh</span><br><span class="line">      ↓</span><br><span class="line">该脚本读取 using-superpowers 技能的完整内容</span><br><span class="line">      ↓</span><br><span class="line">内容被塞进当前会话的上下文</span><br><span class="line">      ↓</span><br><span class="line">模型在回复你之前就已经「读过」了这份行为规范</span><br></pre></td></tr></table></figure>
+
+<p><strong>结果</strong>：你在新会话中发第一条消息时，模型已经知道自己应该遵循 Superpowers 的工作流程。你不需要手动做任何事情——整个发现和注入过程由 Claude Code 的插件系统自动完成。</p>
+<h4 id="方式二：按需调用具体技能"><a href="#方式二：按需调用具体技能" class="headerlink" title="方式二：按需调用具体技能"></a>方式二：按需调用具体技能</h4><p>自动启动注入的是「<strong>总纲</strong>」（<strong>using-superpowers</strong>），告诉模型要先查技能再动手。大部分情况下，模型会按照总纲自动判断并加载合适的技能。</p>
+<p>但你也可以<strong>主动指定</strong>某个技能。比如你想先做设计讨论再写代码：</p>
+<ol>
+<li>在终端启动 Claude Code（输入 <code>claude</code> 进入对话界面）</li>
+<li>在对话界面中输入 <code>/brainstorming 帮我实现一个搜索功能</code></li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ claude                          ← 启动 Claude Code</span><br><span class="line">&gt; /brainstorming 帮我实现一个搜索功能   ← 在对话中调用技能</span><br></pre></td></tr></table></figure>
+
+<p>常用的技能命令：</p>
+<table>
+<thead>
+<tr>
+<th>命令</th>
+<th>用途</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>/brainstorming</code></td>
+<td>设计讨论，先想方案再动手</td>
+</tr>
+<tr>
+<td><code>/writing-plans</code></td>
+<td>编写实现计划</td>
+</tr>
+<tr>
+<td><code>/test-driven-development</code></td>
+<td>按 TDD 流程开发</td>
+</tr>
+<tr>
+<td><code>/systematic-debugging</code></td>
+<td>系统化调试</td>
+</tr>
+</tbody></table>
+<p>模型会读取该技能的完整内容，然后严格按步骤执行。</p>
+<h4 id="两种方式对比"><a href="#两种方式对比" class="headerlink" title="两种方式对比"></a>两种方式对比</h4><table>
+<thead>
+<tr>
+<th>方式</th>
+<th>比喻</th>
+<th>何时发生</th>
+<th>你需要做什么</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>自动启动</strong></td>
+<td>入职第一天收到《员工手册》</td>
+<td>每次新建&#x2F;恢复会话时</td>
+<td>无，自动完成</td>
+</tr>
+<tr>
+<td><strong>按需调用</strong></td>
+<td>要做具体工作时翻开对应章节</td>
+<td>想指定某个流程时</td>
+<td>用 <code>/技能名</code> 调用</td>
+</tr>
+</tbody></table>
+<h3 id="2-3-验证-Superpowers-已在工作"><a href="#2-3-验证-Superpowers-已在工作" class="headerlink" title="2.3 验证 Superpowers 已在工作"></a>2.3 验证 Superpowers 已在工作</h3><p>安装后如何确认它生效了？看以下迹象：</p>
+<ol>
+<li><strong>模型主动声明</strong>：会话开始后，模型的行为会体现出它已收到 Superpowers 指引（比如主动问你是否需要先做设计讨论）。</li>
+<li><strong>技能加载反馈</strong>：调用具体技能后，模型会说明自己正在使用哪个技能、将按什么步骤执行。</li>
+<li><strong>流程约束</strong>：当你试图跳过步骤（比如不做设计直接写代码），模型会提醒你先完成前置步骤。</li>
+<li><strong>结构化输出</strong>：模型的回复会变得更有结构——先分析、再方案、再确认、最后实现，而不是一上来就给代码。</li>
+</ol>
+<hr>
+<h2 id="3-核心概念"><a href="#3-核心概念" class="headerlink" title="3. 核心概念"></a>3. 核心概念</h2><h3 id="3-1-技能（Skill）"><a href="#3-1-技能（Skill）" class="headerlink" title="3.1 技能（Skill）"></a>3.1 技能（Skill）</h3><p>在第 1 节中我们提到 Superpowers 本质是一组「工作指南」，每份指南叫一个<strong>技能</strong>。这里展开说明。</p>
+<h4 id="技能长什么样"><a href="#技能长什么样" class="headerlink" title="技能长什么样"></a>技能长什么样</h4><p>每个技能就是一个 Markdown 文件（<code>SKILL.md</code>），存放在 <code>skills/</code> 目录下。文件顶部有名称和描述，正文是详细的操作流程。例如 TDD 技能里会写清楚：先写失败测试 → 运行确认失败 → 写最少代码通过 → 运行确认通过 → 重构。</p>
+<p>模型加载技能后，就像读到了一份操作手册，会按照手册里的步骤严格执行。</p>
+<h4 id="有哪些技能"><a href="#有哪些技能" class="headerlink" title="有哪些技能"></a>有哪些技能</h4><table>
+<thead>
+<tr>
+<th>技能</th>
+<th>一句话说明</th>
+<th>什么时候会用到</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>brainstorming</code></td>
+<td>先讨论设计方案，再动手</td>
+<td>你要实现新功能、做架构决策时</td>
+</tr>
+<tr>
+<td><code>writing-plans</code></td>
+<td>把大任务拆成详细的实施计划</td>
+<td>任务复杂、需要分步执行时</td>
+</tr>
+<tr>
+<td><code>test-driven-development</code></td>
+<td>先写测试、再写代码</td>
+<td>写任何新功能或修 bug 时</td>
+</tr>
+<tr>
+<td><code>systematic-debugging</code></td>
+<td>系统化定位 bug 根因</td>
+<td>遇到难以复现或复杂的 bug 时</td>
+</tr>
+<tr>
+<td><code>subagent-driven-development</code></td>
+<td>并行分配子代理执行任务</td>
+<td>计划拆分完成后，要批量实现时</td>
+</tr>
+<tr>
+<td><code>writing-skills</code></td>
+<td>创建新的技能文件</td>
+<td>你想自定义自己的工作流时</td>
+</tr>
+</tbody></table>
+<h4 id="两种技能类型"><a href="#两种技能类型" class="headerlink" title="两种技能类型"></a>两种技能类型</h4><ul>
+<li><strong>固定型</strong>（如 TDD、调试）：步骤严格，不能跳过或简化。</li>
+<li><strong>灵活型</strong>（如某些模式类技能）：可根据具体情况灵活调整。</li>
+</ul>
+<h4 id="个人定制"><a href="#个人定制" class="headerlink" title="个人定制"></a>个人定制</h4><p>你可以在 <code>~/.claude/skills</code> 目录放自己写的技能，它们会覆盖同名的系统技能。这样你可以根据团队习惯定制工作流。</p>
+<h3 id="3-2-引导技能-using-superpowers"><a href="#3-2-引导技能-using-superpowers" class="headerlink" title="3.2 引导技能 using-superpowers"></a>3.2 引导技能 using-superpowers</h3><p>在 2.2 节我们提到，每次会话开始时会自动注入一个「总纲（程序的开发手册）」——这个总纲就是 <code>using-superpowers</code> 技能。它的作用是告诉模型：</p>
+<ol>
+<li><strong>先查技能再动手</strong>：收到任何任务时，先判断是否有对应的技能流程，有就先加载。</li>
+<li><strong>不要找借口跳过</strong>：技能文件中内置了大量「防偷懒」机制——列出了模型可能用来跳过流程的各种借口（如「这太简单了不用走流程」「我先看看代码再说」），并逐一反驳。</li>
+<li><strong>流程类技能优先</strong>：当多个技能可能适用时，先加载决定「怎么做」的流程技能（如 brainstorming），再加载指导「做什么」的实现技能。</li>
+</ol>
+<p><strong>对你来说这意味着什么？</strong> 你不需要盯着模型看它有没有偷懒。Claude Code通过hook方式加载了using-superpowers这个技能，给模型灌输了一套开发流程，一旦模型开始执行任务，就会按照这套流程来执行，类比给程序员一部开发手册，程序员要按开发手册要求进行开发。</p>
+<h3 id="3-3-三大组件总览"><a href="#3-3-三大组件总览" class="headerlink" title="3.3 三大组件总览"></a>3.3 三大组件总览</h3><p>如果你想了解 Superpowers 在技术上由哪些部分组成：</p>
+<table>
+<thead>
+<tr>
+<th>组件</th>
+<th>位置</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>技能系统</strong></td>
+<td><code>skills/</code> 目录（在插件安装目录内）</td>
+<td>存放所有技能文件（Markdown），定义各种工作流</td>
+</tr>
+<tr>
+<td><strong>钩子系统</strong></td>
+<td><code>hooks/</code> 目录（在插件安装目录内）</td>
+<td>在会话开始时自动执行脚本，把 using-superpowers 注入上下文</td>
+</tr>
+<tr>
+<td><strong>插件基础设施</strong></td>
+<td><code>.claude-plugin/</code></td>
+<td>Claude Code 插件定义，让你能通过市场安装和更新 Superpowers</td>
+</tr>
+</tbody></table>
+<p>这些目录在你通过 <code>/plugin install</code> 安装后会自动部署到正确位置。日常使用中你不需要关心它们——安装好插件后一切自动运行。</p>
+<hr>
+<h2 id="4-using-superpowers规定的强制执行的开发工作流"><a href="#4-using-superpowers规定的强制执行的开发工作流" class="headerlink" title="4. using-superpowers规定的强制执行的开发工作流"></a>4. using-superpowers规定的强制执行的开发工作流</h2><h3 id="4-1-「强制执行」是怎么实现的"><a href="#4-1-「强制执行」是怎么实现的" class="headerlink" title="4.1 「强制执行」是怎么实现的"></a>4.1 「强制执行」是怎么实现的</h3><p>在理解具体流程之前，有必要先说清楚一个关键问题：<strong>Superpowers 说的「强制执行」到底是什么意思？它是怎么做到的？</strong></p>
+<p><strong>答案是：这里的「强制」是通过文字指令实现的，不是通过代码级的硬阻断。</strong></p>
+<p>Superpowers 没有任何脚本会阻止模型写文件、没有 CI&#x2F;CD 门禁会拦截提交、也没有代码会检测你是否跳过了某个步骤。它的「强制」完全依赖于以下三层文字手段：</p>
+<table>
+<thead>
+<tr>
+<th>手段</th>
+<th>做法</th>
+<th>示例</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>强指令标记</strong></td>
+<td>技能文件中用 <code>&lt;HARD-GATE&gt;</code>、<code>&lt;EXTREMELY-IMPORTANT&gt;</code> 等标记包裹关键规则</td>
+<td>brainstorming 技能：<em>「在用户批准设计方案之前，不得写任何代码」</em></td>
+</tr>
+<tr>
+<td><strong>反合理化表格</strong></td>
+<td>列出模型可能用来跳过步骤的各种借口，逐一反驳</td>
+<td>TDD 技能列了 11 种常见借口（如「太简单不用测」「先写后测也一样」），并解释为什么每一种都站不住脚</td>
+</tr>
+<tr>
+<td><strong>红旗清单</strong></td>
+<td>列出偏离流程的行为特征，告诉模型一旦出现就要停下来从头开始</td>
+<td>TDD 技能：<em>「先写了代码再写测试？删掉代码，从头来过。」</em></td>
+</tr>
+</tbody></table>
+<p><strong>为什么这种方式有效？</strong></p>
+<p>回顾 1.4 节的核心原理：大模型会遵循上下文中的指令。当模型读到措辞极其强硬、逻辑严密、并且把所有「逃跑路线」都堵死的指令时，它几乎不会偏离——这和你读到一份写得非常严格且理由充分的操作规范后，很难找到借口不遵守的道理是一样的。</p>
+<p><strong>局限性</strong></p>
+<p>诚实地说，这种「强制」有边界：</p>
+<ul>
+<li>如果用户明确要求模型跳过某个步骤（比如「别做设计了直接写代码」），模型通常会听从用户</li>
+<li>极少数情况下，模型可能在复杂场景中「遗忘」或「忽略」某些指令</li>
+</ul>
+<p>但在正常使用中，这套指令体系的效果非常可靠。</p>
+<h3 id="4-2-完整流程总览"><a href="#4-2-完整流程总览" class="headerlink" title="4.2 完整流程总览"></a>4.2 完整流程总览</h3><p>Superpowers 定义了以下开发流程序列。通过上述指令手段，模型会按顺序执行，不会主动跳过任何步骤：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">1. 头脑风暴 → 2. Git Worktree → 3. 编写计划 → 4. 子代理实现 → 5. TDD → 6. 代码审查 → 7. 分支合并</span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th>步骤</th>
+<th>技能</th>
+<th>目的</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1. 头脑风暴</td>
+<td><code>brainstorming</code></td>
+<td>将想法提炼为经过验证的设计</td>
+</tr>
+<tr>
+<td>2. Git Worktree</td>
+<td>（模型自动执行）</td>
+<td>创建隔离的开发分支</td>
+</tr>
+<tr>
+<td>3. 编写计划</td>
+<td><code>writing-plans</code></td>
+<td>拆分为详细的实现任务</td>
+</tr>
+<tr>
+<td>4. 子代理实现</td>
+<td><code>subagent-driven-development</code></td>
+<td>自动化实施 + 两阶段审查</td>
+</tr>
+<tr>
+<td>5. TDD</td>
+<td><code>test-driven-development</code></td>
+<td>RED-GREEN-REFACTOR</td>
+</tr>
+<tr>
+<td>6. 代码审查</td>
+<td>（模型自动执行）</td>
+<td>提交前的质量验证</td>
+</tr>
+<tr>
+<td>7. 分支合并</td>
+<td>（模型自动执行）</td>
+<td>合并回主分支</td>
+</tr>
+</tbody></table>
+<h3 id="4-3-头脑风暴（Brainstorming）"><a href="#4-3-头脑风暴（Brainstorming）" class="headerlink" title="4.3 头脑风暴（Brainstorming）"></a>4.3 头脑风暴（Brainstorming）</h3><p>在任何创意工作之前必须使用，包括创建功能、构建组件、添加功能或修改行为。</p>
+<p><strong>流程：</strong></p>
+<ol>
+<li>探索项目上下文</li>
+<li>提出 2-3 种方法及权衡分析</li>
+<li>展示设计方案并获得用户批准</li>
+<li>编写设计文档</li>
+<li>转入实现阶段</li>
+</ol>
+<h3 id="4-4-测试驱动开发（TDD）"><a href="#4-4-测试驱动开发（TDD）" class="headerlink" title="4.4 测试驱动开发（TDD）"></a>4.4 测试驱动开发（TDD）</h3><p>严格的红-绿-重构周期，核心原则：<em>「如果你没有看到测试失败，你就不能确定它测试的是正确的内容。」</em></p>
+<p><strong>流程：</strong></p>
+<ol>
+<li><strong>RED</strong> — 编写失败的测试</li>
+<li><strong>Verify RED</strong> — 运行并确认测试按预期失败</li>
+<li><strong>GREEN</strong> — 编写最少量的代码使测试通过</li>
+<li><strong>Verify GREEN</strong> — 运行并确认测试通过</li>
+<li><strong>REFACTOR</strong> — 在测试通过的前提下重构代码</li>
+<li>重复以上步骤</li>
+</ol>
+<h3 id="4-5-子代理驱动开发（Subagent-Driven-Development）"><a href="#4-5-子代理驱动开发（Subagent-Driven-Development）" class="headerlink" title="4.5 子代理驱动开发（Subagent-Driven Development）"></a>4.5 子代理驱动开发（Subagent-Driven Development）</h3><p><strong>什么是子代理？</strong> Claude Code 可以启动独立的「子会话」来执行任务，每个子会话叫一个子代理（subagent）。子代理有自己独立的上下文，完成任务后把结果汇报给主会话。好处是：每个子代理都是「新鲜的」，不会被前面任务的上下文污染。</p>
+<p><strong>流程：</strong></p>
+<ol>
+<li>把实现计划中的每个独立任务分派给一个新的子代理</li>
+<li>子代理完成后，进行两阶段审查：先检查是否符合规范，再检查代码质量</li>
+<li>若审查发现问题，子代理修复后再次提交审查</li>
+<li>全部任务完成后汇总到主会话</li>
+</ol>
+<hr>
+<h2 id="5-优势与局限"><a href="#5-优势与局限" class="headerlink" title="5. 优势与局限"></a>5. 优势与局限</h2><h3 id="适合用-Superpowers-的场景"><a href="#适合用-Superpowers-的场景" class="headerlink" title="适合用 Superpowers 的场景"></a>适合用 Superpowers 的场景</h3><ul>
+<li>复杂软件项目，需要系统化的开发流程</li>
+<li>团队协作，希望所有人遵循相同的工作规范</li>
+<li>对代码质量要求高，需要内置 TDD 和审查流程</li>
+<li>任务可拆分、可并行，适合子代理批量实现</li>
+</ul>
+<h3 id="可能不太适合的场景"><a href="#可能不太适合的场景" class="headerlink" title="可能不太适合的场景"></a>可能不太适合的场景</h3><ul>
+<li>非常简单的改动（如改一行配置），流程会显得过重</li>
+<li>紧急修复且没有时间走完整流程时</li>
+<li>对 Claude Code 平台没有经验的新用户（建议先熟悉 Claude Code 本身再引入 Superpowers）</li>
+</ul>
+<hr>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>回顾全文的核心要点：</p>
+<p><strong>Superpowers 是什么？</strong> 一组 Markdown 格式的「工作流指南」，通过 Claude Code 的插件系统自动注入给大模型，让模型在帮你写代码时遵循先设计、先测试、不跳步骤的开发规范。</p>
+<p><strong>它怎么工作？</strong> 安装插件后，每次你开启 Claude Code 会话，插件的钩子脚本会自动把引导技能（using-superpowers）的内容塞进模型的上下文。模型读到这份「行为规范」后就会按规范办事——遇到具体任务时再加载对应的详细技能（如 TDD、头脑风暴等）。</p>
+<p><strong>「强制」是怎么实现的？</strong> 不是代码级的硬阻断，而是通过措辞严格、逻辑严密、堵死各种借口的文字指令。大模型会遵循上下文中的指令，这是整个系统的底层原理。</p>
+<p><strong>你需要做的事：</strong></p>
+<ol>
+<li>安装 Claude Code</li>
+<li>在 Claude Code 中执行 <code>/plugin install superpowers@superpowers-marketplace</code></li>
+<li>开始对话——Superpowers 自动生效</li>
+<li>需要时用 <code>/技能名</code> 主动指定某个工作流</li>
+</ol>
+<hr>
+<p>AI 编码助手的能力已经毋庸置疑——它能读代码、写代码、跑命令、修 bug。但能力强不等于做事靠谱。一个没有流程约束的 AI 助手，就像一个技术过硬却从不写设计文档、从不写测试的程序员：活儿干得快，但方向可能跑偏、质量无法保证、复杂任务顾此失彼。</p>
+<p>Superpowers 解决的正是这个问题。它不改变模型的能力，而是给模型注入了一套经过验证的工作纪律——先讨论设计再动手、先写测试再写代码、大任务先拆计划再逐个实现、完成后必须经过审查。而实现这一切的方式出奇简单：几份写给模型看的 Markdown 文件，通过插件系统在每次对话开始时自动注入。</p>
+<p>如果你希望 AI 不只是”能写代码”，而是”能靠谱地做项目”，Superpowers 值得一试。</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://nathanhex.github.io/CICD-Practice">老黄</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://nathanhex.github.io/CICD-Practice/2026/02/14/superpowers-integration-guide/">https://nathanhex.github.io/CICD-Practice/2026/02/14/superpowers-integration-guide/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://nathanhex.github.io/CICD-Practice" target="_blank">老丶黄的个人博客</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/CICD-Practice/tags/AI/">AI</a><a class="post-meta__tags" href="/CICD-Practice/tags/Claude-Code/">Claude Code</a><a class="post-meta__tags" href="/CICD-Practice/tags/Superpowers/">Superpowers</a><a class="post-meta__tags" href="/CICD-Practice/tags/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7/">开发工具</a></div><div class="post_share"><div class="social-share" data-image="/CICD-Practice/images/superpowers-integration-guide-cover.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/CICD-Practice/claude-code-guide/00-overview/" title="Claude Code 架构与组件总览"><img class="cover" src="/CICD-Practice/images/claude-code-guide-covers/00-overview-cover.png" onerror="onerror=null;src='/CICD-Practice/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">Claude Code 架构与组件总览</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/CICD-Practice/claude-code-guide/00-overview/" title="Claude Code 架构与组件总览"><img class="cover" src="/CICD-Practice/images/claude-code-guide-covers/00-overview-cover.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2026-02-05</div><div class="title">Claude Code 架构与组件总览</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="this.onerror=null;this.src='/CICD-Practice/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">老黄</div><div class="author-info__description">天生我材必有用，千金散尽还复来</div></div><div class="card-info-data site-data is-center"><a href="/CICD-Practice/archives/"><div class="headline">文章</div><div class="length-num">16</div></a><a href="/CICD-Practice/tags/"><div class="headline">标签</div><div class="length-num">23</div></a><a href="/CICD-Practice/categories/"><div class="headline">分类</div><div class="length-num">8</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/nathanhex"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content is-expand"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E4%BB%8E%E9%9B%B6%E7%90%86%E8%A7%A3-Superpowers"><span class="toc-number">1.</span> <span class="toc-text">1. 从零理解 Superpowers</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-%E7%90%86%E8%A7%A3Superpowers%E4%B9%8B%E5%89%8D%EF%BC%8C%E5%85%88%E7%90%86%E8%A7%A3%E8%83%8C%E6%99%AF%EF%BC%9AClaude-Code-%E6%98%AF%E4%BB%80%E4%B9%88"><span class="toc-number">1.1.</span> <span class="toc-text">1.1 理解Superpowers之前，先理解背景：Claude Code 是什么</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-%E9%97%AE%E9%A2%98%E5%9C%A8%E5%93%AA%EF%BC%9A%E4%B8%BA%E4%BB%80%E4%B9%88%E9%9C%80%E8%A6%81-Superpowers"><span class="toc-number">1.2.</span> <span class="toc-text">1.2 问题在哪：为什么需要 Superpowers</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3-Superpowers-%E5%88%B0%E5%BA%95%E6%98%AF%E4%BB%80%E4%B9%88"><span class="toc-number">1.3.</span> <span class="toc-text">1.3 Superpowers 到底是什么</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-4-%E6%A0%B8%E5%BF%83%E5%8E%9F%E7%90%86%EF%BC%9A%E4%B8%BA%E4%BB%80%E4%B9%88%E7%BB%99%E6%A8%A1%E5%9E%8B%E4%B8%80%E6%AE%B5%E6%96%87%E5%AD%97%E5%AE%83%E5%B0%B1%E4%BC%9A%E3%80%8C%E5%90%AC%E8%AF%9D%E3%80%8D"><span class="toc-number">1.4.</span> <span class="toc-text">1.4 核心原理：为什么给模型一段文字它就会「听话」</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-5-%E6%89%93%E4%B8%AA%E6%AF%94%E6%96%B9"><span class="toc-number">1.5.</span> <span class="toc-text">1.5 打个比方</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-6-%E4%B8%80%E5%8F%A5%E8%AF%9D%E6%80%BB%E7%BB%93"><span class="toc-number">1.6.</span> <span class="toc-text">1.6 一句话总结</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E5%BF%AB%E9%80%9F%E5%BC%80%E5%A7%8B"><span class="toc-number">2.</span> <span class="toc-text">2. 快速开始</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-%E5%AE%89%E8%A3%85"><span class="toc-number">2.1.</span> <span class="toc-text">2.1 安装</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-%E5%90%AF%E5%8A%A8"><span class="toc-number">2.2.</span> <span class="toc-text">2.2 启动</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%96%B9%E5%BC%8F%E4%B8%80%EF%BC%9A%E8%87%AA%E5%8A%A8%E5%90%AF%E5%8A%A8%EF%BC%88%E6%97%A0%E9%9C%80%E6%93%8D%E4%BD%9C%EF%BC%89"><span class="toc-number">2.2.1.</span> <span class="toc-text">方式一：自动启动（无需操作）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%96%B9%E5%BC%8F%E4%BA%8C%EF%BC%9A%E6%8C%89%E9%9C%80%E8%B0%83%E7%94%A8%E5%85%B7%E4%BD%93%E6%8A%80%E8%83%BD"><span class="toc-number">2.2.2.</span> <span class="toc-text">方式二：按需调用具体技能</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%A4%E7%A7%8D%E6%96%B9%E5%BC%8F%E5%AF%B9%E6%AF%94"><span class="toc-number">2.2.3.</span> <span class="toc-text">两种方式对比</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3-%E9%AA%8C%E8%AF%81-Superpowers-%E5%B7%B2%E5%9C%A8%E5%B7%A5%E4%BD%9C"><span class="toc-number">2.3.</span> <span class="toc-text">2.3 验证 Superpowers 已在工作</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E6%A0%B8%E5%BF%83%E6%A6%82%E5%BF%B5"><span class="toc-number">3.</span> <span class="toc-text">3. 核心概念</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-%E6%8A%80%E8%83%BD%EF%BC%88Skill%EF%BC%89"><span class="toc-number">3.1.</span> <span class="toc-text">3.1 技能（Skill）</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%8A%80%E8%83%BD%E9%95%BF%E4%BB%80%E4%B9%88%E6%A0%B7"><span class="toc-number">3.1.1.</span> <span class="toc-text">技能长什么样</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%9C%89%E5%93%AA%E4%BA%9B%E6%8A%80%E8%83%BD"><span class="toc-number">3.1.2.</span> <span class="toc-text">有哪些技能</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%A4%E7%A7%8D%E6%8A%80%E8%83%BD%E7%B1%BB%E5%9E%8B"><span class="toc-number">3.1.3.</span> <span class="toc-text">两种技能类型</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%AA%E4%BA%BA%E5%AE%9A%E5%88%B6"><span class="toc-number">3.1.4.</span> <span class="toc-text">个人定制</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-%E5%BC%95%E5%AF%BC%E6%8A%80%E8%83%BD-using-superpowers"><span class="toc-number">3.2.</span> <span class="toc-text">3.2 引导技能 using-superpowers</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-3-%E4%B8%89%E5%A4%A7%E7%BB%84%E4%BB%B6%E6%80%BB%E8%A7%88"><span class="toc-number">3.3.</span> <span class="toc-text">3.3 三大组件总览</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-using-superpowers%E8%A7%84%E5%AE%9A%E7%9A%84%E5%BC%BA%E5%88%B6%E6%89%A7%E8%A1%8C%E7%9A%84%E5%BC%80%E5%8F%91%E5%B7%A5%E4%BD%9C%E6%B5%81"><span class="toc-number">4.</span> <span class="toc-text">4. using-superpowers规定的强制执行的开发工作流</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#4-1-%E3%80%8C%E5%BC%BA%E5%88%B6%E6%89%A7%E8%A1%8C%E3%80%8D%E6%98%AF%E6%80%8E%E4%B9%88%E5%AE%9E%E7%8E%B0%E7%9A%84"><span class="toc-number">4.1.</span> <span class="toc-text">4.1 「强制执行」是怎么实现的</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-2-%E5%AE%8C%E6%95%B4%E6%B5%81%E7%A8%8B%E6%80%BB%E8%A7%88"><span class="toc-number">4.2.</span> <span class="toc-text">4.2 完整流程总览</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-3-%E5%A4%B4%E8%84%91%E9%A3%8E%E6%9A%B4%EF%BC%88Brainstorming%EF%BC%89"><span class="toc-number">4.3.</span> <span class="toc-text">4.3 头脑风暴（Brainstorming）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-4-%E6%B5%8B%E8%AF%95%E9%A9%B1%E5%8A%A8%E5%BC%80%E5%8F%91%EF%BC%88TDD%EF%BC%89"><span class="toc-number">4.4.</span> <span class="toc-text">4.4 测试驱动开发（TDD）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-5-%E5%AD%90%E4%BB%A3%E7%90%86%E9%A9%B1%E5%8A%A8%E5%BC%80%E5%8F%91%EF%BC%88Subagent-Driven-Development%EF%BC%89"><span class="toc-number">4.5.</span> <span class="toc-text">4.5 子代理驱动开发（Subagent-Driven Development）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-%E4%BC%98%E5%8A%BF%E4%B8%8E%E5%B1%80%E9%99%90"><span class="toc-number">5.</span> <span class="toc-text">5. 优势与局限</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%80%82%E5%90%88%E7%94%A8-Superpowers-%E7%9A%84%E5%9C%BA%E6%99%AF"><span class="toc-number">5.1.</span> <span class="toc-text">适合用 Superpowers 的场景</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%AF%E8%83%BD%E4%B8%8D%E5%A4%AA%E9%80%82%E5%90%88%E7%9A%84%E5%9C%BA%E6%99%AF"><span class="toc-number">5.2.</span> <span class="toc-text">可能不太适合的场景</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-number">6.</span> <span class="toc-text">总结</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/CICD-Practice/2026/02/14/superpowers-integration-guide/" title="从零开始理解Superpowers：让AI变成听话的AI程序员"><img src="/CICD-Practice/images/superpowers-integration-guide-cover.png" onerror="this.onerror=null;this.src='/CICD-Practice/img/404.jpg'" alt="从零开始理解Superpowers：让AI变成听话的AI程序员"/></a><div class="content"><a class="title" href="/CICD-Practice/2026/02/14/superpowers-integration-guide/" title="从零开始理解Superpowers：让AI变成听话的AI程序员">从零开始理解Superpowers：让AI变成听话的AI程序员</a><time datetime="2026-02-13T16:00:00.000Z" title="发表于 2026-02-14 00:00:00">2026-02-14</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/CICD-Practice/claude-code-guide/00-overview/" title="Claude Code 架构与组件总览"><img src="/CICD-Practice/images/claude-code-guide-covers/00-overview-cover.png" onerror="this.onerror=null;this.src='/CICD-Practice/img/404.jpg'" alt="Claude Code 架构与组件总览"/></a><div class="content"><a class="title" href="/CICD-Practice/claude-code-guide/00-overview/" title="Claude Code 架构与组件总览">Claude Code 架构与组件总览</a><time datetime="2026-02-05T00:00:00.000Z" title="发表于 2026-02-05 08:00:00">2026-02-05</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/CICD-Practice/claude-code-guide/01-rules/" title="Claude Code Rules 系统：持久化的行为约束"><img src="/CICD-Practice/images/claude-code-guide-covers/01-rules-cover.png" onerror="this.onerror=null;this.src='/CICD-Practice/img/404.jpg'" alt="Claude Code Rules 系统：持久化的行为约束"/></a><div class="content"><a class="title" href="/CICD-Practice/claude-code-guide/01-rules/" title="Claude Code Rules 系统：持久化的行为约束">Claude Code Rules 系统：持久化的行为约束</a><time datetime="2026-02-04T23:00:00.000Z" title="发表于 2026-02-05 07:00:00">2026-02-05</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/CICD-Practice/claude-code-guide/02-skills/" title="Claude Code Skills 系统：可复用的指令集"><img src="/CICD-Practice/images/claude-code-guide-covers/02-skills-cover.png" onerror="this.onerror=null;this.src='/CICD-Practice/img/404.jpg'" alt="Claude Code Skills 系统：可复用的指令集"/></a><div class="content"><a class="title" href="/CICD-Practice/claude-code-guide/02-skills/" title="Claude Code Skills 系统：可复用的指令集">Claude Code Skills 系统：可复用的指令集</a><time datetime="2026-02-04T22:00:00.000Z" title="发表于 2026-02-05 06:00:00">2026-02-05</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/CICD-Practice/claude-code-guide/03-commands/" title="Claude Code Commands 系统：斜杠命令"><img src="/CICD-Practice/images/claude-code-guide-covers/03-commands-cover.png" onerror="this.onerror=null;this.src='/CICD-Practice/img/404.jpg'" alt="Claude Code Commands 系统：斜杠命令"/></a><div class="content"><a class="title" href="/CICD-Practice/claude-code-guide/03-commands/" title="Claude Code Commands 系统：斜杠命令">Claude Code Commands 系统：斜杠命令</a><time datetime="2026-02-04T21:00:00.000Z" title="发表于 2026-02-05 05:00:00">2026-02-05</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2026 By 老黄</div><div class="footer_custom_text">欢迎来到老黄的<a href="https://nathanhex.github.io/CICD-Practice/">博客</a>!</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/CICD-Practice/js/utils.js"></script><script src="/CICD-Practice/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"><script>(() => {
+  const $mermaid = document.querySelectorAll('#article-container .mermaid-wrap')
+  if ($mermaid.length === 0) return
+  const runMermaid = () => {
+    window.loadMermaid = true
+    const theme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'default'
+
+    Array.from($mermaid).forEach((item, index) => {
+      const mermaidSrc = item.firstElementChild
+      const mermaidThemeConfig = '%%{init:{ \'theme\':\'' + theme + '\'}}%%\n'
+      const mermaidID = 'mermaid-' + index
+      const mermaidDefinition = mermaidThemeConfig + mermaidSrc.textContent
+
+      const renderFn = mermaid.render(mermaidID, mermaidDefinition)
+
+      const renderV10 = () => {
+        renderFn.then(({svg}) => {
+          mermaidSrc.insertAdjacentHTML('afterend', svg)
+        })
+      }
+
+      const renderV9 = svg => {
+        mermaidSrc.insertAdjacentHTML('afterend', svg)
+      }
+
+      typeof renderFn === 'string' ? renderV9(renderFn) : renderV10()
+    })
+  }
+
+  const loadMermaid = () => {
+    window.loadMermaid ? runMermaid() : getScript('https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js').then(runMermaid)
+  }
+
+  btf.addGlobalFn('themeChange', runMermaid, 'mermaid')
+
+  window.pjax ? loadMermaid() : document.addEventListener('DOMContentLoaded', loadMermaid)
+})()</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
